@@ -1,0 +1,40 @@
+ext{
+    android = [
+            compileSdkVersion       :28,
+            applicationId           : "imitative.lh.com.wanandroid",
+            minSdkVersion           : 19,
+            targetSdkVersion        : 28,
+            versionCode             : 1,
+            versionName             : "1.0"
+    ]
+
+    version = [
+            supportLibraryVersion       : "28.0.0",
+
+            lottieVersion               : "2.3.0",
+
+            butterknifeVersion      : "8.6.0",
+
+    ]
+
+    dependencies = [
+            //base
+            "appcompat-v7"              : "com.android.support:appcompat-v7:${version["supportLibraryVersion"]}",
+            "constraint-layout"         : "com.android.support.constraint:constraint-layout:1.1.3",
+
+            //ui test
+            "espresso-core"             : "com.android.support.test.espresso:espresso-core:3.0.2",
+
+            //ti
+            "butterknife"                       : "com.jakewharton:butterknife:${version["butterknifeVersion"]}",
+            "butterknife-compiler"              : "com.jakewharton:butterknife-compiler:${version["butterknifeVersion"]}",
+
+            //other
+            "lottie"                    : "com.airbnb.android:lottie:${version["lottieVersion"]}",
+
+            //unit test
+            "junit"                     :  'junit:junit:4.12',
+            "runner"                    : "com.android.support.test:runner:1.0.2"
+
+    ]
+}
