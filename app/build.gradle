@@ -25,6 +25,7 @@ dependencies {
     //base
     implementation              rootProject.ext.dependencies["appcompat-v7"]
     implementation              rootProject.ext.dependencies["constraint-layout"]
+    implementation              rootProject.ext.dependencies["design"]
 
     //ti
     implementation              rootProject.ext.dependencies["butterknife"]

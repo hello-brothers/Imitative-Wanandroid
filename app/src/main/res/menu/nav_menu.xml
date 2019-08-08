@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/nav_item_wan_android"
+            android:title="wanAndroid"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@drawable/ic_wan_android"/>
+
+        <item
+            android:id="@+id/nav_item_collection"
+            android:title="收藏"
+            android:checkable="true"
+            android:icon="@drawable/ic_love"/>
+
+        <item
+            android:id="@+id/nav_item_logout"
+            android:title="退出"
+            android:checkable="true"
+            android:icon="@drawable/ic_logout"/>
+    </group>
+
+    <item android:title="其他">
+        <menu>
+            <group >
+                <item
+                    android:id="@+id/nav_item_setting"
+                    android:icon="@drawable/ic_setting"
+                    android:title="设置"
+                    android:checkable="true"
+                    />
+                <item
+                    android:id="@+id/nav_item_baout"
+                    android:title="关于我们"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_about"/>
+            </group>
+        </menu>
+    </item>
+</menu>

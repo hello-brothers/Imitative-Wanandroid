@@ -1,5 +1,6 @@
 package imitative.lh.com.wanandroid;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -8,9 +9,12 @@ import com.airbnb.lottie.LottieAnimationView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
+import imitative.lh.com.wanandroid.presenter.SplashPresenter;
 import imitative.lh.com.wanandroid.utils.StatusBarUtils;
+import imitative.lh.com.wanandroid.view.BaseActivity;
+import imitative.lh.com.wanandroid.view.SplashContract;
 
-public class SplashActivity extends AbstractSimpleActivity {
+public class SplashActivity extends BaseActivity implements SplashContract.View {
 
     @BindView(R.id.splash_view)
     LottieAnimationView splash_view;
@@ -19,8 +23,10 @@ public class SplashActivity extends AbstractSimpleActivity {
         super.onCreate(savedInstanceState);
     }
 
-
-
+    @Override
+    protected SplashPresenter createPresneter() {
+        return new SplashPresenter();
+    }
 
 
     @Override
@@ -62,5 +68,10 @@ public class SplashActivity extends AbstractSimpleActivity {
         if (mLottieAnimationView!=null){
             mLottieAnimationView.cancelAnimation();
         }
+    }
+
+    @Override
+    public void jumpToMain() {
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
     }
 }

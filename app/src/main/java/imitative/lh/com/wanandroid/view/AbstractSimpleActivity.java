@@ -1,4 +1,4 @@
-package imitative.lh.com.wanandroid;
+package imitative.lh.com.wanandroid.view;
 
 import android.os.Binder;
 import android.os.Bundle;
@@ -19,8 +19,11 @@ public abstract class AbstractSimpleActivity extends AppCompatActivity {
         setContentView(getLayoutId());
         unbind = ButterKnife.bind(this);
         initToolbar();
+        onViewCreated();
         initDataAndEvent();
     }
+
+    protected abstract void onViewCreated();
 
     @Override
     protected void onDestroy() {
