@@ -32,6 +32,9 @@ dependencies {
     implementation              rootProject.ext.dependencies["butterknife-compiler"]
     //other
     implementation              rootProject.ext.dependencies["lottie"]
+    implementation              rootProject.ext.dependencies["fragmentation"]
+    implementation              rootProject.ext.dependencies["fragmentation-swipeback"]
+    implementation              rootProject.ext.dependencies["fragmentation-core"]
 
     //unit test
     testImplementation          rootProject.ext.dependencies["junit"]

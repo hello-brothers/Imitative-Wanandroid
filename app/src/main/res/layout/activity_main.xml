@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:background="#ffffff"
     android:layout_height="match_parent"
-    tools:openDrawer="start"
     tools:context=".MainActivity">
 
     <android.support.design.widget.CoordinatorLayout
@@ -20,6 +19,40 @@
 
             <include layout="@layout/common_toolbar"/>
         </android.support.design.widget.AppBarLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+
+        </FrameLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/main_floating_action_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginRight="@dimen/dp_30"
+            android:src="@drawable/ic_float_action_up"
+            android:layout_marginBottom="@dimen/dp_60"
+            />
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/home_bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorCard"
+            app:itemIconTint="@color/nav_item_color_state"
+            app:itemTextColor="@color/nav_item_color_state"
+            app:menu="@menu/bottom_navigation_main"
+            app:labelVisibilityMode="labeled"
+            android:elevation="@dimen/dp_16"
+
+            >
+
+        </android.support.design.widget.BottomNavigationView>
 
     </android.support.design.widget.CoordinatorLayout>
 

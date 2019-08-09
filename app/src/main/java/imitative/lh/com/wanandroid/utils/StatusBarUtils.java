@@ -29,7 +29,7 @@ public class StatusBarUtils {
         }
     }
 
-    private static void immersive(Window window) {
+    public static void immersive(Window window) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN){
             return;
         }

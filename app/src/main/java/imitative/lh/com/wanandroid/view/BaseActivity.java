@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import imitative.lh.com.wanandroid.presenter.BasePresenter;
 
 public abstract class BaseActivity<T extends BasePresenter> extends AbstractSimpleActivity implements AbstractView{
-    private T presenter;
+    protected T presenter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,5 +32,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends AbstractSimp
             presenter = null;
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void showLoginView() {
+
+    }
+
+    @Override
+    public void showLogoutView() {
+
     }
 }

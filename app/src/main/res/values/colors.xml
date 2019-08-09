@@ -10,4 +10,8 @@
     <color name="blue4">#29b6f6</color>
     <color name="blue5">#4fc3f7</color>
     <color name="blue6">#81d4fa</color>
+
+    <color name="colorCard">#ffffff</color>
+    <color name="delete_text">#cccccc</color>
+    <color name="white">#ffffff</color>
 </resources>

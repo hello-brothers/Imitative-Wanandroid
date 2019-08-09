@@ -8,16 +8,19 @@ import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportActivity;
 
-public abstract class AbstractSimpleActivity extends AppCompatActivity {
+public abstract class AbstractSimpleActivity extends SupportActivity {
 
     private Unbinder unbind;
+    protected AbstractSimpleActivity mActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         unbind = ButterKnife.bind(this);
+        mActivity = this;
         initToolbar();
         onViewCreated();
         initDataAndEvent();

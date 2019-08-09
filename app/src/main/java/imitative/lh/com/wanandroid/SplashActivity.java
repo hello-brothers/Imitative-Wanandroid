@@ -73,5 +73,6 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     @Override
     public void jumpToMain() {
         startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        finish();
     }
 }
