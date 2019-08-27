@@ -4,15 +4,15 @@ import android.os.Handler;
 
 import imitative.lh.com.wanandroid.view.SplashContract;
 
-public class SplashPresenter extends BasePresenter<SplashContract.View> {
+public class SplashPresenter extends BasePresenter<SplashContract.View> implements SplashContract.Presenter {
 
     @Override
-    public void attachView(SplashContract.View view) {
-        super.attachView(view);
+    public void showSplashThenToMain() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 getView().jumpToMain();
             }
-        }, 3000);    }
+        }, 3000);
+    }
 }

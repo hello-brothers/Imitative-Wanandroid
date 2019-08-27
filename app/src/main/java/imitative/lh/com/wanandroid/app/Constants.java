@@ -18,4 +18,12 @@ public class Constants {
     public static final int TYPE_COLLECT = 5;
 
     public static final int TYPE_SETTING = 6;
+
+    public static final long CLICK_TIME_AREA = 1000;
+
+    public static final String MY_SHARED_PREFERENCE = "my_shared_preference";
+
+
+    public static final String ACCOUNT = "account";
+    public static final String PASSWORD = "password";
 }

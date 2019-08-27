@@ -3,9 +3,11 @@ package imitative.lh.com.wanandroid.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import imitative.lh.com.wanandroid.presenter.BasePresenter;
+import imitative.lh.com.wanandroid.presenter.AbstractPresenter;
+import imitative.lh.com.wanandroid.utils.CommonUtils;
 
-public abstract class BaseActivity<T extends BasePresenter> extends AbstractSimpleActivity implements AbstractView{
+
+public abstract class BaseActivity<T extends AbstractPresenter> extends AbstractSimpleActivity implements AbstractView{
     protected T presenter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,5 +44,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends AbstractSimp
     @Override
     public void showLogoutView() {
 
+    }
+
+    @Override
+    public void showSnackBar(String message) {
+        CommonUtils.showSnackMessage(this, message);
+    }
+
+    @Override
+    public void showToast(String message) {
+        CommonUtils.showMessage(this, message);
     }
 }

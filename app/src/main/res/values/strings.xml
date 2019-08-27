@@ -13,4 +13,6 @@
     <string name="login_psw_hint">请输入密码</string>
     <string name="text_login">登录</string>
     <string name="text_register">注册</string>
+    <string name="account_password_null_tint">用户名或账号不能为空</string>
+    <string name="login_success">登录成功</string>
 </resources>

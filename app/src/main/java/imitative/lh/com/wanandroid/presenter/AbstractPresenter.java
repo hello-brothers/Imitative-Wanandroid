@@ -11,4 +11,8 @@ public interface AbstractPresenter<T extends AbstractView>  {
     boolean getLoginState();
 
     void setLoginState(boolean loginState);
+
+    void setLoginAccount(String account);
+
+    void setLoginPassword(String password);
 }

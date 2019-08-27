@@ -27,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.app.Constants;
+import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.presenter.MainPresenter;
 import imitative.lh.com.wanandroid.utils.BottomNavigationViewHelper;
@@ -86,7 +87,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
 
     @Override
     protected void initDataAndEvent() {
-
+        presenter.registerEvent();
     }
 
     @Override
@@ -180,6 +181,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
 
     private void initNavigationView() {
         home_nav.setNavigationItemSelectedListener(this);
+//        home_nav.setItemIconTintList(null);
         View headerView = home_nav.getHeaderView(0);
         tv_login = headerView.findViewById(R.id.nav_header_login_tv);
 
@@ -289,7 +291,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
      */
     @Override
     public void showLoginView() {
-
+        if (home_nav == null){
+            return;
+        }
+        tv_login.setText(WanAndroidApp.getInstance().getDataManager().getLoginAccount());
+        tv_login.setOnClickListener(null);
+        home_nav.getMenu().findItem(R.id.nav_item_logout).setVisible(true);
     }
 
     /**

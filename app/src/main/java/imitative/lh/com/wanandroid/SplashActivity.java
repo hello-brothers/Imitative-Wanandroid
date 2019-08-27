@@ -14,7 +14,7 @@ import imitative.lh.com.wanandroid.utils.StatusBarUtils;
 import imitative.lh.com.wanandroid.view.BaseActivity;
 import imitative.lh.com.wanandroid.view.SplashContract;
 
-public class SplashActivity extends BaseActivity implements SplashContract.View {
+public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View {
 
     @BindView(R.id.splash_view)
     LottieAnimationView splash_view;
@@ -53,6 +53,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     @Override
     protected void initDataAndEvent() {
         startAnimation(splash_view, "splash.json");
+        presenter.showSplashThenToMain();
     }
 
     private void cancelAnimation() {

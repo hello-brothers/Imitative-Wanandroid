@@ -8,6 +8,7 @@
     tools:context=".LoginActivity">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/login_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/ic_arrow_back_black">
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_login_user"/>
         <EditText
+            android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -73,6 +75,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_login_psw"/>
         <EditText
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -100,6 +103,7 @@
         android:gravity="center">
 
         <Button
+            android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
             android:layout_marginLeft="@dimen/dp_48"
@@ -113,6 +117,7 @@
             android:layout_margin="@dimen/dp_10"
             android:text="或"/>
         <Button
+            android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
             android:layout_marginLeft="@dimen/dp_48"
