@@ -22,6 +22,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
         setLoginState(true);
         setLoginAccount(username);
         setLoginPassword(password);
+        setLoginState(true);
         getView().showLoginSuccess();
     }
 }

@@ -4,10 +4,7 @@ import io.reactivex.Flowable;
 import io.reactivex.processors.FlowableProcessor;
 import io.reactivex.processors.PublishProcessor;
 
-/**
- * @author quchao
- * @date 2017/11/27
- */
+
 
 public class RxBus {
 
@@ -23,6 +20,10 @@ public class RxBus {
         bus = PublishProcessor.create().toSerialized();
     }
 
+    /**
+     * 单例模式 静态内部类
+     * @return
+     */
     public static RxBus getDefault() {
         return RxBusHolder.INSTANCE;
     }

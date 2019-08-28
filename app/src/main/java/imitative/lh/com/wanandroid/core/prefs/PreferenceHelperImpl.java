@@ -24,6 +24,11 @@ public class PreferenceHelperImpl implements PreferenceHelper {
     }
 
     @Override
+    public void setLoginState(boolean isLogin) {
+        this.mPreferences.edit().putBoolean(Constants.LOGINSTATE, isLogin).apply();
+    }
+
+    @Override
     public String getLoginAccount() {
         return mPreferences.getString(Constants.ACCOUNT, "");
     }
@@ -31,5 +36,10 @@ public class PreferenceHelperImpl implements PreferenceHelper {
     @Override
     public String getLoginPassword() {
         return mPreferences.getString(Constants.PASSWORD, "");
+    }
+
+    @Override
+    public boolean getLoginState() {
+        return mPreferences.getBoolean(Constants.LOGINSTATE, false);
     }
 }

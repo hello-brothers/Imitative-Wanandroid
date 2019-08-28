@@ -6,7 +6,12 @@ public interface PreferenceHelper {
 
     void setLoginPassword(String password);
 
+    void setLoginState(boolean isLogin);
+
     String getLoginAccount();
 
     String getLoginPassword();
+
+    boolean getLoginState();
+
 }

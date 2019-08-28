@@ -7,7 +7,6 @@ import io.reactivex.disposables.Disposable;
 
 public class BasePresenter<T extends AbstractView> implements AbstractPresenter<T>  {
     private T view;
-    private boolean loginState;
     private CompositeDisposable compositeDisposable;
     public void attachView(T view){
         this.view = view;
@@ -25,11 +24,11 @@ public class BasePresenter<T extends AbstractView> implements AbstractPresenter<
     }
 
     public boolean getLoginState(){
-        return loginState;
+        return WanAndroidApp.getInstance().getDataManager().getLoginState();
     }
 
     public void setLoginState(boolean loginState){
-        this.loginState = loginState;
+        WanAndroidApp.getInstance().getDataManager().setLoginState(loginState);
     }
 
     @Override

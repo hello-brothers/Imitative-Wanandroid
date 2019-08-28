@@ -1,5 +1,6 @@
 package imitative.lh.com.wanandroid.presenter;
 
+import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.core.event.LoginEvent;
 import imitative.lh.com.wanandroid.view.MainContract;
@@ -43,5 +44,13 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                         getView().showLogoutView();
                     }
                 }));
+    }
+
+    @Override
+    public void logout() {
+        setLoginAccount("");
+        setLoginPassword("");
+        setLoginState(false);
+        getView().showLogoutSuccess();
     }
 }

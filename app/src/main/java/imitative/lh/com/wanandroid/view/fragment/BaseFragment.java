@@ -8,7 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class BaseFragment extends Fragment {
+import imitative.lh.com.wanandroid.R;
+import imitative.lh.com.wanandroid.app.Constants;
+import imitative.lh.com.wanandroid.utils.CommonUtils;
+import me.yokeyword.fragmentation.SupportFragment;
+
+public abstract class BaseFragment extends SupportFragment {
+    private long clickTime;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -16,4 +23,24 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected abstract int getLayoutId();
+
+    /**
+     * 处理回退事件
+     */
+    @Override
+    public boolean onBackPressedSupport() {
+        if (getChildFragmentManager().getBackStackEntryCount() > 1) {
+            popChild();
+        } else {
+
+            long currentTime = System.currentTimeMillis();
+            if ((currentTime - clickTime) > Constants.DOUBLE_INTERVAL_TIME) {
+                CommonUtils.showSnackMessage(_mActivity, getString(R.string.double_click_exit_tint));
+                clickTime = System.currentTimeMillis();
+            } else {
+                _mActivity.finish();
+            }
+        }
+        return true;
+    }
 }

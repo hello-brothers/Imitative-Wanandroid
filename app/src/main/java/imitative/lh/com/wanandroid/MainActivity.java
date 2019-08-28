@@ -1,9 +1,11 @@
 package imitative.lh.com.wanandroid;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,21 +27,29 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
+import imitative.lh.com.wanandroid.component.RxBus;
+import imitative.lh.com.wanandroid.core.event.LoginEvent;
 import imitative.lh.com.wanandroid.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.presenter.MainPresenter;
 import imitative.lh.com.wanandroid.utils.BottomNavigationViewHelper;
+import imitative.lh.com.wanandroid.utils.CommonAlertDialog;
+import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.utils.StatusBarUtils;
+import imitative.lh.com.wanandroid.view.AboutUsActivity;
 import imitative.lh.com.wanandroid.view.BaseActivity;
 import imitative.lh.com.wanandroid.view.MainContract;
 import imitative.lh.com.wanandroid.view.fragment.BaseFragment;
+import imitative.lh.com.wanandroid.view.fragment.CollectionFragment;
 import imitative.lh.com.wanandroid.view.fragment.KnowledgeHierarchyFragment;
 import imitative.lh.com.wanandroid.view.fragment.MainPagerFragment;
 import imitative.lh.com.wanandroid.view.fragment.NavigationFragment;
 import imitative.lh.com.wanandroid.view.fragment.ProjectFragment;
+import imitative.lh.com.wanandroid.view.fragment.SettingFragment;
 import imitative.lh.com.wanandroid.view.fragment.WxArticleFragment;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements NavigationView.OnNavigationItemSelectedListener, MainContract.View {
@@ -53,6 +64,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     NavigationView home_nav;
     @BindView(R.id.home_bottom_nav)
     BottomNavigationView home_bottom_nav;
+    @BindView(R.id.main_floating_action_btn)
+    FloatingActionButton mFloatingActionButton;
     private TextView tv_login;
     private MainPagerFragment mainPagerFragment;
     private KnowledgeHierarchyFragment knowledgeHierarchyFragment;
@@ -74,7 +87,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayShowTitleEnabled(false);
-        toolbar_title.setText("开发小白");
+        toolbar_title.setText(R.string.main_title);
         StatusBarUtils.immersive(this, home_toolbar);
 
         home_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -110,7 +123,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         switchFragment(position);
     }
 
+    @SuppressLint("RestrictedApi")
     private void switchFragment(int position) {
+        if (position > Constants.TYPE_PROJECT){
+            home_bottom_nav.setVisibility(View.INVISIBLE);
+            mFloatingActionButton.setVisibility(View.INVISIBLE);
+        }else {
+            home_bottom_nav.setVisibility(View.VISIBLE);
+            mFloatingActionButton.setVisibility(View.VISIBLE);
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         BaseFragment mTargetFg = mFragments.get(position);
         BaseFragment mLastFg = mFragments.get(mLastFgIndex);
@@ -132,11 +153,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         projectFragment = ProjectFragment.getInstance();
         wxArticleFragment = WxArticleFragment.getInstance();
 
+        CollectionFragment collectionFragment = CollectionFragment.newInstance();
+        SettingFragment settingFragment = SettingFragment.newInstance();
         mFragments.add(mainPagerFragment);
         mFragments.add(knowledgeHierarchyFragment);
         mFragments.add(wxArticleFragment);
         mFragments.add(navigationFragment);
         mFragments.add(projectFragment);
+        mFragments.add(collectionFragment);
+        mFragments.add(settingFragment);
     }
 
     private void init() {
@@ -181,16 +206,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
 
     private void initNavigationView() {
         home_nav.setNavigationItemSelectedListener(this);
-//        home_nav.setItemIconTintList(null);
         View headerView = home_nav.getHeaderView(0);
         tv_login = headerView.findViewById(R.id.nav_header_login_tv);
-
         if (!presenter.getLoginState()){
             showLogoutView();
         }else {
             showLoginView();
         }
-
     }
 
     private void initDrawerLayout() {
@@ -247,27 +269,60 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        if (home_drawer!=null){
-            home_drawer.closeDrawer(Gravity.START);
-        }
+
         switch (menuItem.getItemId()){
 
             case R.id.nav_item_wan_android:
+                startMainPager();
                 break;
             case R.id.nav_item_collection:
-                Toast.makeText(this, "nav_item_collection", Toast.LENGTH_SHORT).show();
+                if (presenter.getLoginState()){
+                    startCollectFragment();
+                }else {
+                    startActivity(new Intent(this, LoginActivity.class));
+                    CommonUtils.showMessage(this, getString(R.string.login_first));
+                    return false;
+                }
                 break;
             case R.id.nav_item_logout:
-                Toast.makeText(this, "nav_item_logout", Toast.LENGTH_SHORT).show();
+                if (presenter.getLoginState()){
+                    logout();
+                    return false;
+                }
                 break;
             case R.id.nav_item_baout:
-                Toast.makeText(this, "nav_item_baout", Toast.LENGTH_SHORT).show();
-                break;
+                closeDrawer();
+                startActivity(new Intent(this, AboutUsActivity.class));
+                return false;
             case R.id.nav_item_setting:
-                Toast.makeText(this, "nav_item_setting", Toast.LENGTH_SHORT).show();
+                startSettingFragment();
                 break;
         }
         return true;
+    }
+
+    private void startSettingFragment() {
+        toolbar_title.setText(getString(R.string.setting));
+        closeDrawer();
+        switchFragment(Constants.TYPE_SETTING);
+    }
+
+    private void startCollectFragment() {
+        toolbar_title.setText(getString(R.string.collection));
+        closeDrawer();
+        switchFragment(Constants.TYPE_COLLECT);
+    }
+
+    private void startMainPager() {
+        toolbar_title.setText(R.string.main_title);
+        home_bottom_nav.setSelectedItemId(R.id.nav_item_wan_android);
+        closeDrawer();
+    }
+
+    public void closeDrawer(){
+        if (home_drawer!=null){
+            home_drawer.closeDrawer(Gravity.START);
+        }
     }
 
     /**
@@ -283,7 +338,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         }else {
             ActivityCompat.finishAfterTransition(this);
         }
-
     }
 
     /**
@@ -294,6 +348,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         if (home_nav == null){
             return;
         }
+
         tv_login.setText(WanAndroidApp.getInstance().getDataManager().getLoginAccount());
         tv_login.setOnClickListener(null);
         home_nav.getMenu().findItem(R.id.nav_item_logout).setVisible(true);
@@ -315,5 +370,35 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
             return;
         }
         home_nav.getMenu().findItem(R.id.nav_item_logout).setVisible(false);
+    }
+
+    private void logout() {
+        CommonAlertDialog.newInstance().showDialog(this, getString(R.string.logout_tint), getString(R.string.ok), getString(R.string.no),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.logout();
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CommonAlertDialog.newInstance().cancelDialog(true);
+                    }
+                });
+    }
+
+    @Override
+    public void showLogoutSuccess() {
+        CommonAlertDialog.newInstance().cancelDialog(true);
+        startActivity(new Intent(this, LoginActivity.class));
+        RxBus.getDefault().post(new LoginEvent(false));
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CommonAlertDialog.newInstance().cancelDialog(true);
     }
 }

@@ -2,6 +2,9 @@ package imitative.lh.com.wanandroid.core;
 
 import imitative.lh.com.wanandroid.core.prefs.PreferenceHelper;
 
+/**
+ * 代理模式
+ */
 public class DataManager implements PreferenceHelper {
     private PreferenceHelper preferenceHelper;
 
@@ -20,6 +23,11 @@ public class DataManager implements PreferenceHelper {
     }
 
     @Override
+    public void setLoginState(boolean isLogin) {
+        preferenceHelper.setLoginState(isLogin);
+    }
+
+    @Override
     public String getLoginAccount() {
         return preferenceHelper.getLoginAccount();
     }
@@ -27,5 +35,10 @@ public class DataManager implements PreferenceHelper {
     @Override
     public String getLoginPassword() {
         return preferenceHelper.getLoginPassword();
+    }
+
+    @Override
+    public boolean getLoginState() {
+        return preferenceHelper.getLoginState();
     }
 }

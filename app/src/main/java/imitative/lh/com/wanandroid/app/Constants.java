@@ -26,4 +26,6 @@ public class Constants {
 
     public static final String ACCOUNT = "account";
     public static final String PASSWORD = "password";
+    public static final String LOGINSTATE = "loginstatus";
+    public static final long DOUBLE_INTERVAL_TIME = 2000;
 }

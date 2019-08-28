@@ -24,6 +24,7 @@ import imitative.lh.com.wanandroid.utils.StatusBarUtils;
 import imitative.lh.com.wanandroid.view.BaseActivity;
 import imitative.lh.com.wanandroid.view.LoginContract;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
@@ -86,7 +87,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void showLoginSuccess() {
-//        Toast.makeText(mActivity, "登录成功", Toast.LENGTH_SHORT).show();
         showToast(WanAndroidApp.getInstance().getString(R.string.login_success));
         onBackPressedSupport();
         RxBus.getDefault().post(new LoginEvent(true));
