@@ -35,10 +35,10 @@ public abstract class BaseFragment extends SupportFragment {
 
             long currentTime = System.currentTimeMillis();
             if ((currentTime - clickTime) > Constants.DOUBLE_INTERVAL_TIME) {
-                CommonUtils.showSnackMessage(_mActivity, getString(R.string.double_click_exit_tint));
+                CommonUtils.showSnackMessage(getActivity(), getString(R.string.double_click_exit_tint));
                 clickTime = System.currentTimeMillis();
             } else {
-                _mActivity.finish();
+                getActivity().finish();
             }
         }
         return true;

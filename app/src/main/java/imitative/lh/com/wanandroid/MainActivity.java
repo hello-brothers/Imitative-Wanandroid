@@ -66,14 +66,17 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     BottomNavigationView home_bottom_nav;
     @BindView(R.id.main_floating_action_btn)
     FloatingActionButton mFloatingActionButton;
-    private TextView tv_login;
-    private MainPagerFragment mainPagerFragment;
-    private KnowledgeHierarchyFragment knowledgeHierarchyFragment;
-    private WxArticleFragment wxArticleFragment;
-    private ProjectFragment projectFragment;
-    private NavigationFragment navigationFragment;
-    private List<BaseFragment> mFragments;
-    private int mLastFgIndex;
+
+    private MainPagerFragment                       mainPagerFragment;
+    private KnowledgeHierarchyFragment              knowledgeHierarchyFragment;
+    private WxArticleFragment                       wxArticleFragment;
+    private ProjectFragment                         projectFragment;
+    private NavigationFragment                      navigationFragment;
+    private TextView                                tv_login;
+    private List<BaseFragment>                      mFragments;
+    private int                                     mLastFgIndex;
+    
+    private static final int LOGIN_COLLECT_CODE     = 101;
 
 
     @Override
@@ -89,13 +92,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         actionBar.setDisplayShowTitleEnabled(false);
         toolbar_title.setText(R.string.main_title);
         StatusBarUtils.immersive(this, home_toolbar);
-
-        home_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressedSupport();
-            }
-        });
+        home_toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
     }
 
     @Override
@@ -117,12 +114,59 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         return new MainPresenter();
     }
 
+    /**
+     * 初始化界面以及设置一个默认的显示界面
+     * @param position 显示界面序号
+     *
+     */
     private void initPager(int position) {
         initFragments();
         init();
         switchFragment(position);
     }
 
+    /**
+     * 初始化fragment
+     */
+    private void initFragments() {
+
+        mainPagerFragment           = MainPagerFragment.getInstance();              //首页
+        knowledgeHierarchyFragment  = KnowledgeHierarchyFragment.getInstance();     //知识体系
+        wxArticleFragment           = WxArticleFragment.getInstance();              //公众号
+        navigationFragment          = NavigationFragment.getInstance();             //导航
+        projectFragment             = ProjectFragment.getInstance();                //项目
+
+        CollectionFragment collectionFragment   = CollectionFragment.newInstance(); //收藏
+        SettingFragment settingFragment         = SettingFragment.newInstance();    //设置
+
+        mFragments.add(mainPagerFragment);
+        mFragments.add(knowledgeHierarchyFragment);
+        mFragments.add(wxArticleFragment);
+        mFragments.add(navigationFragment);
+        mFragments.add(projectFragment);
+        mFragments.add(collectionFragment);
+        mFragments.add(settingFragment);
+    }
+
+    /**
+     * 初始化侧边栏以及导航、底部栏导航
+     */
+    private void init() {
+        initNavigationView();
+        initDrawerLayout();
+        initBottomNavigation();
+    }
+
+    /**
+     * @see Constants#TYPE_MAIN_PAGER
+     * @see Constants#TYPE_KNOWLEDGE
+     * @see Constants#TYPE_WX_ARTICLE
+     * @see Constants#TYPE_NAVIGATION
+     * @see Constants#TYPE_PROJECT
+     * @see Constants#TYPE_COLLECT
+     * @see Constants#TYPE_SETTING
+     * @param position
+     */
     @SuppressLint("RestrictedApi")
     private void switchFragment(int position) {
         if (position > Constants.TYPE_PROJECT){
@@ -132,9 +176,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
             home_bottom_nav.setVisibility(View.VISIBLE);
             mFloatingActionButton.setVisibility(View.VISIBLE);
         }
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        BaseFragment mTargetFg = mFragments.get(position);
-        BaseFragment mLastFg = mFragments.get(mLastFgIndex);
+        BaseFragment mTargetFg          = mFragments.get(position);
+        BaseFragment mLastFg            = mFragments.get(mLastFgIndex);
         mLastFgIndex = position;
         transaction.hide(mLastFg);
         if (!mTargetFg.isAdded()){
@@ -146,62 +191,33 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
 
     }
 
-    private void initFragments() {
-        mainPagerFragment = MainPagerFragment.getInstance();
-        knowledgeHierarchyFragment = KnowledgeHierarchyFragment.getInstance();
-        navigationFragment = NavigationFragment.getInstance();
-        projectFragment = ProjectFragment.getInstance();
-        wxArticleFragment = WxArticleFragment.getInstance();
-
-        CollectionFragment collectionFragment = CollectionFragment.newInstance();
-        SettingFragment settingFragment = SettingFragment.newInstance();
-        mFragments.add(mainPagerFragment);
-        mFragments.add(knowledgeHierarchyFragment);
-        mFragments.add(wxArticleFragment);
-        mFragments.add(navigationFragment);
-        mFragments.add(projectFragment);
-        mFragments.add(collectionFragment);
-        mFragments.add(settingFragment);
-    }
-
-    private void init() {
-        initNavigationView();
-        initDrawerLayout();
-        initBottomNavigation();
-    }
-
     private void initBottomNavigation() {
 //        BottomNavigationViewHelper.disableShiftMode(home_bottom_nav);
-
-        home_bottom_nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.tab_main_pager:
-                        loadFragment(0, getString(R.string.home_pager));
-                        break;
-                    case R.id.tab_knowledge_hierarchy:
-                        loadFragment(1, getString(R.string.knowledge_hierarchy));
-                        break;
-                    case R.id.tab_wx_article:
-                        loadFragment(2, getString(R.string.wx_article));
-                        break;
-                    case R.id.tab_navigation:
-                        loadFragment(3, getString(R.string.navigation));
-                        break;
-                    case R.id.tab_project:
-                        loadFragment(4, getString(R.string.project));
-                        break;
-                }
-                return true;
+        home_bottom_nav.setOnNavigationItemSelectedListener( menuItem -> {
+            switch (menuItem.getItemId()){
+                case R.id.tab_main_pager:
+                    loadFragment(0, getString(R.string.home_pager));
+                    break;
+                case R.id.tab_knowledge_hierarchy:
+                    loadFragment(1, getString(R.string.knowledge_hierarchy));
+                    break;
+                case R.id.tab_wx_article:
+                    loadFragment(2, getString(R.string.wx_article));
+                    break;
+                case R.id.tab_navigation:
+                    loadFragment(3, getString(R.string.navigation));
+                    break;
+                case R.id.tab_project:
+                    loadFragment(4, getString(R.string.project));
+                    break;
             }
+            return true;
         });
     }
 
     private void loadFragment(int position, String title) {
         switchFragment(position);
         toolbar_title.setText(title);
-
     }
 
     private void initNavigationView() {
@@ -248,28 +264,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_activity_main,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_usage:
-                Toast.makeText(mActivity, "usage", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_search:
-                Toast.makeText(mActivity, "search", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return true;
-    }
-
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-
         switch (menuItem.getItemId()){
 
             case R.id.nav_item_wan_android:
@@ -278,12 +273,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
             case R.id.nav_item_collection:
                 if (presenter.getLoginState()){
                     startCollectFragment();
+                    return true;
                 }else {
-                    startActivity(new Intent(this, LoginActivity.class));
+                    startActivityForResult(new Intent(this, LoginActivity.class), LOGIN_COLLECT_CODE);
                     CommonUtils.showMessage(this, getString(R.string.login_first));
                     return false;
                 }
-                break;
             case R.id.nav_item_logout:
                 if (presenter.getLoginState()){
                     logout();
@@ -291,7 +286,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
                 }
                 break;
             case R.id.nav_item_baout:
-                closeDrawer();
                 startActivity(new Intent(this, AboutUsActivity.class));
                 return false;
             case R.id.nav_item_setting:
@@ -360,12 +354,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     @Override
     public void showLogoutView() {
         tv_login.setText("login");
-        tv_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               startActivity(new Intent(v.getContext(), LoginActivity.class));
-            }
-        });
+        tv_login.setOnClickListener(v -> startActivity(new Intent(this, LoginActivity.class)));
         if (home_nav == null){
             return;
         }
@@ -373,19 +362,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     }
 
     private void logout() {
-        CommonAlertDialog.newInstance().showDialog(this, getString(R.string.logout_tint), getString(R.string.ok), getString(R.string.no),
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        presenter.logout();
-                    }
-                },
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CommonAlertDialog.newInstance().cancelDialog(true);
-                    }
-                });
+        CommonAlertDialog.newInstance().showDialog(this,
+                getString(R.string.logout_tint), getString(R.string.ok), getString(R.string.no),
+                v -> presenter.logout(),
+                v -> CommonAlertDialog.newInstance().cancelDialog(true));
     }
 
     @Override
@@ -393,7 +373,33 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         CommonAlertDialog.newInstance().cancelDialog(true);
         startActivity(new Intent(this, LoginActivity.class));
         RxBus.getDefault().post(new LoginEvent(false));
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_activity_main,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_usage:
+                Toast.makeText(mActivity, "usage", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_search:
+                Toast.makeText(mActivity, "search", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LOGIN_COLLECT_CODE){
+            switchFragment(Constants.TYPE_COLLECT);
+        }
     }
 
     @Override

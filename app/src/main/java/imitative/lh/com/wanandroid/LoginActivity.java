@@ -88,7 +88,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     public void showLoginSuccess() {
         showToast(WanAndroidApp.getInstance().getString(R.string.login_success));
-        onBackPressedSupport();
+        setResult(0);
         RxBus.getDefault().post(new LoginEvent(true));
+        finish();
     }
 }

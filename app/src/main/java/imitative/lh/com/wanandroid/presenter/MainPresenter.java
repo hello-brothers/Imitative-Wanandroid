@@ -23,27 +23,12 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
         addDisposible(RxBus.getDefault()
                 .toFlowable(LoginEvent.class)
                 .filter(LoginEvent :: isLogin)
-                .subscribe(new Consumer<LoginEvent>() {
-                    @Override
-                    public void accept(LoginEvent loginEvent) throws Exception {
-                        getView().showLoginView();
-                    }
-                }));
+                .subscribe(loginEvent -> getView().showLoginView()));
 
         addDisposible(RxBus.getDefault()
                 .toFlowable(LoginEvent.class)
-                .filter(new Predicate<LoginEvent>() {
-                    @Override
-                    public boolean test(LoginEvent loginEvent) throws Exception {
-                        return !loginEvent.isLogin();
-                    }
-                })
-                .subscribe(new Consumer<LoginEvent>() {
-                    @Override
-                    public void accept(LoginEvent loginEvent) throws Exception {
-                        getView().showLogoutView();
-                    }
-                }));
+                .filter(loginEvent -> !loginEvent.isLogin())
+                .subscribe(loginEvent -> getView().showLogoutView()));
     }
 
     @Override
