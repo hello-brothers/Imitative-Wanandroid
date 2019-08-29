@@ -5,6 +5,7 @@
     android:id="@+id/common_toolbar"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/common_toolbar_bg"
+    app:layout_scrollFlags="scroll|enterAlways"
     app:navigationIcon="@drawable/ic_arrow_back_white">
 
     <TextView

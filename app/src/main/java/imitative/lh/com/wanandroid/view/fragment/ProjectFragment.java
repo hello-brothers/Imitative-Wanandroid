@@ -8,6 +8,16 @@ public class ProjectFragment extends BaseFragment {
         return R.layout.fragment_project;
     }
 
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initDataAndView() {
+
+    }
+
     public static ProjectFragment getInstance(){
         ProjectFragment fragment = new ProjectFragment();
         return fragment;

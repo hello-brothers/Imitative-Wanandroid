@@ -8,6 +8,16 @@ public class WxArticleFragment extends BaseFragment {
         return R.layout.fragment_wx_article;
     }
 
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initDataAndView() {
+
+    }
+
     public static WxArticleFragment getInstance(){
         WxArticleFragment fragment = new WxArticleFragment();
         return fragment;

@@ -7,11 +7,21 @@ import imitative.lh.com.wanandroid.R;
  * @created by lh
  * @Describe:
  */
-public class CollectionFragment extends BaseFragment{
+public class CollectionFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_collection_pager;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initDataAndView() {
+
     }
 
     public static CollectionFragment newInstance(){

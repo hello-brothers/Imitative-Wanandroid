@@ -7,10 +7,20 @@ import imitative.lh.com.wanandroid.R;
  * @created by lh
  * @Describe:
  */
-public class SettingFragment extends BaseFragment {
+public class SettingFragment extends AbstractSimpleFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_setting_pager;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initDataAndView() {
+
     }
 
     public static SettingFragment newInstance(){

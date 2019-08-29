@@ -8,6 +8,16 @@ public class NavigationFragment extends BaseFragment {
         return R.layout.fragment_navigation;
     }
 
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initDataAndView() {
+
+    }
+
     public static NavigationFragment getInstance(){
         NavigationFragment fragment = new NavigationFragment();
         return fragment;

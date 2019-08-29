@@ -35,6 +35,11 @@ dependencies {
     implementation rootProject.ext.dependencies["rxbinding"]
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]
+
+    //ui
+    implementation rootProject.ext.dependencies["SmartRefreshLayout"]
+    implementation rootProject.ext.dependencies["SmartRefreshHeader"]
+    implementation rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
     //ti
     implementation rootProject.ext.dependencies["butterknife"]
     implementation rootProject.ext.dependencies["butterknife-compiler"]

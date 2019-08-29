@@ -9,14 +9,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,25 +22,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.core.event.LoginEvent;
-import imitative.lh.com.wanandroid.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.presenter.MainPresenter;
-import imitative.lh.com.wanandroid.utils.BottomNavigationViewHelper;
 import imitative.lh.com.wanandroid.utils.CommonAlertDialog;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.utils.StatusBarUtils;
 import imitative.lh.com.wanandroid.view.AboutUsActivity;
 import imitative.lh.com.wanandroid.view.BaseActivity;
 import imitative.lh.com.wanandroid.view.MainContract;
-import imitative.lh.com.wanandroid.view.fragment.BaseFragment;
+import imitative.lh.com.wanandroid.view.fragment.AbstractSimpleFragment;
 import imitative.lh.com.wanandroid.view.fragment.CollectionFragment;
 import imitative.lh.com.wanandroid.view.fragment.KnowledgeHierarchyFragment;
 import imitative.lh.com.wanandroid.view.fragment.MainPagerFragment;
@@ -73,7 +66,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     private ProjectFragment                         projectFragment;
     private NavigationFragment                      navigationFragment;
     private TextView                                tv_login;
-    private List<BaseFragment>                      mFragments;
+    private List<AbstractSimpleFragment>                      mFragments;
     private int                                     mLastFgIndex;
     
     private static final int LOGIN_COLLECT_CODE     = 101;
@@ -105,6 +98,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         super.onCreate(savedInstanceState);
         mFragments = new ArrayList<>();
         if (savedInstanceState == null){
+            initPager(Constants.TYPE_MAIN_PAGER);
+        }else {
             initPager(Constants.TYPE_MAIN_PAGER);
         }
     }
@@ -178,8 +173,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        BaseFragment mTargetFg          = mFragments.get(position);
-        BaseFragment mLastFg            = mFragments.get(mLastFgIndex);
+        AbstractSimpleFragment mTargetFg          = mFragments.get(position);
+        AbstractSimpleFragment mLastFg            = mFragments.get(mLastFgIndex);
         mLastFgIndex = position;
         transaction.hide(mLastFg);
         if (!mTargetFg.isAdded()){
@@ -310,6 +305,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     private void startMainPager() {
         toolbar_title.setText(R.string.main_title);
         home_bottom_nav.setSelectedItemId(R.id.nav_item_wan_android);
+        switchFragment(Constants.TYPE_MAIN_PAGER);
         closeDrawer();
     }
 
