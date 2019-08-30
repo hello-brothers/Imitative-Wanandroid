@@ -40,6 +40,9 @@ dependencies {
     implementation rootProject.ext.dependencies["SmartRefreshLayout"]
     implementation rootProject.ext.dependencies["SmartRefreshHeader"]
     implementation rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
+    implementation rootProject.ext.dependencies["banner"]
+    implementation rootProject.ext.dependencies["glide"]
+    implementation rootProject.ext.dependencies["glide_compiler"]
     //ti
     implementation rootProject.ext.dependencies["butterknife"]
     implementation rootProject.ext.dependencies["butterknife-compiler"]

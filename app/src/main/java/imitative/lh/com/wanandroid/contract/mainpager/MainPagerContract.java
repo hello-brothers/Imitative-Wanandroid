@@ -15,10 +15,18 @@ public interface MainPagerContract {
         /**
          * 展示文章列表数据
          */
-        void showEssayListView(List data);
+        void showEssayListView(List data, boolean isRefresh);
+
+        void showBannerData(List data);
     }
 
-    interface Presenter extends AbstractPresenter{
+    interface Presenter extends AbstractPresenter<View>{
+
+        void autoRefresh();
+
+        void refresh();
+
+        void loadMore();
 
         void getEssayListData();
     }

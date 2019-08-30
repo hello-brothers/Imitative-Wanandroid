@@ -28,6 +28,7 @@ public abstract class AbstractSimpleFragment extends SupportFragment {
         return view;
     }
 
+
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);

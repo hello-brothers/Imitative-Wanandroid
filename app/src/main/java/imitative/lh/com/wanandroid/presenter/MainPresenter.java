@@ -1,11 +1,8 @@
 package imitative.lh.com.wanandroid.presenter;
 
-import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.core.event.LoginEvent;
 import imitative.lh.com.wanandroid.view.MainContract;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Predicate;
 
 public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter{
     @Override

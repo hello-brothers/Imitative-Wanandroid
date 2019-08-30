@@ -7,5 +7,13 @@ public interface AbstractView {
 
     void showSnackBar(String message);
 
+    void preload();
+
     void showToast(String message);
+
+    void showNormalView();
+
+    void showLoadingView();
+
+    void showErrorView();
 }

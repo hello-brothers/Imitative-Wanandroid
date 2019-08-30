@@ -6,25 +6,35 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class BasePresenter<T extends AbstractView> implements AbstractPresenter<T>  {
-    private T view;
+    protected T mView;
     private CompositeDisposable compositeDisposable;
     public void attachView(T view){
-        this.view = view;
+        this.mView = view;
     }
 
     public void detachView(){
-        this.view = null;
+        this.mView = null;
         if (compositeDisposable != null){
             compositeDisposable.clear();
         }
     }
 
     public T getView(){
-        return this.view;
+        return this.mView;
     }
 
     public boolean getLoginState(){
         return WanAndroidApp.getInstance().getDataManager().getLoginState();
+    }
+
+    @Override
+    public String getLoginAccount() {
+        return WanAndroidApp.getInstance().getDataManager().getLoginAccount();
+    }
+
+    @Override
+    public String getLoginPassword() {
+        return WanAndroidApp.getInstance().getDataManager().getLoginPassword();
     }
 
     public void setLoginState(boolean loginState){
@@ -47,5 +57,4 @@ public class BasePresenter<T extends AbstractView> implements AbstractPresenter<
         }
         compositeDisposable.add(disposable);
     }
-
 }

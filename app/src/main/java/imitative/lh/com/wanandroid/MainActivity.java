@@ -37,6 +37,7 @@ import imitative.lh.com.wanandroid.view.AboutUsActivity;
 import imitative.lh.com.wanandroid.view.BaseActivity;
 import imitative.lh.com.wanandroid.view.MainContract;
 import imitative.lh.com.wanandroid.view.fragment.AbstractSimpleFragment;
+import imitative.lh.com.wanandroid.view.fragment.BaseRootFragment;
 import imitative.lh.com.wanandroid.view.fragment.CollectionFragment;
 import imitative.lh.com.wanandroid.view.fragment.KnowledgeHierarchyFragment;
 import imitative.lh.com.wanandroid.view.fragment.MainPagerFragment;
@@ -98,9 +99,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         super.onCreate(savedInstanceState);
         mFragments = new ArrayList<>();
         if (savedInstanceState == null){
-            initPager(Constants.TYPE_MAIN_PAGER);
+            initPager(false, Constants.TYPE_MAIN_PAGER);
         }else {
-            initPager(Constants.TYPE_MAIN_PAGER);
+            initPager(true, Constants.TYPE_MAIN_PAGER);
         }
     }
 
@@ -114,8 +115,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
      * @param position 显示界面序号
      *
      */
-    private void initPager(int position) {
-        initFragments();
+    private void initPager(boolean isReCreate, int position) {
+        initFragments(isReCreate);
         init();
         switchFragment(position);
     }
@@ -123,9 +124,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     /**
      * 初始化fragment
      */
-    private void initFragments() {
+    private void initFragments(boolean isReCreate) {
 
-        mainPagerFragment           = MainPagerFragment.getInstance();              //首页
+        mainPagerFragment           = MainPagerFragment.getInstance(isReCreate);              //首页
         knowledgeHierarchyFragment  = KnowledgeHierarchyFragment.getInstance();     //知识体系
         wxArticleFragment           = WxArticleFragment.getInstance();              //公众号
         navigationFragment          = NavigationFragment.getInstance();             //导航
@@ -191,28 +192,29 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         home_bottom_nav.setOnNavigationItemSelectedListener( menuItem -> {
             switch (menuItem.getItemId()){
                 case R.id.tab_main_pager:
-                    loadFragment(0, getString(R.string.home_pager));
+                    loadFragment(0, getString(R.string.home_pager), mainPagerFragment);
                     break;
                 case R.id.tab_knowledge_hierarchy:
-                    loadFragment(1, getString(R.string.knowledge_hierarchy));
+                    loadFragment(1, getString(R.string.knowledge_hierarchy), knowledgeHierarchyFragment);
                     break;
                 case R.id.tab_wx_article:
-                    loadFragment(2, getString(R.string.wx_article));
+                    loadFragment(2, getString(R.string.wx_article), wxArticleFragment);
                     break;
                 case R.id.tab_navigation:
-                    loadFragment(3, getString(R.string.navigation));
+                    loadFragment(3, getString(R.string.navigation), navigationFragment);
                     break;
                 case R.id.tab_project:
-                    loadFragment(4, getString(R.string.project));
+                    loadFragment(4, getString(R.string.project), projectFragment);
                     break;
             }
             return true;
         });
     }
 
-    private void loadFragment(int position, String title) {
-        switchFragment(position);
+    private void loadFragment(int position, String title, BaseRootFragment fragment) {
         toolbar_title.setText(title);
+        switchFragment(position);
+        fragment.preload();
     }
 
     private void initNavigationView() {

@@ -1,8 +1,9 @@
 package imitative.lh.com.wanandroid.view.fragment;
 
 import imitative.lh.com.wanandroid.R;
+import imitative.lh.com.wanandroid.presenter.AbstractPresenter;
 
-public class WxArticleFragment extends BaseFragment {
+public class WxArticleFragment extends BaseRootFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_wx_article;
@@ -21,5 +22,10 @@ public class WxArticleFragment extends BaseFragment {
     public static WxArticleFragment getInstance(){
         WxArticleFragment fragment = new WxArticleFragment();
         return fragment;
+    }
+
+    @Override
+    protected AbstractPresenter createPresenter() {
+        return null;
     }
 }

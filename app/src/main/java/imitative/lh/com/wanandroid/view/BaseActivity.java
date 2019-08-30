@@ -47,6 +47,11 @@ public abstract class BaseActivity<T extends AbstractPresenter> extends Abstract
     }
 
     @Override
+    public void preload() {
+
+    }
+
+    @Override
     public void showSnackBar(String message) {
         CommonUtils.showSnackMessage(this, message);
     }
@@ -54,5 +59,20 @@ public abstract class BaseActivity<T extends AbstractPresenter> extends Abstract
     @Override
     public void showToast(String message) {
         CommonUtils.showMessage(this, message);
+    }
+
+    @Override
+    public void showErrorView() {
+
+    }
+
+    @Override
+    public void showLoadingView() {
+
+    }
+
+    @Override
+    public void showNormalView() {
+
     }
 }

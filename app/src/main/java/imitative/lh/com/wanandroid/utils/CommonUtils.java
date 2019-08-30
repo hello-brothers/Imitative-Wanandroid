@@ -2,6 +2,8 @@ package imitative.lh.com.wanandroid.utils;
 
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import imitative.lh.com.wanandroid.R;
+import imitative.lh.com.wanandroid.app.WanAndroidApp;
 
 public class CommonUtils {
 
@@ -52,6 +55,12 @@ public class CommonUtils {
                 activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
             }
         });
+    }
+
+    public static boolean isNetworkConnected(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) WanAndroidApp.getInstance().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
+        return connectivityManager.getActiveNetworkInfo() != null;
     }
 
 }

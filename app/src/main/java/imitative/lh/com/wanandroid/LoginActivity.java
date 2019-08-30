@@ -1,13 +1,10 @@
 package imitative.lh.com.wanandroid;
 
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -18,13 +15,11 @@ import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.core.event.LoginEvent;
-import imitative.lh.com.wanandroid.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.presenter.LoginPresenter;
 import imitative.lh.com.wanandroid.utils.StatusBarUtils;
 import imitative.lh.com.wanandroid.view.BaseActivity;
 import imitative.lh.com.wanandroid.view.LoginContract;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
@@ -58,7 +53,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 onBackPressedSupport();
             }
         });
-        StatusBarUtils.immersive(this);
+        StatusBarUtils.immersive(this, toolbar);
 
     }
 

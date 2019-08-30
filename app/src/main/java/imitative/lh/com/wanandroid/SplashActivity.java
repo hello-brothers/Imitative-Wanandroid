@@ -1,13 +1,11 @@
 package imitative.lh.com.wanandroid;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.airbnb.lottie.LottieAnimationView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.presenter.SplashPresenter;
 import imitative.lh.com.wanandroid.utils.StatusBarUtils;
@@ -45,8 +43,8 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
         if (!WanAndroidApp.isFirstrun){
 
         }
-        WanAndroidApp.isFirstrun = false;
         StatusBarUtils.immersive(this);
+        WanAndroidApp.isFirstrun = false;
 
     }
 

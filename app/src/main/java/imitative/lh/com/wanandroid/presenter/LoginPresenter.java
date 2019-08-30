@@ -5,7 +5,6 @@ import android.util.Log;
 
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
-import imitative.lh.com.wanandroid.view.BaseActivity;
 import imitative.lh.com.wanandroid.view.LoginContract;
 
 public class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginContract.Presenter{
