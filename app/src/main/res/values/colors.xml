@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#4fc3f7</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="colorstar">#f06292</color>
+
     <color name="blue1">#0288d1</color>
     <color name="blue2">#039be5</color>
     <color name="blue3">#03a9f4</color>
@@ -15,5 +17,6 @@
     <color name="delete_text">#cccccc</color>
     <color name="white">#ffffff</color>
     <color name="comment_text">#5b5d5c</color>
-    <color name="black">#000000</color>
+    <color name="colorblack">#000000</color>
+    <color name="colorlittleblack">#1A0101</color>
 </resources>

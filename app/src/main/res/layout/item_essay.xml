@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary"
-    android:layout_marginBottom="@dimen/dp_8"
-    android:layout_marginEnd="@dimen/dp_8"
-    android:layout_marginStart="@dimen/dp_8"
-    android:layout_marginTop="@dimen/dp_4"
+    android:layout_marginEnd="@dimen/dp_4"
+    android:layout_marginStart="@dimen/dp_4"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/colorCard"
-    app:cardCornerRadius="@dimen/dp_3"
-    app:cardElevation="@dimen/dp_2">
+    >
 
     <LinearLayout
         android:layout_margin="@dimen/dp_10"
@@ -33,20 +29,21 @@
                 <TextView
                     android:id="@+id/item_essay_h"
                     android:layout_gravity="center_vertical"
-                    android:layout_width="@dimen/dp_24"
-                    android:layout_height="@dimen/dp_24"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
                     android:background="@drawable/essay_list_h"
                     tools:text="A"
                     android:gravity="center"
                     android:textColor="@color/colorCard"
-                    android:textSize="@dimen/dp_9"
+                    android:textSize="@dimen/dp_8"
                     />
 
                 <TextView
                     android:id="@+id/essay_author"
-                    style="@style/item_essay_normal_text"
-                    tools:text="Android"
-                    android:layout_margin="@dimen/dp_10"
+                    style="@style/item_gray_text"
+                    android:text="Android"
+                    android:textSize="@dimen/dp_10"
+                    android:layout_margin="@dimen/dp_6"
                     />
             </LinearLayout>
 
@@ -57,19 +54,13 @@
                 android:layout_centerVertical="true"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/item_essay_date"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:src="@drawable/ic_time"
-                    android:tint="@color/colorPrimary" />
 
                 <TextView
                     android:id="@+id/item_essay_date"
-                    style="@style/item_essay_normal_text"
+                    style="@style/item_gray_text"
                     android:layout_alignParentRight="true"
                     android:drawableTint="@color/colorPrimary"
+                    android:textSize="@dimen/dp_10"
                     android:text="18小時前" />
             </LinearLayout>
 
@@ -77,9 +68,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Kotlin Coroutines(协程)完全解析（一），协程简介"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dp_16"
+            android:text="Kotlin Coroutines(协程)完全解析（一），协程简介"
+            android:textColor="@color/colorblack"
+            android:textSize="@dimen/dp_12"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_10"
             android:maxLines="2"
@@ -95,21 +86,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:background="@drawable/essay_text_bg"
-                    android:textColor="@color/colorCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
-                    android:text="Kotlin"/>
+                    android:text="Kotlin . Java"/>
 
-                <TextView
-                    android:background="@drawable/essay_text_bg"
-                    android:textColor="@color/colorCard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/dp_10"
-                    android:text="Kotlin"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -118,22 +101,15 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_share"
-                    android:tint="@color/colorPrimary"
-                    android:layout_marginRight="@dimen/dp_20"
-                    />
-                <ImageView
                     android:id="@+id/im_start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_start"
-                    android:tint="@color/colorPrimary"
+                    android:src="@drawable/ic_star"
+                    android:tint="@color/colorstar"
                     />
             </LinearLayout>
 
         </RelativeLayout>
     </LinearLayout>
 
-</android.support.v7.widget.CardView>
+</LinearLayout>

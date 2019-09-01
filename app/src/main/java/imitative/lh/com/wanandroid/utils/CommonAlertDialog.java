@@ -27,7 +27,7 @@ public class CommonAlertDialog {
         private static final CommonAlertDialog COMMON_ALERT_DIALOG = new CommonAlertDialog();
     }
 
-    public void showDialog(Activity mActivity, String content, String btnFirstContent, String btnNextContent,
+    public void showDialog(Activity mActivity, String content, String secondContent, String btnFirstContent, String btnNextContent,
                            View.OnClickListener onFirstClickListener,
                            View.OnClickListener onNextClickListener){
         if (mActivity == null){
@@ -47,6 +47,8 @@ public class CommonAlertDialog {
             window.setContentView(R.layout.common_alert_dialog);
             TextView tv_content = window.findViewById(R.id.dialog_content);
             tv_content.setText(content);
+            TextView contentSecond = window.findViewById(R.id.dialog_content_second);
+            contentSecond.setText(secondContent);
             Button btn_ok = window.findViewById(R.id.dialog_btn);
             btn_ok.setText(btnFirstContent);
             Button btn_no = window.findViewById(R.id.dialog_negative_btn);

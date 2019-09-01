@@ -14,9 +14,14 @@ public interface AbstractPresenter<T extends AbstractView>  {
 
     String getLoginPassword();
 
+    int getCurrentPage();
+
+    void setCurrentPage(int index);
+
     void setLoginState(boolean loginState);
 
     void setLoginAccount(String account);
 
     void setLoginPassword(String password);
+
 }

@@ -14,4 +14,8 @@ public interface PreferenceHelper {
 
     boolean getLoginState();
 
+    int getCurrentPage();
+
+    void setCurrentPage(int pageIndex);
+
 }

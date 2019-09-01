@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dp_230"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorCard">
 
     <TextView
@@ -9,16 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:minHeight="@dimen/dp_60"
-        android:textColor="@color/comment_text"
+        android:minHeight="@dimen/dp_30"
+        tools:text="请先登录"
+        android:textColor="@color/colorblack"
         android:textSize="@dimen/sp_16" />
+    <TextView
+        android:id="@+id/dialog_content_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_content"
+        android:gravity="center|top"
+        android:minHeight="@dimen/dp_30"
+        tools:text="还没有登陆，请先登录..."
+        android:textColor="@color/comment_text"
+        android:textSize="@dimen/sp_10" />
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_05"
+        tools:visibility="visible"
         android:background="@color/delete_text"
-        android:layout_below="@id/dialog_content" />
+        android:layout_below="@id/dialog_content_second" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,6 +46,8 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_30"
             android:layout_weight="1"
+            tools:text="确认"
+            android:textColor="@color/colorlittleblack"
             android:gravity="center" />
 
         <View
@@ -40,6 +55,7 @@
             android:layout_width="@dimen/dp_05"
             android:layout_height="match_parent"
             android:background="@color/delete_text"
+            tools:visibility="visible"
             android:visibility="gone" />
 
         <Button
@@ -49,6 +65,9 @@
             android:layout_height="@dimen/dp_30"
             android:layout_weight="1"
             android:gravity="center"
+            android:textColor="@color/colorlittleblack"
+            tools:text="取消"
+            tools:visibility="visible"
             android:visibility="gone" />
     </LinearLayout>
 </RelativeLayout>

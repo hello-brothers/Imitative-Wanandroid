@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import imitative.lh.com.wanandroid.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
+import imitative.lh.com.wanandroid.view.fragment.BaseFragment;
 
 
 public abstract class BaseActivity<T extends AbstractPresenter> extends AbstractSimpleActivity implements AbstractView{
@@ -75,4 +76,6 @@ public abstract class BaseActivity<T extends AbstractPresenter> extends Abstract
     public void showNormalView() {
 
     }
+
+
 }

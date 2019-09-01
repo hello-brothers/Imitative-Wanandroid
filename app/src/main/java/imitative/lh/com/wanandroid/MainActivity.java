@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.component.RxBus;
@@ -85,7 +86,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         assert actionBar != null;
         actionBar.setDisplayShowTitleEnabled(false);
         toolbar_title.setText(R.string.main_title);
-        StatusBarUtils.immersive(this, home_toolbar);
+        StatusBarUtils.immersive(this, home_toolbar, false);
         home_toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
     }
 
@@ -192,28 +193,29 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         home_bottom_nav.setOnNavigationItemSelectedListener( menuItem -> {
             switch (menuItem.getItemId()){
                 case R.id.tab_main_pager:
-                    loadFragment(0, getString(R.string.home_pager), mainPagerFragment);
+                    loadFragment(0, getString(R.string.home_pager), mainPagerFragment, Constants.TYPE_MAIN_PAGER);
                     break;
                 case R.id.tab_knowledge_hierarchy:
-                    loadFragment(1, getString(R.string.knowledge_hierarchy), knowledgeHierarchyFragment);
+                    loadFragment(1, getString(R.string.knowledge_hierarchy), knowledgeHierarchyFragment, Constants.TYPE_KNOWLEDGE);
                     break;
                 case R.id.tab_wx_article:
-                    loadFragment(2, getString(R.string.wx_article), wxArticleFragment);
+                    loadFragment(2, getString(R.string.wx_article), wxArticleFragment, Constants.TYPE_WX_ARTICLE);
                     break;
                 case R.id.tab_navigation:
-                    loadFragment(3, getString(R.string.navigation), navigationFragment);
+                    loadFragment(3, getString(R.string.navigation), navigationFragment, Constants.TYPE_NAVIGATION);
                     break;
                 case R.id.tab_project:
-                    loadFragment(4, getString(R.string.project), projectFragment);
+                    loadFragment(4, getString(R.string.project), projectFragment, Constants.TYPE_PROJECT);
                     break;
             }
             return true;
         });
     }
 
-    private void loadFragment(int position, String title, BaseRootFragment fragment) {
+    private void loadFragment(int position, String title, BaseRootFragment fragment, int index) {
         toolbar_title.setText(title);
         switchFragment(position);
+        presenter.setCurrentPage(index);
         fragment.preload();
     }
 
@@ -361,9 +363,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
 
     private void logout() {
         CommonAlertDialog.newInstance().showDialog(this,
-                getString(R.string.logout_tint), getString(R.string.ok), getString(R.string.no),
-                v -> presenter.logout(),
-                v -> CommonAlertDialog.newInstance().cancelDialog(true));
+                getString(R.string.logout_tint), getString(R.string.query_logout), getString(R.string.no), getString(R.string.ok),
+                v -> CommonAlertDialog.newInstance().cancelDialog(true),
+                v -> presenter.logout());
     }
 
     @Override
@@ -371,6 +373,37 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         CommonAlertDialog.newInstance().cancelDialog(true);
         startActivity(new Intent(this, LoginActivity.class));
         RxBus.getDefault().post(new LoginEvent(false));
+    }
+
+    @OnClick(R.id.main_floating_action_btn)
+    void OnClick(View view){
+        switch (view.getId()){
+            case R.id.main_floating_action_btn:
+                jumpToTheTop();
+                break;
+        }
+    }
+
+    private void jumpToTheTop() {
+        if (presenter == null){
+            return;
+        }
+
+        switch (presenter.getCurrentPage()){
+            case Constants.TYPE_MAIN_PAGER:
+                mainPagerFragment.jumpToTheTop();
+                break;
+            case Constants.TYPE_KNOWLEDGE:
+                break;
+            case Constants.TYPE_WX_ARTICLE:
+                break;
+            case Constants.TYPE_NAVIGATION:
+                break;
+            case Constants.TYPE_PROJECT:
+                break;
+                default:
+                    break;
+        }
     }
 
     @Override

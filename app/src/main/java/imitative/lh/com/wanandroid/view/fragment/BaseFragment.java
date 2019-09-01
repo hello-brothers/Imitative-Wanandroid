@@ -98,4 +98,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
                 break;
         }
     }
+
+    public void jumpToTheTop(){
+
+    }
 }

@@ -42,4 +42,14 @@ public class PreferenceHelperImpl implements PreferenceHelper {
     public boolean getLoginState() {
         return mPreferences.getBoolean(Constants.LOGINSTATE, false);
     }
+
+    @Override
+    public int getCurrentPage() {
+        return mPreferences.getInt(Constants.CURRENT_PAGE, Constants.TYPE_MAIN_PAGER);
+    }
+
+    @Override
+    public void setCurrentPage(int pageIndex) {
+        mPreferences.edit().putInt(Constants.CURRENT_PAGE, pageIndex).apply();
+    }
 }

@@ -15,12 +15,13 @@
     <string name="text_register">注册</string>
     <string name="account_password_null_tint">用户名或账号不能为空</string>
     <string name="login_success">登录成功</string>
-    <string name="ok">是</string>
-    <string name="no">否</string>
+    <string name="ok">确认</string>
+    <string name="no">取消</string>
     <string name="logout_tint">退出登录</string>
     <string name="main_title">主页</string>
     <string name="login_first">请先登录！</string>
     <string name="collection">收藏</string>
     <string name="setting">设置</string>
     <string name="double_click_exit_tint">再按一次后退键退出</string>
+    <string name="query_logout">确认退出登录</string>
 </resources>

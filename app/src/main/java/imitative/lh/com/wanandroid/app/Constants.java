@@ -29,4 +29,6 @@ public class Constants {
     public static final String LOGINSTATE = "loginstatus";
     public static final long DOUBLE_INTERVAL_TIME = 2000;
     public static final String ARG_PARAM1 = "param1";
+    public static final String CURRENT_PAGE = "current_page";
+
 }

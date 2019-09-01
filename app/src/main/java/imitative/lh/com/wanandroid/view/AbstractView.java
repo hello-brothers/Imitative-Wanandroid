@@ -16,4 +16,5 @@ public interface AbstractView {
     void showLoadingView();
 
     void showErrorView();
+
 }

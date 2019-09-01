@@ -41,4 +41,14 @@ public class DataManager implements PreferenceHelper {
     public boolean getLoginState() {
         return preferenceHelper.getLoginState();
     }
+
+    @Override
+    public int getCurrentPage() {
+        return preferenceHelper.getCurrentPage();
+    }
+
+    @Override
+    public void setCurrentPage(int pageIndex) {
+        preferenceHelper.setCurrentPage(pageIndex);
+    }
 }

@@ -43,7 +43,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
         if (!WanAndroidApp.isFirstrun){
 
         }
-        StatusBarUtils.immersive(this);
+        StatusBarUtils.immersive(this, null, false);
         WanAndroidApp.isFirstrun = false;
 
     }

@@ -53,7 +53,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 onBackPressedSupport();
             }
         });
-        StatusBarUtils.immersive(this, toolbar);
+        StatusBarUtils.immersive(this, toolbar, true);
 
     }
 

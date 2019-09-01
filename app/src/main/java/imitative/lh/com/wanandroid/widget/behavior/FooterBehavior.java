@@ -37,9 +37,9 @@ public class FooterBehavior extends FloatingActionButton.Behavior {
         //向上滑动 隐藏
         if ( (dyConsumed > 0 || dyUnconsumed > 0) && !isAnimating && isShow){
             ViewCompat.animate(child)
-                    .translationY(350)
+                    .translationY(500)
                     .setInterpolator(new FastOutSlowInInterpolator())
-                    .setDuration(400)
+                    .setDuration(500)
                     .setListener(new ViewPropertyAnimatorListener() {
                         @Override
                         public void onAnimationStart(View view) {

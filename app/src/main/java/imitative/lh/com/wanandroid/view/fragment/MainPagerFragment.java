@@ -5,6 +5,7 @@ package imitative.lh.com.wanandroid.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -91,6 +92,13 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         }
     }
 
+    @Override
+    public void jumpToTheTop() {
+        if (recyclerView != null){
+            recyclerView.smoothScrollToPosition(0);
+        }
+    }
+
     private boolean isLoggedAndNotRebuild() {
         return !isReCreate && !TextUtils.isEmpty(presenter.getLoginAccount())
                 && !TextUtils.isEmpty(presenter.getLoginPassword());
@@ -112,6 +120,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
         //添加轮播
         LinearLayout mLinearLayout = (LinearLayout) LayoutInflater.from(_mActivity).inflate(R.layout.head_banner, null);
         banner = mLinearLayout.findViewById(R.id.head_banner);
@@ -182,7 +191,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
             titles.add("第" + i + "张");
         }
         //设置banner样式
-        banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE);
+//        banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE);
         //设置图片加载器
         banner.setImageLoader(new ImageLoader() {
             @Override
@@ -196,7 +205,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         //设置banner动画效果
         banner.setBannerAnimation(Transformer.DepthPage);
         //设置标题集合（当banner样式有显示title时）
-        banner.setBannerTitles(titles);
+//        banner.setBannerTitles(titles);
         //设置自动轮播，默认为true
         banner.isAutoPlay(true);
         //设置轮播时间
