@@ -393,6 +393,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
                 mainPagerFragment.jumpToTheTop();
                 break;
             case Constants.TYPE_KNOWLEDGE:
+                knowledgeHierarchyFragment.jumpToTheTop();
                 break;
             case Constants.TYPE_WX_ARTICLE:
                 break;

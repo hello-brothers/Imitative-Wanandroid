@@ -29,10 +29,12 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
 
     @Override
     protected void initDataAndView() {
-        mNormalView = getView().findViewById(R.id.smartrefresh_layout);
-        if (mNormalView == null){
+        if (getView() == null){
             return;
-//            throw new IllegalArgumentException("smartrefresh is null");
+        }
+        mNormalView = getView().findViewById(R.id.normal_view);
+        if (mNormalView == null){
+            throw new IllegalArgumentException("smartrefresh is null");
         }
         if (!(mNormalView.getParent() instanceof  ViewGroup)){
             throw new IllegalArgumentException("this view`s parent should be ViewGroup");

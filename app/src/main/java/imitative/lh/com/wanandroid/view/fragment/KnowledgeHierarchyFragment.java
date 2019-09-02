@@ -11,12 +11,16 @@ import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.contract.mainpager.KnowledgePagerContract;
 import imitative.lh.com.wanandroid.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.presenter.KnowledgePagerPresenter;
+import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.view.adapter.NavigationAdapter;
 
 
 public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPresenter> implements KnowledgePagerContract.View {
     @BindView(R.id.knowledge_recycler)
     RecyclerView knowledge_recycler;
+    private List<String> knowledgeData;
+    private NavigationAdapter adapter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_knowledge_hierarchy;
@@ -30,6 +34,12 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
     @Override
     protected void initDataAndView() {
         super.initDataAndView();
+        if(presenter != null){
+            presenter.getKnowledgeData();
+        }
+        if (CommonUtils.isNetworkConnected()){
+            showLoadingView();
+        }
     }
 
     public static KnowledgeHierarchyFragment getInstance(){
@@ -43,17 +53,28 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
     }
 
     private void initRecyclerView() {
-        List<String> date = createDate();
+        knowledgeData = new ArrayList<>();
         knowledge_recycler.setLayoutManager(new LinearLayoutManager(_mActivity));
-        NavigationAdapter adapter = new NavigationAdapter(R.layout.item_knowledge, date);
+        adapter = new NavigationAdapter(R.layout.item_knowledge, knowledgeData);
         knowledge_recycler.setAdapter(adapter);
     }
 
-    private List<String> createDate() {
-        ArrayList<String> datas = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            datas.add("22");
+
+    @Override
+    public void showKnowledgeList(List data) {
+        if (adapter == null){
+            return;
         }
-        return datas;
+        knowledgeData = data;
+        adapter.replaceData(data);
+        showNormalView();
+    }
+
+    @Override
+    public void jumpToTheTop() {
+        super.jumpToTheTop();
+        if (knowledge_recycler != null){
+            knowledge_recycler.smoothScrollToPosition(0);
+        }
     }
 }

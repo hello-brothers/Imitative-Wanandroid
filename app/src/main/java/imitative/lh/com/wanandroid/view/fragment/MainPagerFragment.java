@@ -38,7 +38,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
 
     @BindView(R.id.essay_recycler)
     RecyclerView recyclerView;
-    @BindView(R.id.smartrefresh_layout)
+    @BindView(R.id.normal_view)
     SmartRefreshLayout smartRefreshLayout;
 
     private EssayListAdapter    recycleradapter;

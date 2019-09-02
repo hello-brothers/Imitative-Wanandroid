@@ -1,5 +1,7 @@
 package imitative.lh.com.wanandroid.contract.mainpager;
 
+import java.util.List;
+
 import imitative.lh.com.wanandroid.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.view.AbstractView;
 
@@ -11,10 +13,10 @@ import imitative.lh.com.wanandroid.view.AbstractView;
 public interface KnowledgePagerContract {
 
     interface View extends AbstractView{
-
+        void showKnowledgeList(List data);
     }
 
     interface Presenter extends AbstractPresenter<View>{
-
+        void getKnowledgeData();
     }
 }
