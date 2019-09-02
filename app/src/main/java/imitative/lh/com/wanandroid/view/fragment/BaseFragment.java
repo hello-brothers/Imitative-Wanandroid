@@ -31,7 +31,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
     protected void initDataAndView() {
         mNormalView = getView().findViewById(R.id.smartrefresh_layout);
         if (mNormalView == null){
-            throw new IllegalArgumentException("smartrefresh is null");
+            return;
+//            throw new IllegalArgumentException("smartrefresh is null");
         }
         if (!(mNormalView.getParent() instanceof  ViewGroup)){
             throw new IllegalArgumentException("this view`s parent should be ViewGroup");

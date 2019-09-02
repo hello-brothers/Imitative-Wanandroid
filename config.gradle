@@ -37,6 +37,7 @@ ext{
             "banner"                            : "com.youth.banner:banner:1.4.10",
             "glide"                             : "com.github.bumptech.glide:glide:${version["glideVersion"]}",
             "glide_compiler"                    : "com.github.bumptech.glide:compiler:${version["glideVersion"]}",
+            "flexbox"                           : "com.google.android:flexbox:1.0.0",
 
             //ui test
             "espresso-core"                 : "com.android.support.test.espresso:espresso-core:3.0.2",

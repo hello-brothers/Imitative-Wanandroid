@@ -38,7 +38,7 @@
             android:layout_marginRight="@dimen/dp_30"
             android:src="@drawable/ic_float_action_up"
             android:layout_marginBottom="@dimen/dp_60"
-            app:layout_behavior=".widget.behavior.FooterBehavior"
+            app:layout_behavior=".widget.behavior.ScaleBehavior"
             />
 
         <android.support.design.widget.BottomNavigationView

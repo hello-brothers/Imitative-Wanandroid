@@ -43,6 +43,7 @@ dependencies {
     implementation rootProject.ext.dependencies["banner"]
     implementation rootProject.ext.dependencies["glide"]
     implementation rootProject.ext.dependencies["glide_compiler"]
+    implementation rootProject.ext.dependencies["flexbox"]
     //ti
     implementation rootProject.ext.dependencies["butterknife"]
     implementation rootProject.ext.dependencies["butterknife-compiler"]

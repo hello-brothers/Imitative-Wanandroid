@@ -126,7 +126,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
      * 初始化fragment
      */
     private void initFragments(boolean isReCreate) {
-
         mainPagerFragment           = MainPagerFragment.getInstance(isReCreate);              //首页
         knowledgeHierarchyFragment  = KnowledgeHierarchyFragment.getInstance();     //知识体系
         wxArticleFragment           = WxArticleFragment.getInstance();              //公众号
