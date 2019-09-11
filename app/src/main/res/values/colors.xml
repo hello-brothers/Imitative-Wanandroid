@@ -20,4 +20,5 @@
     <color name="comment_text">#5b5d5c</color>
     <color name="colorblack">#000000</color>
     <color name="colorlittleblack">#1A0101</color>
+    <color name="translucent">#00000000</color>
 </resources>

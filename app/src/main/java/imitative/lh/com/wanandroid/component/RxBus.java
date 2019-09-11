@@ -49,7 +49,10 @@ public class RxBus {
      * @return Flowable<T>
      */
     public <T> Flowable<T> toFlowable(Class<T> eventType) {
-        return bus.ofType(eventType);
+//        return bus.ofType(eventType);
+        //oftype = filter+cast;
+        return bus.filter(o -> eventType.isInstance(o))
+                .cast(eventType);
     }
 
 }

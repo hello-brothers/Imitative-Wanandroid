@@ -2,6 +2,7 @@ package imitative.lh.com.wanandroid.view.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +13,16 @@ import imitative.lh.com.wanandroid.contract.mainpager.KnowledgePagerContract;
 import imitative.lh.com.wanandroid.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.presenter.KnowledgePagerPresenter;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
+import imitative.lh.com.wanandroid.view.adapter.KnowledgeAdapter;
 import imitative.lh.com.wanandroid.view.adapter.NavigationAdapter;
+import imitative.lh.com.wanandroid.widget.custom.FlexTextView;
 
 
 public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPresenter> implements KnowledgePagerContract.View {
     @BindView(R.id.knowledge_recycler)
     RecyclerView knowledge_recycler;
     private List<String> knowledgeData;
-    private NavigationAdapter adapter;
+    private KnowledgeAdapter knowledgeAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -55,18 +58,18 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
     private void initRecyclerView() {
         knowledgeData = new ArrayList<>();
         knowledge_recycler.setLayoutManager(new LinearLayoutManager(_mActivity));
-        adapter = new NavigationAdapter(R.layout.item_knowledge, knowledgeData);
-        knowledge_recycler.setAdapter(adapter);
+        knowledgeAdapter = new KnowledgeAdapter(R.layout.item_knowledge, knowledgeData);
+        knowledgeAdapter.setListener(position -> startToKnowledgeNext(position));
+        knowledge_recycler.setAdapter(knowledgeAdapter);
     }
-
 
     @Override
     public void showKnowledgeList(List data) {
-        if (adapter == null){
+        if (knowledgeAdapter == null){
             return;
         }
         knowledgeData = data;
-        adapter.replaceData(data);
+        knowledgeAdapter.replaceData(data);
         showNormalView();
     }
 
@@ -77,4 +80,11 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
             knowledge_recycler.smoothScrollToPosition(0);
         }
     }
+
+
+    private void startToKnowledgeNext(int position) {
+        CommonUtils.showMessage(_mActivity, position+"");
+    }
+
+
 }

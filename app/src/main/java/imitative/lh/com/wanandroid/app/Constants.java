@@ -31,4 +31,5 @@ public class Constants {
     public static final String ARG_PARAM1 = "param1";
     public static final String CURRENT_PAGE = "current_page";
 
+    public static final int TAB_ONE = 0;
 }

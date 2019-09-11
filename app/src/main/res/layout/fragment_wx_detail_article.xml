@@ -2,22 +2,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="center">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:id="@+id/normal_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/knowledge_recycler"
+            android:id="@+id/wx_detail_recycler"
+            tools:listitem="@layout/item_essay"
             android:layout_width="match_parent"
-            tools:listitem="@layout/item_knowledge"
             android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>
     </LinearLayout>
-
-
 
 </FrameLayout>
