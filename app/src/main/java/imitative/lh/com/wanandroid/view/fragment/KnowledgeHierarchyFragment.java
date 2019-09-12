@@ -86,5 +86,19 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
         CommonUtils.showMessage(_mActivity, position+"");
     }
 
+    @Override
+    public void preload() {
+        super.preload();
+        if (presenter != null && knowledge_recycler.getVisibility() == View.VISIBLE){
+            presenter.autoRefresh();
+        }
+    }
 
+    @Override
+    public void reload() {
+        super.reload();
+        if (presenter != null && knowledge_recycler.getVisibility() == View.VISIBLE){
+            presenter.refresh();
+        }
+    }
 }

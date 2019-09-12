@@ -1,19 +1,16 @@
 package imitative.lh.com.wanandroid.contract.mainpager;
 
-import java.util.List;
-
 import imitative.lh.com.wanandroid.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.view.AbstractView;
 
 /**
- * @Date 2019/9/2
+ * @Date 2019/9/12
  * @created by lh
  * @Describe:
  */
-public interface KnowledgePagerContract {
-
+public interface WxArticlePagerContract {
     interface View extends AbstractView{
-        void showKnowledgeList(List data);
+        void showWxAuthorListView(String... titles);
     }
 
     interface Presenter extends AbstractPresenter<View>{
@@ -22,6 +19,7 @@ public interface KnowledgePagerContract {
 
         void refresh();
 
-        void getKnowledgeData();
+        void getWxAuthorListData();
+
     }
 }

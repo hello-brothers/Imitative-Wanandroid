@@ -12,15 +12,18 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.app.Constants;
-import imitative.lh.com.wanandroid.presenter.AbstractPresenter;
+import imitative.lh.com.wanandroid.component.RxBus;
+import imitative.lh.com.wanandroid.contract.mainpager.WxArticlePagerContract;
+import imitative.lh.com.wanandroid.core.event.JumpToTheTop;
+import imitative.lh.com.wanandroid.presenter.WxArticlePresenter;
+import imitative.lh.com.wanandroid.utils.CommonUtils;
 
-public class WxArticleFragment extends BaseFragment {
+public class WxArticleFragment extends BaseFragment<WxArticlePresenter> implements WxArticlePagerContract.View {
     @BindView(R.id.wx_detail_tab_layout)
     SlidingTabLayout slidingTabLayout;
     @BindView(R.id.wx_detail_viewpager)
     ViewPager mViewPager;
     private ArrayList<BaseRootFragment> fragments = new ArrayList<>();
-    private String[] titles = new String[]{"测试", "android", "学习", "知乎", "安丘一", "腾讯", "世界杯","android", "学习", "知乎", "安丘一", "腾讯", "世界杯"};
     private int currentPage;
 
     @Override
@@ -33,12 +36,16 @@ public class WxArticleFragment extends BaseFragment {
     @Override
     protected void initDataAndView() {
         super.initDataAndView();
-        initFragment();
-        initViewPagerAndTabLayout();
+        if (presenter != null){
+            presenter.getWxAuthorListData();
+        }
+        if (CommonUtils.isNetworkConnected()){
+            showLoadingView();
+        }
 
     }
 
-    private void initViewPagerAndTabLayout() {
+    private void initViewPagerAndTabLayout(String... titles) {
         mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
@@ -78,13 +85,6 @@ public class WxArticleFragment extends BaseFragment {
         mViewPager.setCurrentItem(Constants.TAB_ONE);
     }
 
-    private void initFragment() {
-        for (int i = 0; i < titles.length; i++) {
-
-            fragments.add(WxDetailArticleFragment.getInstance());
-        }
-
-    }
 
     public static WxArticleFragment getInstance(){
         WxArticleFragment fragment = new WxArticleFragment();
@@ -92,7 +92,41 @@ public class WxArticleFragment extends BaseFragment {
     }
 
     @Override
-    protected AbstractPresenter createPresenter() {
-        return null;
+    protected WxArticlePresenter createPresenter() {
+        return new WxArticlePresenter();
+    }
+
+    @Override
+    public void showWxAuthorListView(String... titles) {
+        initFragments(titles);
+        initViewPagerAndTabLayout(titles);
+        showNormalView();
+
+    }
+
+    @Override
+    public void preload() {
+        super.preload();
+        if (presenter != null ){
+            presenter.getWxAuthorListData();
+        }
+    }
+
+    @Override
+    public void reload() {
+        super.reload();
+    }
+
+    private void initFragments(String... titles) {
+        for (int i = 0; i < titles.length; i++) {
+            fragments.add(WxDetailArticleFragment.getInstance());
+        }
+    }
+
+    @Override
+    public void jumpToTheTop() {
+        if (_mActivity != null){
+            RxBus.getDefault().post(new JumpToTheTop());
+        }
     }
 }

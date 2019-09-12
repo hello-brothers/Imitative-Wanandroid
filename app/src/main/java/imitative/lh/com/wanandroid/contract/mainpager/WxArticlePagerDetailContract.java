@@ -6,22 +6,28 @@ import imitative.lh.com.wanandroid.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.view.AbstractView;
 
 /**
- * @Date 2019/9/2
+ * @Date 2019/9/12
  * @created by lh
  * @Describe:
  */
-public interface KnowledgePagerContract {
-
+public interface WxArticlePagerDetailContract {
     interface View extends AbstractView{
-        void showKnowledgeList(List data);
+
+        void jumpToTheTop();
+
+        void showWxDetailData(List data, boolean isRefresh);
+
+
     }
 
     interface Presenter extends AbstractPresenter<View>{
 
-        void autoRefresh();
-
         void refresh();
 
-        void getKnowledgeData();
+        void loadMore();
+
+        void getWxDetailData();
+
+
     }
 }

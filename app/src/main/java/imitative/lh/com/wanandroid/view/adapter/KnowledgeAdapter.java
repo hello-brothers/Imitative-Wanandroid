@@ -21,15 +21,18 @@ import imitative.lh.com.wanandroid.widget.custom.FlexTextView;
  * @Describe:
  */
 public class KnowledgeAdapter extends BaseQuickAdapter<String, KnowledgeHierarchyListViewHolder> {
+    private final List data;
+
     public KnowledgeAdapter(int layoutResId, @Nullable List data) {
         super(layoutResId, data);
+        this.data = data;
     }
 
 
     @Override
     protected void convert(KnowledgeHierarchyListViewHolder helper, String item) {
         FlexboxLayout knowleage_flexbox = helper.getView(R.id.knowledge_flexBox);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < data.size(); i++) {
             FlexTextView flexTextView = new FlexTextView(mContext);
             flexTextView.setTag(i);
             flexTextView.setText("sfd");
@@ -39,7 +42,9 @@ public class KnowledgeAdapter extends BaseQuickAdapter<String, KnowledgeHierarch
                     listener.onItemClick(finalI);
                 }
             });
-            knowleage_flexbox.addView(flexTextView);
+            if (knowleage_flexbox.getChildCount() < data.size()){
+                knowleage_flexbox.addView(flexTextView);
+            }
         }
     }
 

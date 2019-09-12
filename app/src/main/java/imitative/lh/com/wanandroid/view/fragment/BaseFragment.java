@@ -46,7 +46,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
         loadingView = parent.findViewById(R.id.loading_view);
         errorView = parent.findViewById(R.id.error_view);
         btn_reload = errorView.findViewById(R.id.btn_reload);
-        btn_reload.setOnClickListener( v -> preload());
+        btn_reload.setOnClickListener( v -> reload());
         mNormalView.setVisibility(View.VISIBLE);
         loadingView.setVisibility(View.GONE);
         errorView.setVisibility(View.GONE);

@@ -53,6 +53,11 @@ public abstract class BaseActivity<T extends AbstractPresenter> extends Abstract
     }
 
     @Override
+    public void reload() {
+
+    }
+
+    @Override
     public void showSnackBar(String message) {
         CommonUtils.showSnackMessage(this, message);
     }

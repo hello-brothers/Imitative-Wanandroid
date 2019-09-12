@@ -165,6 +165,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
      */
     @SuppressLint("RestrictedApi")
     private void switchFragment(int position) {
+        if (position == Constants.TYPE_WX_ARTICLE){
+            home_toolbar.setVisibility(View.GONE);
+        }else {
+            home_toolbar.setVisibility(View.VISIBLE);
+
+        }
         if (position > Constants.TYPE_PROJECT){
             home_bottom_nav.setVisibility(View.INVISIBLE);
             mFloatingActionButton.setVisibility(View.INVISIBLE);
@@ -396,6 +402,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
                 knowledgeHierarchyFragment.jumpToTheTop();
                 break;
             case Constants.TYPE_WX_ARTICLE:
+                wxArticleFragment.jumpToTheTop();
                 break;
             case Constants.TYPE_NAVIGATION:
                 break;

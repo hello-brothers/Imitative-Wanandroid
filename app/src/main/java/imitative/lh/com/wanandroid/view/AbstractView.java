@@ -9,6 +9,8 @@ public interface AbstractView {
 
     void preload();
 
+    void reload();
+
     void showToast(String message);
 
     void showNormalView();

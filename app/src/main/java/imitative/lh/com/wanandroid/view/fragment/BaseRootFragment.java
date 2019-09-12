@@ -67,6 +67,11 @@ public abstract class BaseRootFragment<T extends AbstractPresenter> extends Abst
     }
 
     @Override
+    public void reload() {
+
+    }
+
+    @Override
     public void showNormalView() {
 
     }

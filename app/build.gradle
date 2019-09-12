@@ -45,6 +45,7 @@ dependencies {
     implementation rootProject.ext.dependencies["glide_compiler"]
     implementation rootProject.ext.dependencies["flexbox"]
     implementation rootProject.ext.dependencies["FlycoTabLayout_Lib"]
+    implementation rootProject.ext.dependencies["VerticalTabLayout"]
     //ti
     implementation rootProject.ext.dependencies["butterknife"]
     implementation rootProject.ext.dependencies["butterknife-compiler"]

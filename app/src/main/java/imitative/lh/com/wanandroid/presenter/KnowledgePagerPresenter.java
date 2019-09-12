@@ -23,8 +23,19 @@ public class KnowledgePagerPresenter extends BasePresenter<KnowledgePagerContrac
         createDate();
     }
 
+    @Override
+    public void autoRefresh() {
+        createDate();
+    }
+
+    @Override
+    public void refresh() {
+        createDate();
+    }
+
     private void createDate() {
         ArrayList<String> datas = new ArrayList<>();
+        datas.clear();
         for (int i = 0; i < 10; i++) {
             datas.add("22");
         }
