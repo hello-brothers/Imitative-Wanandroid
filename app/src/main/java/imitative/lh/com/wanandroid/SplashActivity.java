@@ -16,6 +16,14 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @BindView(R.id.splash_view)
     LottieAnimationView splash_view;
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        StatusBarUtils.immersive(this, null, false);
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +46,12 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
         return R.layout.activity_splash;
     }
 
+
     @Override
     protected void initToolbar() {
         if (!WanAndroidApp.isFirstrun){
 
         }
-        StatusBarUtils.immersive(this, null, false);
         WanAndroidApp.isFirstrun = false;
 
     }

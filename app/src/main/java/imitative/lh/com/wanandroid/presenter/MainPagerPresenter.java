@@ -7,6 +7,7 @@ import java.util.Observer;
 import java.util.concurrent.TimeUnit;
 
 import imitative.lh.com.wanandroid.R;
+import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.MainPagerContract;
 import io.reactivex.Observable;
@@ -55,7 +56,7 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.View> im
         }
 
         Observable.just(dataList)
-                .delay(3000, TimeUnit.MILLISECONDS)
+                .delay(Constants.delayTime, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<String>>() {

@@ -32,4 +32,5 @@ public class Constants {
     public static final String CURRENT_PAGE = "current_page";
 
     public static final int TAB_ONE = 0;
+    public static long delayTime = 1000;
 }

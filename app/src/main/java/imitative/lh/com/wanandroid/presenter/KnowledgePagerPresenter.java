@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.contract.mainpager.KnowledgePagerContract;
 import imitative.lh.com.wanandroid.view.fragment.BaseFragment;
 import io.reactivex.Observable;
@@ -40,7 +41,7 @@ public class KnowledgePagerPresenter extends BasePresenter<KnowledgePagerContrac
             datas.add("22");
         }
         Observable.just(datas)
-                .delay(3000,TimeUnit.MILLISECONDS)
+                .delay(Constants.delayTime,TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<String>>() {

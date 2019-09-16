@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center">
 
     <LinearLayout
@@ -14,9 +15,19 @@
         <q.rorbin.verticaltablayout.VerticalTabLayout
             android:id="@+id/navigation_tab_layout"
             android:layout_width="@dimen/dp_100"
+            app:indicator_corners="@dimen/dp_20"
+            app:tab_margin="@dimen/dp_15"
+            app:tab_height="@dimen/dp_50"
+            app:tab_mode="scrollable"
+            app:indicator_color="@color/blue4"
             android:layout_height="match_parent">
 
         </q.rorbin.verticaltablayout.VerticalTabLayout>
+
+        <View
+            android:layout_width="@dimen/dp_05"
+            android:layout_height="match_parent"
+            android:background="@color/gray_bg"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/navigation_RecyclerView"
             android:layout_width="match_parent"

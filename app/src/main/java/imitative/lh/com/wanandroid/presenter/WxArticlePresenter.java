@@ -2,7 +2,9 @@ package imitative.lh.com.wanandroid.presenter;
 
 import java.util.concurrent.TimeUnit;
 
+import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.contract.mainpager.WxArticlePagerContract;
+import imitative.lh.com.wanandroid.utils.CommonUtils;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,7 +35,7 @@ public class WxArticlePresenter extends BasePresenter<WxArticlePagerContract.Vie
     private void createData() {
         String[] titles = new String[]{"测试", "android", "学习", "知乎", "安丘一", "腾讯", "世界杯","android", "学习", "知乎", "安丘一", "腾讯", "世界杯"};
         Observable.just(titles)
-                .delay(3000, TimeUnit.MILLISECONDS)
+                .delay(Constants.delayTime, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String[]>() {
