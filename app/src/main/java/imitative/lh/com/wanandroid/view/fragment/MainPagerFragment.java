@@ -240,4 +240,6 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
             presenter.autoRefresh();
         }
     }
+
+
 }

@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
     private NavigationAdapter navigationAdapter;
     private LinearLayoutManager layoutManager;
     private int lastfirstCompletelyVisibleItemPosition = -1;
+    private boolean needScorll;
+    private boolean needTabClick;
 
     @Override
     protected int getLayoutId() {
@@ -123,6 +126,9 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    needTabClick = true;
+                }
             }
 
             /**
@@ -134,10 +140,14 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+//                if (needTabClick){
+//                    return;
+//                }
                 int firstCompletelyVisibleItemPosition = layoutManager.findFirstCompletelyVisibleItemPosition();
                 if (firstCompletelyVisibleItemPosition == lastfirstCompletelyVisibleItemPosition){
                     return;
                 }
+                needTabClick = false; //是否需要tab的回调跟着相应
                 verticalTabLayout.setTabSelected(firstCompletelyVisibleItemPosition);
                 lastfirstCompletelyVisibleItemPosition = firstCompletelyVisibleItemPosition;
             }
@@ -146,7 +156,10 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
         verticalTabLayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
-                setTag(position);
+                if (needTabClick) {
+                    setTag(position);
+                    Log.i("TAG", "onTabSelected: " + position);
+                }
             }
 
             @Override
@@ -161,13 +174,16 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
     }
 
     private void smoothScrollToPosition(int currentPosition) {
-
+        Log.i("TAG", "smoothScrollToPosition: " + currentPosition);
         int firstCompletelyVisibleItemPosition = layoutManager.findFirstCompletelyVisibleItemPosition();
         int lastCompletelyVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
         int firstPosition = layoutManager.findFirstVisibleItemPosition();
 
         if (currentPosition <= lastCompletelyVisibleItemPosition && currentPosition >= firstCompletelyVisibleItemPosition){
-//            int top = recyclerView.getChildAt(currentPosition).getTop();
+//            int firstTop = recyclerView.getChildAt(firstPosition).getTop();
+//            int curTop = recyclerView.getChildAt(currentPosition).getTop();
+//            int top = curTop-firstTop;
+            needScorll = false;
             layoutManager.scrollToPositionWithOffset(currentPosition, 0);
 //            recyclerView.smoothScrollBy(0, top);
         }else {
