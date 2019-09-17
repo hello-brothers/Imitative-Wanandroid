@@ -22,4 +22,5 @@
     <color name="colorblack">#000000</color>
     <color name="colorlittleblack">#1A0101</color>
     <color name="translucent">#00000000</color>
+    <color name="color_red">#ef5350</color>
 </resources>

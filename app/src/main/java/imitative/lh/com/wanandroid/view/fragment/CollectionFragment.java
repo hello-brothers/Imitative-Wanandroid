@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -34,6 +35,7 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
     SmartRefreshLayout collection_refresh;
     private CollectionAdapter collectionAdapter;
     private LinearLayoutManager linearLayoutManager;
+    private List showData = new ArrayList();
 
     @Override
     protected int getLayoutId() {
@@ -68,18 +70,22 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
 
     @Override
     public void showCollectionListData(List data) {
-        collectionAdapter.replaceData(data);
+        this.showData = data;
+        collectionAdapter.replaceData(showData);
         showNormalView();
     }
 
     private void initRecyclerView() {
-        ArrayList<String> data = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(_mActivity);
         collection_recycler.setLayoutManager(linearLayoutManager);
         collection_recycler.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
-        collectionAdapter = new CollectionAdapter(R.layout.item_liker, data);
+        collectionAdapter = new CollectionAdapter(R.layout.item_collection, showData);
+        collectionAdapter.setOnItemClickListener((adapter, view, position) -> {});
+        collectionAdapter.setOnItemChildClickListener((adapter, view, position) -> clickChildEvent(view, position));
         collection_recycler.setAdapter(collectionAdapter);
     }
+
+
 
     private void initRefresh(){
         collection_refresh.setOnRefreshListener(new OnRefreshListener() {
@@ -96,5 +102,16 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
                 refreshLayout.setNoMoreData(true);
             }
         });
+    }
+
+    private void clickChildEvent(View view, int position) {
+        switch (view.getId()){
+            case R.id.tv_delet:
+                showData.remove(position);
+                collectionAdapter.replaceData(showData);
+                CommonUtils.showMessage(_mActivity, position + "");
+
+                break;
+        }
     }
 }

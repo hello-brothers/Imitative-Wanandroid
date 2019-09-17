@@ -19,7 +19,7 @@ public class CollectionPresenter extends BasePresenter<CollectionPagerContract.V
 
     @Override
     public void refresh() {
-
+        createData();
     }
 
     private void createData() {
