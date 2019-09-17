@@ -174,19 +174,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
 
         }
         if (position > Constants.TYPE_PROJECT){
+            isNeedShowMenu = false;
             home_bottom_nav.setVisibility(View.INVISIBLE);
-            mFloatingActionButton.setVisibility(View.INVISIBLE);
+            mFloatingActionButton.setVisibility(View.GONE);
         }else {
+            isNeedShowMenu = true;
             home_bottom_nav.setVisibility(View.VISIBLE);
             mFloatingActionButton.setVisibility(View.VISIBLE);
         }
-        if (position == Constants.TYPE_SETTING){
-            isNeedShowMenu = false;
-            checkOptionMenu();
-        }else {
-            isNeedShowMenu = true;
-            checkOptionMenu();
-        }
+        checkOptionMenu();
+
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         AbstractSimpleFragment mTargetFg          = mFragments.get(position);
