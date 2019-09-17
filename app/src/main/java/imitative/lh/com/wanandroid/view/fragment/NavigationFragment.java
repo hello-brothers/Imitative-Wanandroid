@@ -5,6 +5,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +31,15 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
     RecyclerView recyclerView;
     private NavigationAdapter navigationAdapter;
     private LinearLayoutManager layoutManager;
-    private int lastfirstCompletelyVisibleItemPosition = -1;
-    private boolean needScorll;
-    private boolean needTabClick;
+
+    /** 判断recyclerview是主动滑动还是被动滑动 true -是 false -否由tablayout引起 **/
+    private boolean isTouchRecycler;
+    private boolean scrollByTouch;
+    //记录上次顶部的位置，防止同一滑块滑动定位到同一tab
+    private int lastPos;
+    private boolean canScroll;
+    private int scrollToPosition;
+
 
     @Override
     protected int getLayoutId() {
@@ -77,6 +85,10 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
         }
         navigationAdapter = new NavigationAdapter(R.layout.item_knowledge, data);
         layoutManager = new LinearLayoutManager(_mActivity);
+        recyclerView.setOnTouchListener((v, event) -> {
+            isTouchRecycler = true;
+            return false;
+        });
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(navigationAdapter);
     }
@@ -126,8 +138,15 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                if (isTouchRecycler && (newState != RecyclerView.SCROLL_STATE_IDLE)){
+                    scrollByTouch = true;
+                }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                    needTabClick = true;
+                    scrollByTouch = false;
+                }
+                if (canScroll){
+                    canScroll = false;
+                    smoothScrollToPosition(scrollToPosition);
                 }
             }
 
@@ -140,26 +159,26 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-//                if (needTabClick){
-//                    return;
-//                }
-                int firstCompletelyVisibleItemPosition = layoutManager.findFirstCompletelyVisibleItemPosition();
-                if (firstCompletelyVisibleItemPosition == lastfirstCompletelyVisibleItemPosition){
-                    return;
+                if (scrollByTouch){
+                    int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+                    if (lastPos != firstVisibleItemPosition){
+                        verticalTabLayout.setTabSelected(firstVisibleItemPosition);
+                    }
+                    lastPos = firstVisibleItemPosition;
                 }
-                needTabClick = false; //是否需要tab的回调跟着相应
-                verticalTabLayout.setTabSelected(firstCompletelyVisibleItemPosition);
-                lastfirstCompletelyVisibleItemPosition = firstCompletelyVisibleItemPosition;
+
             }
         });
 
         verticalTabLayout.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabView tab, int position) {
-                if (needTabClick) {
-                    setTag(position);
+                if (!scrollByTouch){
                     Log.i("TAG", "onTabSelected: " + position);
+                    smoothScrollToPosition(position);
                 }
+//                isRecyclerScroll = false;
+//                smoothScrollToPosition(position);
             }
 
             @Override
@@ -169,25 +188,21 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
         });
     }
 
-    private void setTag(int position) {
-        smoothScrollToPosition(position);
-    }
 
     private void smoothScrollToPosition(int currentPosition) {
         Log.i("TAG", "smoothScrollToPosition: " + currentPosition);
-        int firstCompletelyVisibleItemPosition = layoutManager.findFirstCompletelyVisibleItemPosition();
-        int lastCompletelyVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
         int firstPosition = layoutManager.findFirstVisibleItemPosition();
+        int lastPosition = layoutManager.findLastVisibleItemPosition();
 
-        if (currentPosition <= lastCompletelyVisibleItemPosition && currentPosition >= firstCompletelyVisibleItemPosition){
-//            int firstTop = recyclerView.getChildAt(firstPosition).getTop();
-//            int curTop = recyclerView.getChildAt(currentPosition).getTop();
-//            int top = curTop-firstTop;
-            needScorll = false;
-            layoutManager.scrollToPositionWithOffset(currentPosition, 0);
-//            recyclerView.smoothScrollBy(0, top);
+        if (currentPosition <= firstPosition){
+            recyclerView.smoothScrollToPosition(currentPosition);
+        }else if (currentPosition <= lastPosition){
+            int top = recyclerView.getChildAt(currentPosition - firstPosition).getTop();
+            recyclerView.smoothScrollBy(0, top);
         }else {
             recyclerView.smoothScrollToPosition(currentPosition);
+            scrollToPosition = currentPosition;
+            canScroll = true;
         }
     }
 
