@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.flyco.tablayout.SlidingTabLayout;
 
@@ -36,7 +37,7 @@ public class WxArticleFragment extends BaseFragment<WxArticlePresenter> implemen
     @Override
     protected void initDataAndView() {
         super.initDataAndView();
-        if (presenter != null){
+        if (presenter != null && slidingTabLayout.getVisibility() == View.INVISIBLE){
             presenter.getWxAuthorListData();
         }
         if (CommonUtils.isNetworkConnected()){
@@ -98,24 +99,22 @@ public class WxArticleFragment extends BaseFragment<WxArticlePresenter> implemen
 
     @Override
     public void showWxAuthorListView(String... titles) {
+        fragments.clear();
         initFragments(titles);
         initViewPagerAndTabLayout(titles);
+        setChildViewVisibility(View.VISIBLE);
         showNormalView();
 
     }
 
     @Override
-    public void preload() {
-        super.preload();
-        if (presenter != null ){
+    public void reload() {
+        super.reload();
+        if (presenter != null && (slidingTabLayout.getVisibility() == View.INVISIBLE)){
             presenter.getWxAuthorListData();
         }
     }
 
-    @Override
-    public void reload() {
-        super.reload();
-    }
 
     private void initFragments(String... titles) {
         for (int i = 0; i < titles.length; i++) {
@@ -129,4 +128,9 @@ public class WxArticleFragment extends BaseFragment<WxArticlePresenter> implemen
             RxBus.getDefault().post(new JumpToTheTop());
         }
     }
+    private void setChildViewVisibility(int visible) {
+        slidingTabLayout.setVisibility(visible);
+        mViewPager.setVisibility(visible);
+    }
+
 }

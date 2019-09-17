@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center">
+    >
 
     <LinearLayout
         android:id="@+id/normal_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:ignore="UselessParent"
         android:orientation="vertical">
 
         <com.flyco.tablayout.SlidingTabLayout
@@ -17,14 +19,20 @@
             android:layout_height="@dimen/dp_48"
             app:tl_textsize="@dimen/sp_14"
             app:tl_tab_space_equal="false"
-            app:tl_underline_color="@color/blue4"
+            app:tl_underline_color="@color/colorCard"
             app:tl_underline_height="@dimen/dp_10"
-            app:tl_textSelectColor="@color/colorCard"
-            app:tl_textUnselectColor="@color/colorCard"
-            android:background="@color/blue4"
-            app:tl_indicator_color="@color/colorCard"
-            app:tl_indicator_width_equal_title="true" />
-
+            app:tl_textSelectColor="@color/blue4"
+            app:tl_textUnselectColor="@color/gray_txt"
+            android:background="@color/colorCard"
+            app:tl_indicator_color="@color/blue4"
+            app:tl_indicator_width_equal_title="true"
+            android:visibility="invisible"/>
+        <View
+            android:id="@+id/project_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/gray_bg"
+            android:visibility="invisible" />
         <android.support.v4.view.ViewPager
             android:id="@+id/wx_detail_viewpager"
             android:layout_width="match_parent"
@@ -33,4 +41,4 @@
              />
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

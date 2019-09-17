@@ -6,11 +6,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import imitative.lh.com.wanandroid.app.Constants;
-import imitative.lh.com.wanandroid.component.RxBus;
-import imitative.lh.com.wanandroid.contract.mainpager.WxArticlePagerContract;
-import imitative.lh.com.wanandroid.contract.mainpager.WxArticlePagerDetailContract;
-import imitative.lh.com.wanandroid.core.event.JumpToTheTop;
-import imitative.lh.com.wanandroid.utils.CommonUtils;
+import imitative.lh.com.wanandroid.contract.mainpager.ProjectPagerContracr;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -18,35 +14,30 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * @Date 2019/9/12
+ * @Date 2019/9/17
  * @created by lh
  * @Describe:
  */
-public class WxArticleDetailPresenter extends BasePresenter<WxArticlePagerDetailContract.View> implements WxArticlePagerDetailContract.Presenter {
+public class ProjectPresenter extends BasePresenter<ProjectPagerContracr.View> implements ProjectPagerContracr.Presenter {
+
     @Override
-    public void attachView(WxArticlePagerDetailContract.View view) {
-        super.attachView(view);
-        registerEvent();
+    public void autoRefresh() {
+
     }
 
     @Override
     public void refresh() {
-        createData(true);
+
     }
 
     @Override
-    public void loadMore() {
-        createData(false);
+    public void getProjectListData() {
+        createData();
     }
 
-    @Override
-    public void getWxDetailData() {
-        createData(true);
-    }
-
-    private void createData(boolean isRefresh) {
-        String[] data = new String[10];
-        addDisposible(Observable.just(data)
+    private void createData() {
+        String[] titles = {"完整项目", "跨平台应用", "资源聚合类", "动画", "项目基础功能", "网络下载"};
+        addDisposible(Observable.just(titles)
                 .delay(Constants.delayTime, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -59,13 +50,8 @@ public class WxArticleDetailPresenter extends BasePresenter<WxArticlePagerDetail
                 .subscribe(new Consumer<List>() {
                     @Override
                     public void accept(List list) throws Exception {
-                        mView.showWxDetailData(list, isRefresh);
+                        mView.showProjectListData(list);
                     }
                 }));
-    }
-
-    private void registerEvent() {
-        addDisposible(RxBus.getDefault().toFlowable(JumpToTheTop.class)
-                .subscribe(jumpToTheTop -> mView.jumpToTheTop()));
     }
 }

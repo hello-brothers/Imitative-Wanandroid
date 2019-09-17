@@ -16,7 +16,6 @@ import java.util.List;
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.contract.mainpager.WxArticlePagerDetailContract;
-import imitative.lh.com.wanandroid.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.presenter.WxArticleDetailPresenter;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.view.adapter.WxDetailArticleAdapter;

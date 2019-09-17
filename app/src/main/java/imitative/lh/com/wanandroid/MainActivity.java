@@ -72,6 +72,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     private int                                     mLastFgIndex;
     
     private static final int LOGIN_COLLECT_CODE     = 101;
+    private Menu mMenu;
+    private boolean isNeedShowMenu;
 
 
     @Override
@@ -166,7 +168,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     @SuppressLint("RestrictedApi")
     private void switchFragment(int position) {
         if (position == Constants.TYPE_WX_ARTICLE){
-            home_toolbar.setVisibility(View.GONE);
+//            home_toolbar.setVisibility(View.GONE);
         }else {
             home_toolbar.setVisibility(View.VISIBLE);
 
@@ -177,6 +179,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         }else {
             home_bottom_nav.setVisibility(View.VISIBLE);
             mFloatingActionButton.setVisibility(View.VISIBLE);
+        }
+        if (position == Constants.TYPE_SETTING){
+            isNeedShowMenu = false;
+            checkOptionMenu();
+        }else {
+            isNeedShowMenu = true;
+            checkOptionMenu();
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -221,7 +230,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         toolbar_title.setText(title);
         switchFragment(position);
         presenter.setCurrentPage(index);
-        fragment.preload();
+        fragment.reload();
     }
 
     private void initNavigationView() {
@@ -405,12 +414,22 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
                 wxArticleFragment.jumpToTheTop();
                 break;
             case Constants.TYPE_NAVIGATION:
+                navigationFragment.jumpToTheTop();
                 break;
             case Constants.TYPE_PROJECT:
+                projectFragment.jumpToTheTop();
                 break;
                 default:
                     break;
         }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        this.mMenu = menu;
+        checkOptionMenu();
+        return super.onPrepareOptionsMenu(menu);
+
     }
 
     @Override
@@ -437,6 +456,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LOGIN_COLLECT_CODE){
             switchFragment(Constants.TYPE_COLLECT);
+        }
+    }
+
+    private void checkOptionMenu() {
+        if (null != this.mMenu){
+            boolean showTag = isNeedShowMenu == true ? true : false;
+            for (int i = 0; i < mMenu.size(); i++) {
+                mMenu.getItem(i).setVisible(showTag);
+                mMenu.getItem(i).setEnabled(showTag);
+            }
         }
     }
 

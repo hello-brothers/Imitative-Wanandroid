@@ -15,6 +15,7 @@
 
     <color name="colorCard">#ffffff</color>
     <color name="delete_text">#cccccc</color>
+    <color name="gray_txt">#bdbdbd</color>
     <color name="gray_bg">#eeeeee</color>
     <color name="white">#ffffff</color>
     <color name="comment_text">#5b5d5c</color>

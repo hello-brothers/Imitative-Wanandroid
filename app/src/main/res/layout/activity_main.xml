@@ -16,6 +16,7 @@
             android:theme="@style/AppTheme.AppBarOverlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:elevation="@dimen/dp_0"
             >
 
             <include layout="@layout/common_toolbar"
@@ -26,7 +27,8 @@
             android:id="@+id/fragment_group"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+            app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
+            >
 
         </FrameLayout>
 
@@ -38,6 +40,8 @@
             android:layout_marginRight="@dimen/dp_30"
             android:src="@drawable/ic_float_action_up"
             android:layout_marginBottom="@dimen/dp_60"
+            android:backgroundTint="@color/blue4"
+            app:borderWidth="@dimen/dp_0"
             app:layout_behavior=".widget.behavior.ScaleBehavior"
             />
 

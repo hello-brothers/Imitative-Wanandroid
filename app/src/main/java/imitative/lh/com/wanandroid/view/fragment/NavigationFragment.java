@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
     VerticalTabLayout verticalTabLayout;
     @BindView(R.id.navigation_RecyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.normal_view)
+    LinearLayout normal_view;
     private NavigationAdapter navigationAdapter;
     private LinearLayoutManager layoutManager;
 
@@ -206,4 +209,19 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
         }
     }
 
+    @Override
+    public void jumpToTheTop() {
+        super.jumpToTheTop();
+        if (verticalTabLayout != null){
+            verticalTabLayout.setTabSelected(0);
+        }
+    }
+
+    @Override
+    public void reload() {
+        super.reload();
+        if (presenter != null && normal_view.getVisibility() == View.INVISIBLE){
+            presenter.getNavigationListData();
+        }
+    }
 }
