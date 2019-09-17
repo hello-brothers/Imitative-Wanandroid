@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.billy.android.swipe.SmartSwipe;
+import com.billy.android.swipe.SwipeConsumer;
 import com.billy.android.swipe.consumer.SlidingConsumer;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -42,6 +43,6 @@ public class CollectionAdapter extends BaseQuickAdapter<String, CollectionListVi
         super.onBindViewHolder(holder, position);
         SmartSwipe.wrap(liker_content)
                 .addConsumer(new SlidingConsumer())
-                .setHorizontalDrawerView(tv_delete);
+                .setRightDrawerView(tv_delete);
     }
 }

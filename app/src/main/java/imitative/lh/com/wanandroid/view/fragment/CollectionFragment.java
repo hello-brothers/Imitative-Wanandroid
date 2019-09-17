@@ -100,6 +100,7 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.setNoMoreData(true);
+                refreshLayout.finishLoadMore(2000);
             }
         });
     }
@@ -109,8 +110,6 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
             case R.id.tv_delet:
                 showData.remove(position);
                 collectionAdapter.replaceData(showData);
-                CommonUtils.showMessage(_mActivity, position + "");
-
                 break;
         }
     }
