@@ -33,4 +33,12 @@ public class Constants {
 
     public static final int TAB_ONE = 0;
     public static long delayTime = 1000;
+
+    public static final int TYPE_DEFAULE        = 0;//搜索默认界面
+
+    public static final int TYPE_EFFECTIVE      = 1;//有效数据界面
+
+    public static final int TYPE_INEFFECTIVE    = 2;//无效数据界面
+
+    public static final int TYPE_ERROR          = 3;//因为网络错误等问题界面
 }

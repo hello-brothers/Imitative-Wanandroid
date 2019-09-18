@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/default_search"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_margin="@dimen/dp_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hot_search"
+                        android:textSize="@dimen/dp_10"
+                        android:textColor="@color/comment_text"
+                        android:padding="@dimen/dp_10"
+                        />
+
+                    <LinearLayout
+                        android:layout_alignParentRight="true"
+
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="@dimen/dp_15"
+                            android:layout_height="@dimen/dp_15"
+                            android:background="@drawable/ic_changesearch"
+                            android:backgroundTint="@color/comment_text"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/change_search_txt"
+                            android:padding="@dimen/dp_10"
+                            android:textSize="@dimen/dp_10"
+                            android:textColor="@color/comment_text"
+                            android:drawablePadding="@dimen/dp_5"
+
+                            />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/hot_search_flexBox"
+                    android:layout_width="match_parent"
+                    app:flexDirection="row"
+                    android:layout_height="wrap_content"
+                    app:flexWrap="wrap"
+                    app:alignItems="center"
+                    app:alignContent="flex_start"
+                    app:justifyContent="flex_start"
+                    app:showDivider="beginning|middle"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingLeft="@dimen/dp_5"
+                    >
+
+                    <imitative.lh.com.wanandroid.widget.custom.FlexTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="afgsegghgbsfh"/>
+
+                    <imitative.lh.com.wanandroid.widget.custom.FlexTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="afgsegghgbsfh"/>
+                    <imitative.lh.com.wanandroid.widget.custom.FlexTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="sagdfsgdsfghbdfhbfgh"/>
+
+
+                </com.google.android.flexbox.FlexboxLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_margin="@dimen/dp_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_alignParentLeft="true"
+                        android:id="@+id/knowledge_head"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history_search"
+                        android:textSize="@dimen/dp_10"
+                        android:textColor="@color/comment_text"
+                        android:padding="@dimen/dp_10"
+                        />
+
+                    <LinearLayout
+                        android:layout_alignParentRight="true"
+
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="@dimen/dp_15"
+                            android:layout_height="@dimen/dp_15"
+                            android:background="@drawable/ic_close"
+                            android:backgroundTint="@color/comment_text"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/clear"
+                            android:padding="@dimen/dp_10"
+                            android:textSize="@dimen/dp_10"
+                            android:textColor="@color/comment_text"
+                            android:drawablePadding="@dimen/dp_5"
+
+                            />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/history_search_flexBox"
+                    android:layout_width="match_parent"
+                    app:flexDirection="row"
+                    android:layout_height="wrap_content"
+                    app:flexWrap="wrap"
+                    app:alignItems="center"
+                    app:alignContent="flex_start"
+                    app:justifyContent="flex_start"
+                    app:showDivider="beginning|middle"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingLeft="@dimen/dp_5"
+                    >
+
+                    <imitative.lh.com.wanandroid.widget.custom.FlexTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="afgsegghgbsfh"/>
+
+                    <imitative.lh.com.wanandroid.widget.custom.FlexTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="afgsegghgbsfh"/>
+                    <imitative.lh.com.wanandroid.widget.custom.FlexTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="sagdfsgdsfghbdfhbfgh"/>
+
+
+                </com.google.android.flexbox.FlexboxLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+</FrameLayout>

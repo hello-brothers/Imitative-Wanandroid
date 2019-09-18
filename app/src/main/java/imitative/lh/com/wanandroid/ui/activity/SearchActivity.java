@@ -3,33 +3,34 @@ package imitative.lh.com.wanandroid.ui.activity;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.R;
+import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.base.activity.BaseActivity;
-import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.contract.mainpager.SearchContract;
 import imitative.lh.com.wanandroid.presenter.SearchPresenter;
 import imitative.lh.com.wanandroid.utils.StatusBarUtils;
+import imitative.lh.com.wanandroid.widget.custom.SearchView;
 
-public class SearchActivity extends BaseActivity<SearchPresenter> implements SearchContract.View {
+public class SearchActivity extends BaseActivity<SearchPresenter> implements SearchContract.View, SearchView.OnStatusChangListener {
 
     @BindView(R.id.toolbar_search)
     Toolbar toolbar_search;
 
     @BindView(R.id.search_container)
     FrameLayout search_container;
-    private ConstraintLayout empty_layout;
+    @BindView(R.id.search_view)
+    SearchView searchView;
+    private ConstraintLayout inEffective_layout;
+    private FrameLayout effective_layout;
+    private int CURRENT_INDEX = -1;
+    private FrameLayout defaule_layout;
 
     @Override
     protected SearchPresenter createPresneter() {
@@ -54,9 +55,10 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
     @Override
     protected void initDataAndEvent() {
+        initSearchView();
         initLayout();
-        showNoData();
-        if (presenter != null){
+        showSearchView();
+        if (checkPresenter()){
 
         }
     }
@@ -80,10 +82,24 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void initSearchView() {
+        searchView.setOnStatusChangListener(this);
+    }
+
     private void initLayout() {
+        View.inflate(this, R.layout.search_default, search_container);
         View.inflate(this, R.layout.empty_data, search_container);
-        empty_layout = search_container.findViewById(R.id.search_empty);
-        empty_layout.setVisibility(View.GONE);
+        View.inflate(this, R.layout.search_effectivedata, search_container);
+
+
+        defaule_layout = search_container.findViewById(R.id.default_search);
+        inEffective_layout = search_container.findViewById(R.id.search_empty);
+        effective_layout = search_container.findViewById(R.id.search_effectiveLayout);
+
+        defaule_layout.setVisibility(View.GONE);
+        inEffective_layout.setVisibility(View.GONE);
+        effective_layout.setVisibility(View.GONE);
     }
 
     /**
@@ -91,7 +107,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
      */
     @Override
     public void showSearchView() {
-
+        adjustContentView(Constants.TYPE_DEFAULE);
     }
 
     /**
@@ -99,7 +115,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
      */
     @Override
     public void showSearchData() {
-
+        adjustContentView(Constants.TYPE_EFFECTIVE);
     }
 
     /**
@@ -107,6 +123,57 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
      */
     @Override
     public void showNoData() {
-        empty_layout.setVisibility(View.VISIBLE);
+        adjustContentView(Constants.TYPE_INEFFECTIVE);
+    }
+
+    /**
+     * 点击EditText事件回调
+     */
+    @Override
+    public void touchEditText() {
+        adjustContentView(Constants.TYPE_DEFAULE);
+    }
+
+    /**
+     * 点击软键盘的搜索
+     * 开始进行搜索回调
+     * @param content 需要搜索的字段
+     */
+    @Override
+    public void searchContent(String content) {
+        if (checkPresenter() && !TextUtils.isEmpty(content)){
+            presenter.getSearchData(content);
+        }
+    }
+
+    private boolean checkPresenter(){
+        return presenter == null ? false : true;
+    }
+
+    private void adjustContentView(int showIndex){
+        if (showIndex == CURRENT_INDEX){
+            return;
+        }
+        activeContentView(CURRENT_INDEX, true);
+        activeContentView(showIndex, false);
+        CURRENT_INDEX = showIndex;
+
+
+    }
+
+    private void activeContentView(int index, boolean isHide){
+        switch (index){
+            case Constants.TYPE_DEFAULE:
+                defaule_layout.setVisibility(isHide == true ? View.GONE : View.VISIBLE);
+                break;
+            case Constants.TYPE_EFFECTIVE:
+                effective_layout.setVisibility(isHide == true ? View.GONE : View.VISIBLE);
+                break;
+            case Constants.TYPE_INEFFECTIVE:
+                inEffective_layout.setVisibility(isHide == true ? View.GONE : View.VISIBLE);
+                break;
+            case Constants.TYPE_ERROR:
+                break;
+        }
     }
 }

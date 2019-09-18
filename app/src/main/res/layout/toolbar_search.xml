@@ -10,6 +10,7 @@
     android:layout_height="?attr/actionBarSize">
 
     <imitative.lh.com.wanandroid.widget.custom.SearchView
+        android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></imitative.lh.com.wanandroid.widget.custom.SearchView>
 

@@ -27,4 +27,8 @@
     <string name="search_hint">搜索</string>
     <string name="empty_data">空空如也</string>
     <string name="text_refresh">刷 新 一 下</string>
+    <string name="change_search_txt">换一换</string>
+    <string name="hot_search">热门搜索</string>
+    <string name="history_search">历史搜索</string>
+    <string name="clear">清空</string>
 </resources>
