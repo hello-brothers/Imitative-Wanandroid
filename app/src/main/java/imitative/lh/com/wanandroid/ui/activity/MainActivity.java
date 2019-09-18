@@ -335,12 +335,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
      */
     @Override
     public void onBackPressedSupport() {
-        if (home_drawer != null && home_drawer.isDrawerOpen(Gravity.START)){
-            home_drawer.closeDrawer(Gravity.START);
-        }
-        if (getSupportFragmentManager().getBackStackEntryCount() >1){
+
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             pop();
-        }else {
+        } else {
             ActivityCompat.finishAfterTransition(this);
         }
     }
@@ -443,6 +441,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
                 break;
             case R.id.action_search:
                 Toast.makeText(mActivity, "search", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, SearchActivity.class));
+//                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_in_left);
+
                 break;
         }
         return true;

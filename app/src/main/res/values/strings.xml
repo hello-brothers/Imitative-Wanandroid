@@ -24,4 +24,7 @@
     <string name="setting">设置</string>
     <string name="double_click_exit_tint">再按一次后退键退出</string>
     <string name="query_logout">确认退出登录</string>
+    <string name="search_hint">搜索</string>
+    <string name="empty_data">空空如也</string>
+    <string name="text_refresh">刷 新 一 下</string>
 </resources>

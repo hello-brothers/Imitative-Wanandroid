@@ -40,16 +40,6 @@ public class FlexTextView extends TextView {
         this.setBackground(bg);
     }
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        switch (event.getAction()){
-//            case MotionEvent.ACTION_DOWN:
-//                Log.i("TAG", "onTouchEvent: ");
-//                break;
-//        }
-//        return true;
-//    }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
