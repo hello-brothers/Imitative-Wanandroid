@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 
-import imitative.lh.com.wanandroid.MainActivity;
 import imitative.lh.com.wanandroid.R;
 
 import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;

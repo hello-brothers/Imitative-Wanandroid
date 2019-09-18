@@ -47,6 +47,7 @@ dependencies {
     implementation rootProject.ext.dependencies["FlycoTabLayout_Lib"]
     implementation rootProject.ext.dependencies["VerticalTabLayout"]
     implementation rootProject.ext.dependencies["SmartSwipe"]
+    implementation rootProject.ext.dependencies["LikeButton"]
 
     //ti
     implementation rootProject.ext.dependencies["butterknife"]

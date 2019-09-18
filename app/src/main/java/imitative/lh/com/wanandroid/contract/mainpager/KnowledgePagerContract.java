@@ -2,8 +2,8 @@ package imitative.lh.com.wanandroid.contract.mainpager;
 
 import java.util.List;
 
-import imitative.lh.com.wanandroid.presenter.AbstractPresenter;
-import imitative.lh.com.wanandroid.view.AbstractView;
+import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
+import imitative.lh.com.wanandroid.base.view.AbstractView;
 
 /**
  * @Date 2019/9/2

@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import imitative.lh.com.wanandroid.app.Constants;
+import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.component.RxBus;
-import imitative.lh.com.wanandroid.contract.mainpager.WxArticlePagerContract;
 import imitative.lh.com.wanandroid.contract.mainpager.WxArticlePagerDetailContract;
 import imitative.lh.com.wanandroid.core.event.JumpToTheTop;
-import imitative.lh.com.wanandroid.utils.CommonUtils;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;

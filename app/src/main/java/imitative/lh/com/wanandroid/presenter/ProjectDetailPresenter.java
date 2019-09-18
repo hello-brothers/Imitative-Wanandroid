@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import imitative.lh.com.wanandroid.app.Constants;
+import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.ProjectPagerDetailContract;
 import imitative.lh.com.wanandroid.core.event.JumpToTheTop;

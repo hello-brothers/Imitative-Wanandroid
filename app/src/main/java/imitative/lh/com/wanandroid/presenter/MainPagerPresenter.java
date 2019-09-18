@@ -3,12 +3,11 @@ package imitative.lh.com.wanandroid.presenter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Observer;
 import java.util.concurrent.TimeUnit;
 
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.app.Constants;
-import imitative.lh.com.wanandroid.component.RxBus;
+import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.contract.mainpager.MainPagerContract;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

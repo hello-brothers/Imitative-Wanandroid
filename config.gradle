@@ -42,6 +42,7 @@ ext{
             "FlycoTabLayout_Lib"                : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
             "VerticalTabLayout"                 : "q.rorbin:VerticalTabLayout:1.2.5",
             "SmartSwipe"                        : "com.billy.android:smart-swipe:${version["smartSwipeVersion"]}",
+            "LikeButton"                                  : "com.github.jd-alexander:LikeButton:0.2.3",
 
 
             //ui test

@@ -1,8 +1,9 @@
 package imitative.lh.com.wanandroid.presenter;
 
+import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.core.event.LoginEvent;
-import imitative.lh.com.wanandroid.view.MainContract;
+import imitative.lh.com.wanandroid.contract.mainpager.MainContract;
 
 public class MainPresenter extends BasePresenter<MainContract.View> implements MainContract.Presenter{
     @Override
