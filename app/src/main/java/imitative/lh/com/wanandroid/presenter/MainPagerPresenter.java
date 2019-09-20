@@ -1,5 +1,7 @@
 package imitative.lh.com.wanandroid.presenter;
 
+import android.annotation.SuppressLint;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +11,10 @@ import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.contract.mainpager.MainPagerContract;
+import imitative.lh.com.wanandroid.network.base.BaseObserver;
+import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.util.RxUtil;
+import imitative.lh.com.wanandroid.network.bean.BannerData;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -21,51 +27,66 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class MainPagerPresenter extends BasePresenter<MainPagerContract.View> implements MainPagerContract.Presenter {
 
+    private int mPageIndex = 0;
+    //默认为刷新数据
+    private boolean isfresh = true;
+
     @Override
     public void autoRefresh() {
-        createData(true);
+        isfresh = true;
+        createData();
     }
 
     @Override
     public void refresh() {
-        createData(true);
+        isfresh = true;
+        createData();
     }
 
     @Override
     public void loadMore() {
-        createData(false);
+        //加载更多
+        isfresh = false;
+        mPageIndex ++;
+        getEssayListData();
+    }
+
+
+    /**
+     * 模拟数据
+     */
+    @SuppressLint("CheckResult")
+    private void createData() {
+        getEssayListData();
+        getBannerData();
+
     }
 
     @Override
     public void getEssayListData() {
-        createData(true);
+
+        addDisposible(manager.getEssayListData(mPageIndex)
+                .compose(RxUtil.handleResult())
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribeWith(new BaseObserver<EssayListData>(mView) {
+                    @Override
+                    public void onNext(EssayListData essayListData) {
+                        super.onNext(essayListData);
+                        mView.showEssayListView(essayListData, isfresh);
+                    }
+                }));
     }
 
-    /**
-     * 模拟数据
-     * @param isRefresh 是否是刷新界面操作
-     */
-    private void createData(boolean isRefresh) {
-        List<String> dataList = new ArrayList<>();
-        Integer[] imgs = new Integer[]{R.drawable.v0, R.drawable.v1, R.drawable.v2, R.drawable.v3};
-        List<Integer> bannerData = Arrays.asList(imgs);
-
-        for (int i = 0; i < 10; i++) {
-            dataList.add("1");
-        }
-
-        Observable.just(dataList)
-                .delay(Constants.delayTime, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<String>>() {
+    private void getBannerData() {
+        addDisposible(manager.getBannerData()
+                .compose(RxUtil.handleResult())
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribeWith(new BaseObserver<List<BannerData>>(mView){
                     @Override
-                    public void accept(List<String> strings) throws Exception {
-                        mView.showEssayListView(dataList, isRefresh);
+                    public void onNext(List<BannerData> bannerData) {
+                        super.onNext(bannerData);
                         mView.showBannerData(bannerData);
                     }
-
-                });
-
+                }));
     }
 }

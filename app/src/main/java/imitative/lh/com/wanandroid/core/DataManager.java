@@ -1,15 +1,24 @@
 package imitative.lh.com.wanandroid.core;
 
+import java.util.List;
+
 import imitative.lh.com.wanandroid.core.prefs.PreferenceHelper;
+import imitative.lh.com.wanandroid.network.base.BaseResponse;
+import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.core.HttpHelper;
+import imitative.lh.com.wanandroid.network.bean.BannerData;
+import io.reactivex.Observable;
 
 /**
  * 代理模式
  */
-public class DataManager implements PreferenceHelper {
-    private PreferenceHelper preferenceHelper;
+public class DataManager implements PreferenceHelper, HttpHelper {
+    private final HttpHelper httpHelper;
+    private final PreferenceHelper preferenceHelper;
 
-    public DataManager(PreferenceHelper preferenceHelper) {
+    public DataManager(PreferenceHelper preferenceHelper, HttpHelper httpHelper) {
         this.preferenceHelper = preferenceHelper;
+        this.httpHelper = httpHelper;
     }
 
     @Override
@@ -50,5 +59,17 @@ public class DataManager implements PreferenceHelper {
     @Override
     public void setCurrentPage(int pageIndex) {
         preferenceHelper.setCurrentPage(pageIndex);
+    }
+
+
+    /**********************************************http*****************************************************************/
+    @Override
+    public Observable<BaseResponse<List<BannerData>>> getBannerData() {
+        return httpHelper.getBannerData();
+    }
+
+    @Override
+    public Observable<BaseResponse<EssayListData>> getEssayListData(int pageIndex) {
+        return httpHelper.getEssayListData(pageIndex);
     }
 }

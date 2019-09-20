@@ -82,5 +82,8 @@ public abstract class BaseActivity<T extends AbstractPresenter> extends Abstract
 
     }
 
-
+    @Override
+    public void showErrorMsg(String errorMsg) {
+        CommonUtils.showMessage(this, errorMsg);
+    }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
+import imitative.lh.com.wanandroid.utils.CommonUtils;
 
 /**
  * @Date 2019/8/29
@@ -84,5 +85,10 @@ public abstract class BaseRootFragment<T extends AbstractPresenter> extends Abst
     @Override
     public void showErrorView() {
 
+    }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+        CommonUtils.showMessage(_mActivity, errorMsg);
     }
 }

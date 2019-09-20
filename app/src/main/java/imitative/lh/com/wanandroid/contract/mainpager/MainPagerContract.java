@@ -4,6 +4,8 @@ import java.util.List;
 
 import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
+import imitative.lh.com.wanandroid.network.bean.BannerData;
+import imitative.lh.com.wanandroid.network.bean.EssayListData;
 
 /**
  * @Date 2019/8/29
@@ -15,9 +17,9 @@ public interface MainPagerContract {
         /**
          * 展示文章列表数据
          */
-        void showEssayListView(List data, boolean isRefresh);
+        void showEssayListView(EssayListData data, boolean isRefresh);
 
-        void showBannerData(List data);
+        void showBannerData(List<BannerData> data);
     }
 
     interface Presenter extends AbstractPresenter<View>{

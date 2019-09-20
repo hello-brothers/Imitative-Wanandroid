@@ -9,7 +9,7 @@ import io.reactivex.disposables.Disposable;
 public class BasePresenter<T extends AbstractView> implements AbstractPresenter<T>  {
     protected T mView;
     private CompositeDisposable compositeDisposable;
-    private DataManager manager = WanAndroidApp.getInstance().getDataManager();
+    protected DataManager manager = WanAndroidApp.getInstance().getDataManager();
     public void attachView(T view){
         this.mView = view;
     }

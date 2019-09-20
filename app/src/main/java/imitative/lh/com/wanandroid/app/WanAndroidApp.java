@@ -4,6 +4,8 @@ import android.app.Application;
 
 import imitative.lh.com.wanandroid.core.DataManager;
 import imitative.lh.com.wanandroid.core.prefs.PreferenceHelperImpl;
+import imitative.lh.com.wanandroid.network.core.HttpHelperImpl;
+import imitative.lh.com.wanandroid.network.core.NetworkManager;
 
 public class WanAndroidApp extends Application {
     public static boolean isFirstrun = true;
@@ -11,6 +13,7 @@ public class WanAndroidApp extends Application {
 
     public static WanAndroidApp instance;
     private DataManager dataManager;
+    private NetworkManager networkManager;
 
     public static synchronized WanAndroidApp getInstance(){
         return instance;
@@ -20,10 +23,16 @@ public class WanAndroidApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        dataManager = new DataManager(new PreferenceHelperImpl());
+        networkManager = NetworkManager.getInstance();
+
+        dataManager = new DataManager(new PreferenceHelperImpl(), new HttpHelperImpl());
     }
 
     public DataManager getDataManager() {
         return dataManager;
+    }
+
+    public NetworkManager getNetworkManager(){
+        return networkManager;
     }
 }

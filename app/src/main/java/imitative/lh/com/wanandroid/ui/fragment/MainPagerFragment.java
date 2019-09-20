@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import imitative.lh.com.wanandroid.network.bean.BannerData;
+import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.ui.activity.LoginActivity;
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.app.Constants;
@@ -43,7 +45,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
     SmartRefreshLayout smartRefreshLayout;
 
     private EssayListAdapter    recycleradapter;
-    private List<String>        mEssayDataList;
+    private List<EssayListData.EssayData>        mEssayDataList;
     private boolean             isReCreate;
     private Banner              banner;
 
@@ -83,10 +85,11 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
     protected void initDataAndView() {
         super.initDataAndView();
         setRefrash();
-        if (isLoggedAndNotRebuild()){
-            presenter.getEssayListData();
-        }else {
+        if (isFirstbuild()){
+            //第一次加载
             presenter.autoRefresh();
+        }else {
+            presenter.getEssayListData();
         }
         if (CommonUtils.isNetworkConnected()){
             showLoadingView();
@@ -100,9 +103,8 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         }
     }
 
-    private boolean isLoggedAndNotRebuild() {
-        return !isReCreate && !TextUtils.isEmpty(presenter.getLoginAccount())
-                && !TextUtils.isEmpty(presenter.getLoginPassword());
+    private boolean isFirstbuild() {
+        return !isReCreate ;
     }
 
     public static MainPagerFragment getInstance(boolean param){
@@ -169,28 +171,30 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
     }
 
     @Override
-    public void showEssayListView(List data, boolean isRefresh) {
+    public void showEssayListView(EssayListData data, boolean isRefresh) {
         if (recycleradapter == null){
             return;
         }
         if (isRefresh){
             //刷新数据
-            mEssayDataList = data;
-            recycleradapter.replaceData(data);
+            mEssayDataList = data.getDatas();
+            recycleradapter.replaceData(mEssayDataList);
         }else {
             //向下拉加载数据
-            mEssayDataList.addAll(data);
-            recycleradapter.addData(data);
+            mEssayDataList.addAll(data.getDatas());
+            recycleradapter.addData(data.getDatas());
         }
         showNormalView();
     }
 
     @Override
-    public void showBannerData(List data) {
-        ArrayList<String> titles = new ArrayList<>();
-        for (int i = 0; i < data.size(); i++) {
-            titles.add("第" + i + "张");
+    public void showBannerData(List<BannerData> bannerDataList) {
+        ArrayList<String> bannerImgs = new ArrayList<>();
+        for (BannerData bannerData : bannerDataList) {
+            bannerImgs.add(bannerData.getImagePath());
         }
+
+
         //设置banner样式
 //        banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE);
         //设置图片加载器
@@ -202,7 +206,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
             }
         });
         //设置图片集合
-        banner.setImages(data);
+        banner.setImages(bannerImgs);
         //设置banner动画效果
         banner.setBannerAnimation(Transformer.DepthPage);
         //设置标题集合（当banner样式有显示title时）
@@ -210,7 +214,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         //设置自动轮播，默认为true
         banner.isAutoPlay(true);
         //设置轮播时间
-        banner.setDelayTime(data.size() * 400);
+        banner.setDelayTime(bannerDataList.size() * 400);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
         banner.start();

@@ -17,7 +17,8 @@ ext{
             butterknifeVersion      : "8.6.0",
             fragmentationVersion    : "1.1.9",
             glideVersion            : "4.9.0",
-            smartSwipeVersion       : "1.0.7"
+            smartSwipeVersion       : "1.0.7",
+            retrofitVersion         : "2.3.0",
     ]
 
     dependencies = [
@@ -43,10 +44,16 @@ ext{
             "VerticalTabLayout"                 : "q.rorbin:VerticalTabLayout:1.2.5",
             "SmartSwipe"                        : "com.billy.android:smart-swipe:${version["smartSwipeVersion"]}",
             "LikeButton"                                  : "com.github.jd-alexander:LikeButton:0.2.3",
-
+            "retrofit"                          : "com.squareup.retrofit2:retrofit:${version["retrofitVersion"]}",
+            "converter-gson"                    : "com.squareup.retrofit2:converter-gson:${version["retrofitVersion"]}",
+            "adapter-rxjava2"                   : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitVersion"]}",
+            "logging-interceptor"               : "com.squareup.okhttp3:logging-interceptor:3.8.1",
 
             //ui test
             "espresso-core"                 : "com.android.support.test.espresso:espresso-core:3.0.2",
+
+            //multidex
+            "multidex"                          : "com.android.support:multidex:1.0.3",
 
             //ti
             "butterknife"                   : "com.jakewharton:butterknife:${version["butterknifeVersion"]}",

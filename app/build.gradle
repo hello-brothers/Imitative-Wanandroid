@@ -10,6 +10,8 @@ android {
         //AndroidJUnitRunner必须在defaultConfig中指定，使用gradle依赖无法使其生效
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
+        multiDexEnabled true
+
     }
     buildTypes {
         release {
@@ -48,6 +50,10 @@ dependencies {
     implementation rootProject.ext.dependencies["VerticalTabLayout"]
     implementation rootProject.ext.dependencies["SmartSwipe"]
     implementation rootProject.ext.dependencies["LikeButton"]
+    implementation rootProject.ext.dependencies["retrofit"]
+    implementation rootProject.ext.dependencies["converter-gson"]
+    implementation rootProject.ext.dependencies["adapter-rxjava2"]
+    implementation rootProject.ext.dependencies["logging-interceptor"]
 
     //ti
     implementation rootProject.ext.dependencies["butterknife"]
@@ -59,6 +65,7 @@ dependencies {
     implementation rootProject.ext.dependencies["fragmentation-core"]
     implementation rootProject.ext.dependencies["logger"]
 
+    implementation rootProject.ext.dependencies["multidex"]
     //unit test
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation rootProject.ext.dependencies["junit"]

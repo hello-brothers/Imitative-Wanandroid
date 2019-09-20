@@ -19,4 +19,6 @@ public interface AbstractView {
 
     void showErrorView();
 
+    void showErrorMsg(String errorMsg);
+
 }
