@@ -30,4 +30,6 @@ public interface WanApi {
     @GET("banner/json")
     Observable<BaseResponse<List<BannerData>>> getBannerData();
 
+
+
 }

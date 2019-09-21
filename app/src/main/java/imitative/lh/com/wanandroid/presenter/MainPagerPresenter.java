@@ -55,7 +55,6 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.View> im
     /**
      * 模拟数据
      */
-    @SuppressLint("CheckResult")
     private void createData() {
         getEssayListData();
         getBannerData();

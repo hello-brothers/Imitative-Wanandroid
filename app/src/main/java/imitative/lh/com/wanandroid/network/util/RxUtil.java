@@ -53,7 +53,7 @@ public class RxUtil {
 
     public static <T> ObservableTransformer<T, T> rxSchedulerHelper(){
         return upstream -> upstream
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 }

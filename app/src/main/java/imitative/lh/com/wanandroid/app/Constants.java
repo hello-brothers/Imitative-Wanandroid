@@ -19,6 +19,10 @@ public class Constants {
 
     public static final int TYPE_SETTING = 6;
 
+    public static final int TYPE_WANANDROID = 7;
+
+    public static final int TYPE_LOGOUT = 8;
+
     public static final long CLICK_TIME_AREA = 1000;
 
     public static final String MY_SHARED_PREFERENCE = "my_shared_preference";

@@ -22,7 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -70,7 +72,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     private TextView                                tv_login;
     private List<AbstractSimpleFragment>                      mFragments;
     private int                                     mLastFgIndex;
-    
+
     private static final int LOGIN_COLLECT_CODE     = 101;
     private Menu mMenu;
     private boolean isNeedShowMenu;
@@ -182,8 +184,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
             home_bottom_nav.setVisibility(View.VISIBLE);
             mFloatingActionButton.setVisibility(View.VISIBLE);
         }
-        checkOptionMenu();
 
+        checkOptionMenu();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         AbstractSimpleFragment mTargetFg          = mFragments.get(position);
@@ -196,7 +198,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         }
         transaction.show(mTargetFg);
         transaction.commitAllowingStateLoss();
-
     }
 
     private void initBottomNavigation() {
@@ -381,6 +382,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     public void showLogoutSuccess() {
         CommonAlertDialog.newInstance().cancelDialog(true);
         startActivity(new Intent(this, LoginActivity.class));
+        adjustFragment();
         RxBus.getDefault().post(new LoginEvent(false));
     }
 
@@ -453,10 +455,19 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LOGIN_COLLECT_CODE){
-            switchFragment(Constants.TYPE_COLLECT);
+            adjustFragment();
         }
     }
 
+    private void adjustFragment() {
+        switchFragment(Constants.TYPE_MAIN_PAGER);
+        home_nav.setCheckedItem(R.id.nav_item_wan_android);
+        home_bottom_nav.setSelectedItemId(R.id.tab_main_pager);
+    }
+
+    /**
+     * 调整menu的显示隐藏
+     */
     private void checkOptionMenu() {
         if (null != this.mMenu){
             boolean showTag = isNeedShowMenu == true ? true : false;
