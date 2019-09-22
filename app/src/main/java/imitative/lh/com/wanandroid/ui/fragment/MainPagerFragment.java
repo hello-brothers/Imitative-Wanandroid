@@ -155,6 +155,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
             CommonUtils.showMessage(_mActivity, getString(R.string.login_first));
             return;
         }
+
         CommonUtils.showMessage(_mActivity, "i like " + position);
     }
 
