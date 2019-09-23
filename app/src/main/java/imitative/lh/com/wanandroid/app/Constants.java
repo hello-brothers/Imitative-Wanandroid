@@ -36,6 +36,7 @@ public class Constants {
     public static final String CURRENT_PAGE = "current_page";
 
     public static final int TAB_ONE = 0;
+    public static final float KNOLEDGE_TEXT_SIZE = 12;
     public static long delayTime = 1000;
 
     public static final int TYPE_DEFAULE        = 0;//搜索默认界面

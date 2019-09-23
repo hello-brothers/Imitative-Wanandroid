@@ -19,9 +19,9 @@ import imitative.lh.com.wanandroid.ui.adapter.KnowledgeAdapter;
 
 public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPresenter> implements KnowledgePagerContract.View {
     @BindView(R.id.knowledge_recycler)
-    RecyclerView                knowledge_recycler;
+    RecyclerView                                knowledge_recycler;
     private List<KnowledgeHierarchyData>        knowledgeData;
-    private KnowledgeAdapter    knowledgeAdapter;
+    private KnowledgeAdapter                    knowledgeAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -80,12 +80,9 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
         }
     }
 
-
     private void startToKnowledgeNext(String position) {
         CommonUtils.showMessage(_mActivity, position+"");
     }
-
-
 
     @Override
     public void reload() {
@@ -94,6 +91,4 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
             presenter.refresh();
         }
     }
-
-
 }
