@@ -19,6 +19,7 @@ public class EssayListData {
     private boolean over;
     private int pageCount;
     private int size;
+
     private int total;
     private List<EssayData> datas;
 
