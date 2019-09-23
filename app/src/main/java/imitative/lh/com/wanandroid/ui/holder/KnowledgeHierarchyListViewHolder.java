@@ -25,5 +25,6 @@ public class KnowledgeHierarchyListViewHolder extends BaseViewHolder {
     public KnowledgeHierarchyListViewHolder(View view) {
         super(view);
         ButterKnife.bind(this, view);
+        view.setTag(view.toString());
     }
 }

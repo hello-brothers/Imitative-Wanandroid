@@ -5,6 +5,7 @@ import java.util.List;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -29,6 +30,14 @@ public interface WanApi {
 
     @GET("banner/json")
     Observable<BaseResponse<List<BannerData>>> getBannerData();
+
+    /**
+     * 知识体系数据
+     * https://www.wanandroid.com/tree/json
+     * @return
+     */
+    @GET("tree/json")
+    Observable<BaseResponse<List<KnowledgeHierarchyData>>> getKnowleageHierarchyData();
 
 
 

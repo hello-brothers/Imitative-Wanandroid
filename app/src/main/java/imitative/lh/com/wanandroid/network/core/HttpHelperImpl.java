@@ -7,6 +7,7 @@ import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.api.WanApi;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import io.reactivex.Observable;
 
 /**
@@ -35,5 +36,10 @@ public class HttpHelperImpl implements HttpHelper{
     @Override
     public Observable<BaseResponse<EssayListData>> getEssayListData(int pageIndex) {
         return service.getEssayListData(pageIndex);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<KnowledgeHierarchyData>>> getKnowleageHierarchyData() {
+        return service.getKnowleageHierarchyData();
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import imitative.lh.com.wanandroid.core.prefs.PreferenceHelper;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import imitative.lh.com.wanandroid.network.core.HttpHelper;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import io.reactivex.Observable;
@@ -71,5 +72,10 @@ public class DataManager implements PreferenceHelper, HttpHelper {
     @Override
     public Observable<BaseResponse<EssayListData>> getEssayListData(int pageIndex) {
         return httpHelper.getEssayListData(pageIndex);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<KnowledgeHierarchyData>>> getKnowleageHierarchyData() {
+        return httpHelper.getKnowleageHierarchyData();
     }
 }

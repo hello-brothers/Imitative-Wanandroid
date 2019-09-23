@@ -4,6 +4,7 @@ import java.util.List;
 
 import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
+import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 
 /**
  * @Date 2019/9/2
@@ -13,7 +14,7 @@ import imitative.lh.com.wanandroid.base.view.AbstractView;
 public interface KnowledgePagerContract {
 
     interface View extends AbstractView{
-        void showKnowledgeList(List data);
+        void showKnowledgeList(List<KnowledgeHierarchyData> data);
     }
 
     interface Presenter extends AbstractPresenter<View>{

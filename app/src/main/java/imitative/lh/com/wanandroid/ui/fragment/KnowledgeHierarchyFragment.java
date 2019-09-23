@@ -11,6 +11,7 @@ import butterknife.BindView;
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.base.fragment.BaseFragment;
 import imitative.lh.com.wanandroid.contract.mainpager.KnowledgePagerContract;
+import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import imitative.lh.com.wanandroid.presenter.KnowledgePagerPresenter;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.ui.adapter.KnowledgeAdapter;
@@ -19,7 +20,7 @@ import imitative.lh.com.wanandroid.ui.adapter.KnowledgeAdapter;
 public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPresenter> implements KnowledgePagerContract.View {
     @BindView(R.id.knowledge_recycler)
     RecyclerView                knowledge_recycler;
-    private List<String>        knowledgeData;
+    private List<KnowledgeHierarchyData>        knowledgeData;
     private KnowledgeAdapter    knowledgeAdapter;
 
     @Override
@@ -62,7 +63,7 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
     }
 
     @Override
-    public void showKnowledgeList(List data) {
+    public void showKnowledgeList(List<KnowledgeHierarchyData> data) {
         if (knowledgeAdapter == null){
             return;
         }
@@ -80,7 +81,7 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
     }
 
 
-    private void startToKnowledgeNext(int position) {
+    private void startToKnowledgeNext(String position) {
         CommonUtils.showMessage(_mActivity, position+"");
     }
 
@@ -93,4 +94,6 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
             presenter.refresh();
         }
     }
+
+
 }
