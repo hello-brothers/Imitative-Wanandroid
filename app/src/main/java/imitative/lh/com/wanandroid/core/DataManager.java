@@ -6,6 +6,12 @@ import imitative.lh.com.wanandroid.core.prefs.PreferenceHelper;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
+import imitative.lh.com.wanandroid.network.bean.NavigationListData;
+import imitative.lh.com.wanandroid.network.bean.ProjectListData;
+import imitative.lh.com.wanandroid.network.bean.ProjectTab;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
+import imitative.lh.com.wanandroid.network.bean.WxArticalListData;
+import imitative.lh.com.wanandroid.network.bean.WxAuthor;
 import imitative.lh.com.wanandroid.network.core.HttpHelper;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import io.reactivex.Observable;
@@ -63,7 +69,14 @@ public class DataManager implements PreferenceHelper, HttpHelper {
     }
 
 
+
+
     /**********************************************http*****************************************************************/
+    @Override
+    public Observable<BaseResponse<List<EssayData>>> getTopArticalListData() {
+        return httpHelper.getTopArticalListData();
+    }
+
     @Override
     public Observable<BaseResponse<List<BannerData>>> getBannerData() {
         return httpHelper.getBannerData();
@@ -77,5 +90,30 @@ public class DataManager implements PreferenceHelper, HttpHelper {
     @Override
     public Observable<BaseResponse<List<KnowledgeHierarchyData>>> getKnowleageHierarchyData() {
         return httpHelper.getKnowleageHierarchyData();
+    }
+
+    @Override
+    public Observable<BaseResponse<List<WxAuthor>>> getWxAuthorTab() {
+        return httpHelper.getWxAuthorTab();
+    }
+
+    @Override
+    public Observable<BaseResponse<WxArticalListData>> getWxAuthorListData(int authorId, int pageIndex) {
+        return httpHelper.getWxAuthorListData(authorId, pageIndex);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<NavigationListData>>> getNavigationListData() {
+        return httpHelper.getNavigationListData();
+    }
+
+    @Override
+    public Observable<BaseResponse<List<ProjectTab>>> getProjectTab() {
+        return httpHelper.getProjectTab();
+    }
+
+    @Override
+    public Observable<BaseResponse<ProjectListData>> getProjectListData(int pageIndex, int cid) {
+        return httpHelper.getProjectListData(pageIndex, cid);
     }
 }

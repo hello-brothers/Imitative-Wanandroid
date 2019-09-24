@@ -8,6 +8,9 @@ import java.util.concurrent.TimeUnit;
 import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.contract.mainpager.ProjectPagerContracr;
+import imitative.lh.com.wanandroid.network.base.BaseObserver;
+import imitative.lh.com.wanandroid.network.bean.ProjectTab;
+import imitative.lh.com.wanandroid.network.util.RxUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -33,7 +36,19 @@ public class ProjectPresenter extends BasePresenter<ProjectPagerContracr.View> i
 
     @Override
     public void getProjectListData() {
-        createData();
+
+        addDisposible(manager.getProjectTab()
+                .compose(RxUtil.handleResult())
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribeWith(new BaseObserver<List<ProjectTab>>(mView) {
+                    @Override
+                    public void onNext(List<ProjectTab> projectTabs) {
+                        super.onNext(projectTabs);
+                        mView.showProjectListData(projectTabs);
+                    }
+                })
+        );
+//        createData();
     }
 
     private void createData() {

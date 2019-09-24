@@ -20,6 +20,7 @@ import imitative.lh.com.wanandroid.base.fragment.BaseRootFragment;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.ProjectPagerContracr;
 import imitative.lh.com.wanandroid.core.event.JumpToTheTop;
+import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.presenter.ProjectPresenter;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 
@@ -64,20 +65,20 @@ public class ProjectFragment extends BaseFragment<ProjectPresenter> implements P
     }
 
     @Override
-    public void showProjectListData(List data) {
+    public void showProjectListData(List<ProjectTab> data) {
         fragments.clear();
         initFragment(data);
         initViewPagerAndTabLayout(data);
         showNormalView();
     }
 
-    private void initFragment(List data) {
+    private void initFragment(List<ProjectTab> data) {
         for (int i = 0; i < data.size(); i++) {
-            fragments.add(ProjectDetailFragment.getInstance());
+            fragments.add(ProjectDetailFragment.getInstance(data.get(i).getId()));
         }
     }
 
-    private void initViewPagerAndTabLayout(List data) {
+    private void initViewPagerAndTabLayout(List<ProjectTab> data) {
         projectDetailPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
@@ -92,7 +93,7 @@ public class ProjectFragment extends BaseFragment<ProjectPresenter> implements P
             @Nullable
             @Override
             public CharSequence getPageTitle(int position) {
-                return (CharSequence) data.get(position);
+                return data.get(position).getName();
             }
         });
 

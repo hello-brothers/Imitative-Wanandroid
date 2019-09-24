@@ -1,10 +1,14 @@
 package imitative.lh.com.wanandroid.presenter;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.contract.mainpager.WxArticlePagerContract;
+import imitative.lh.com.wanandroid.network.base.BaseObserver;
+import imitative.lh.com.wanandroid.network.bean.WxAuthor;
+import imitative.lh.com.wanandroid.network.util.RxUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -28,21 +32,19 @@ public class WxArticlePresenter extends BasePresenter<WxArticlePagerContract.Vie
 
     @Override
     public void getWxAuthorListData() {
-        createData();
-    }
-
-    private void createData() {
-        String[] titles = new String[]{"测试", "android", "学习", "知乎", "安丘一", "腾讯", "世界杯","android", "学习", "知乎", "安丘一", "腾讯", "世界杯"};
-        Observable.just(titles)
-                .delay(Constants.delayTime, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String[]>() {
+        addDisposible(manager.getWxAuthorTab()
+                .compose(RxUtil.handleResult())
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribeWith(new BaseObserver<List<WxAuthor>>(mView) {
                     @Override
-                    public void accept(String[] strings) throws Exception {
-                        mView.showWxAuthorListView(titles);
+                    public void onNext(List<WxAuthor> wxAuthors) {
+                        super.onNext(wxAuthors);
+                        mView.showWxAuthorListView(wxAuthors);
                     }
-                });
+                })
+        );
 
     }
+
+
 }

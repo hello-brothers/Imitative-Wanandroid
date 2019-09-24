@@ -4,6 +4,7 @@ import java.util.List;
 
 import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
+import imitative.lh.com.wanandroid.network.bean.WxArticalListData;
 
 /**
  * @Date 2019/9/12
@@ -15,7 +16,7 @@ public interface WxArticlePagerDetailContract {
 
         void jumpToTheTop();
 
-        void showWxDetailData(List data, boolean isRefresh);
+        void showWxDetailData(List<WxArticalListData.WxArticalData> data, boolean isRefresh);
 
 
     }
@@ -26,7 +27,7 @@ public interface WxArticlePagerDetailContract {
 
         void loadMore();
 
-        void getWxDetailData();
+        void getWxDetailData(int authorId);
 
 
     }

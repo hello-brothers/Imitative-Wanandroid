@@ -4,6 +4,7 @@ import java.util.List;
 
 import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
+import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 
 /**
  * @Date 2019/9/17
@@ -15,12 +16,12 @@ public interface ProjectPagerDetailContract {
 
         void jumpToTheTop();
 
-        void showProjectDetailData(List data, boolean isRefresh);
+        void showProjectDetailData(ProjectListData data, boolean isRefresh);
     }
 
     interface Presenter extends AbstractPresenter<View>{
 
-        void getProjectDetailData();
+        void getProjectDetailData(int projectID);
 
         void refresh();
 

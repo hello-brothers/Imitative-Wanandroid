@@ -10,6 +10,7 @@ import java.util.List;
 
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.ui.holder.EssayListViewHolder;
 
@@ -18,14 +19,14 @@ import imitative.lh.com.wanandroid.ui.holder.EssayListViewHolder;
  * @created by lh
  * @Describe:
  */
-public class EssayListAdapter extends BaseQuickAdapter<EssayListData.EssayData, EssayListViewHolder> {
+public class EssayListAdapter extends BaseQuickAdapter<EssayData, EssayListViewHolder> {
 
-    public EssayListAdapter(int layoutResId, @Nullable List<EssayListData.EssayData> data) {
+    public EssayListAdapter(int layoutResId, @Nullable List<EssayData> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(EssayListViewHolder helper, EssayListData.EssayData essayData) {
+    protected void convert(EssayListViewHolder helper, EssayData essayData) {
         helper.addOnClickListener(R.id.im_start);
         helper.setText(R.id.essay_title, essayData.getTitle());
         helper.setText(R.id.item_essay_date, essayData.getNiceDate());

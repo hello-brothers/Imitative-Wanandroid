@@ -15,6 +15,7 @@ import butterknife.BindView;
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.base.fragment.BaseFragment;
 import imitative.lh.com.wanandroid.contract.mainpager.NavigationContract;
+import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.presenter.NavigationPresenter;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.ui.adapter.NavigationAdapter;
@@ -75,17 +76,18 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
     }
 
     @Override
-    public void showNavigationListData(List data) {
+    public void showNavigationListData(List<NavigationListData> data) {
+        if (data.size() == 0){
+            return;
+        }
         initVerticalTabLayout(data);
         navigationAdapter.replaceData(data);
         leftRightLinkage();
     }
 
     private void initReyclerView() {
-        ArrayList<String> data = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            data.add(i + "");
-        }
+
+        List<NavigationListData> data = new ArrayList<>();
         navigationAdapter = new NavigationAdapter(R.layout.item_knowledge, data);
         layoutManager = new LinearLayoutManager(_mActivity);
         recyclerView.setOnTouchListener((v, event) -> {
@@ -97,7 +99,7 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
     }
 
 
-    private void initVerticalTabLayout(List data) {
+    private void initVerticalTabLayout(List<NavigationListData> data) {
         verticalTabLayout.setTabAdapter(new TabAdapter() {
             @Override
             public int getCount() {
@@ -116,9 +118,10 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
 
             @Override
             public ITabView.TabTitle getTitle(int position) {
-                ITabView.TabTitle title = new ITabView.TabTitle.Builder().setContent(data.get(position) + "").setTextColor(
+                ITabView.TabTitle title = new ITabView.TabTitle.Builder().setContent(data.get(position).getName()).setTextColor(
                         ContextCompat.getColor(_mActivity, R.color.blue4),
                         ContextCompat.getColor(_mActivity, R.color.colorblack))
+                        .setTextSize(14)
                         .build();
                 return title;
             }

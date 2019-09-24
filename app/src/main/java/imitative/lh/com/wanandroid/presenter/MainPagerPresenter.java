@@ -39,6 +39,7 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.View> im
 
     @Override
     public void refresh() {
+        mPageIndex = 0;
         isfresh = true;
         createData();
     }

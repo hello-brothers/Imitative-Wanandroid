@@ -1,5 +1,6 @@
 package imitative.lh.com.wanandroid.ui.fragment;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +16,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.R;
+import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.base.fragment.BaseFragment;
 import imitative.lh.com.wanandroid.contract.mainpager.ProjectPagerDetailContract;
+import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 import imitative.lh.com.wanandroid.presenter.ProjectDetailPresenter;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.ui.adapter.ProjectDetailAdapter;
@@ -34,9 +37,14 @@ public class ProjectDetailFragment extends BaseFragment<ProjectDetailPresenter> 
     RecyclerView project_detail_recycler;
     private ProjectDetailAdapter    projectDetailAdapter;
     private LinearLayoutManager     manager;
+    private boolean isNoMoreDate = false;
 
-    public static ProjectDetailFragment getInstance(){
-        return new ProjectDetailFragment();
+    public static ProjectDetailFragment getInstance(int id){
+        ProjectDetailFragment projectDetailFragment = new ProjectDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.ARG_PARAM1, id);
+        projectDetailFragment.setArguments(bundle);
+        return projectDetailFragment;
     }
 
     @Override
@@ -48,9 +56,14 @@ public class ProjectDetailFragment extends BaseFragment<ProjectDetailPresenter> 
     @Override
     protected void initDataAndView() {
         super.initDataAndView();
+        Bundle bundle = getArguments();
+        int projectId = bundle.getInt(Constants.ARG_PARAM1, 0);
+        if (projectId == 0){
+            return;
+        }
         initRefresh();
         if (presenter != null){
-            presenter.getProjectDetailData();
+            presenter.getProjectDetailData(projectId);
         }
         if (CommonUtils.isNetworkConnected()){
             showLoadingView();
@@ -80,14 +93,14 @@ public class ProjectDetailFragment extends BaseFragment<ProjectDetailPresenter> 
         project_refresh.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                presenter.loadMore();
-                refreshLayout.finishLoadMore(3000);
+                    presenter.loadMore();
+                    refreshLayout.finishLoadMore(3000);
             }
         });
     }
 
     private void initRecyclerView() {
-        ArrayList<String> data = new ArrayList<>();
+        ArrayList<ProjectListData.ProjectData> data = new ArrayList<>();
         projectDetailAdapter = new ProjectDetailAdapter(R.layout.item_essay_with_img, data);
         manager = new LinearLayoutManager(_mActivity);
         project_detail_recycler.addItemDecoration(new DividerItemDecoration(_mActivity, DividerItemDecoration.VERTICAL));
@@ -96,11 +109,17 @@ public class ProjectDetailFragment extends BaseFragment<ProjectDetailPresenter> 
     }
 
     @Override
-    public void showProjectDetailData(List data, boolean isRefresh) {
+    public void showProjectDetailData(ProjectListData data, boolean isRefresh) {
+        if (data.getDatas() == null){
+            return;
+        }
+        if (data.getDatas().size() < Constants.PAGE_SIZE){
+            project_refresh.finishLoadMoreWithNoMoreData();
+        }
         if (isRefresh){
-            projectDetailAdapter.replaceData(data);
+            projectDetailAdapter.replaceData(data.getDatas());
         }else {
-            projectDetailAdapter.addData(data);
+            projectDetailAdapter.addData(data.getDatas());
         }
         showNormalView();
     }

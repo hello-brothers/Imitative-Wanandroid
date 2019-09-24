@@ -1,5 +1,6 @@
 package imitative.lh.com.wanandroid.ui.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +12,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.R;
+import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.base.fragment.BaseFragment;
 import imitative.lh.com.wanandroid.contract.mainpager.WxArticlePagerDetailContract;
+import imitative.lh.com.wanandroid.network.bean.WxArticalListData;
 import imitative.lh.com.wanandroid.presenter.WxArticleDetailPresenter;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.ui.adapter.WxDetailArticleAdapter;
@@ -30,8 +33,12 @@ public class WxDetailArticleFragment extends BaseFragment<WxArticleDetailPresent
     SmartRefreshLayout                  smartRefreshLayout;
     private WxDetailArticleAdapter      wxDetailArticleAdapter;
 
-    public static WxDetailArticleFragment getInstance(){
-        return new WxDetailArticleFragment();
+    public static WxDetailArticleFragment getInstance(int authorId){
+        WxDetailArticleFragment wxDetailArticleFragment = new WxDetailArticleFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.ARG_PARAM1, authorId);
+        wxDetailArticleFragment.setArguments(bundle);
+        return wxDetailArticleFragment;
     }
 
     @Override
@@ -44,8 +51,13 @@ public class WxDetailArticleFragment extends BaseFragment<WxArticleDetailPresent
     protected void initDataAndView() {
         super.initDataAndView();
         initRefresh();
+        Bundle arguments = getArguments();
+        int authorid = arguments.getInt(Constants.ARG_PARAM1, 0);
+        if (authorid == 0){
+            return;
+        }
         if (presenter != null){
-            presenter.getWxDetailData();
+            presenter.getWxDetailData(authorid);
         }
         if (CommonUtils.isNetworkConnected()){
             showLoadingView();
@@ -74,7 +86,7 @@ public class WxDetailArticleFragment extends BaseFragment<WxArticleDetailPresent
 
 
     @Override
-    public void showWxDetailData(List data, boolean isRefresh) {
+    public void showWxDetailData(List<WxArticalListData.WxArticalData> data, boolean isRefresh) {
         if (isRefresh){
             wxDetailArticleAdapter.replaceData(data);
         }else {

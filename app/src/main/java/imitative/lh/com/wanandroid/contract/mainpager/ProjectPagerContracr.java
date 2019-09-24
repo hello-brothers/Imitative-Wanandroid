@@ -4,6 +4,7 @@ import java.util.List;
 
 import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
+import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 
 /**
  * @Date 2019/9/17
@@ -12,7 +13,7 @@ import imitative.lh.com.wanandroid.base.view.AbstractView;
  */
 public interface ProjectPagerContracr {
     interface View extends AbstractView{
-        void showProjectListData(List data);
+        void showProjectListData(List<ProjectTab> data);
     }
 
     interface Presenter extends AbstractPresenter<View>{

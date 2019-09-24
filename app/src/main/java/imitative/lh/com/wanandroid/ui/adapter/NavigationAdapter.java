@@ -9,6 +9,8 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.List;
 
 import imitative.lh.com.wanandroid.R;
+import imitative.lh.com.wanandroid.app.Constants;
+import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.ui.holder.KnowledgeHierarchyListViewHolder;
 import imitative.lh.com.wanandroid.widget.custom.FlexTextView;
 
@@ -17,26 +19,29 @@ import imitative.lh.com.wanandroid.widget.custom.FlexTextView;
  * @created by lh
  * @Describe:
  */
-public class NavigationAdapter extends BaseQuickAdapter<String, KnowledgeHierarchyListViewHolder> {
-    private final List data;
+public class NavigationAdapter extends BaseQuickAdapter<NavigationListData, KnowledgeHierarchyListViewHolder> {
 
-    public NavigationAdapter(int layoutResId, @Nullable List data) {
+    private FlexboxLayout knowleage_flexbox;
+
+    public NavigationAdapter(int layoutResId, @Nullable List<NavigationListData> data) {
         super(layoutResId, data);
-        this.data = data;
     }
 
+
     @Override
-    protected void convert(KnowledgeHierarchyListViewHolder helper, String item) {
+    protected void convert(KnowledgeHierarchyListViewHolder helper, NavigationListData item) {
         TextView tv_haed = helper.getView(R.id.knowledge_head);
-        tv_haed.setText(item);
-        FlexboxLayout knowleage_flexbox = helper.getView(R.id.knowledge_flexBox);
-        for (int i = 0; i < 7; i++) {
+        tv_haed.setText(item.getName());
+        knowleage_flexbox = helper.getView(R.id.knowledge_flexBox);
+        knowleage_flexbox.removeAllViews();
+        for (NavigationListData.NavigationData article : item.getArticles()) {
             FlexTextView flexTextView = new FlexTextView(mContext);
-            flexTextView.setTag(i);
-            flexTextView.setText("sfd");
-            if (knowleage_flexbox.getChildCount() < 7){
+            flexTextView.setTextSize(Constants.KNOLEDGE_TEXT_SIZE);
+            flexTextView.setText(article.getTitle());
+            if (knowleage_flexbox.getChildCount() < item.getArticles().size()){
                 knowleage_flexbox.addView(flexTextView);
             }
         }
+
     }
 }

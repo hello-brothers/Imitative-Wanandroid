@@ -36,6 +36,7 @@ public class KnowledgePagerPresenter extends BasePresenter<KnowledgePagerContrac
                 }));
     }
 
+
     @Override
     public void autoRefresh() {
 

@@ -8,6 +8,9 @@ import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.ProjectPagerDetailContract;
 import imitative.lh.com.wanandroid.core.event.JumpToTheTop;
+import imitative.lh.com.wanandroid.network.base.BaseObserver;
+import imitative.lh.com.wanandroid.network.bean.ProjectListData;
+import imitative.lh.com.wanandroid.network.util.RxUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -19,6 +22,9 @@ import io.reactivex.schedulers.Schedulers;
  * @Describe:
  */
 public class ProjectDetailPresenter extends BasePresenter<ProjectPagerDetailContract.View> implements ProjectPagerDetailContract.Presenter {
+
+    private int currentIndex = 1;
+    private int projectID = -1;
 
     @Override
     public void attachView(ProjectPagerDetailContract.View view) {
@@ -37,34 +43,39 @@ public class ProjectDetailPresenter extends BasePresenter<ProjectPagerDetailCont
     }
 
     @Override
-    public void getProjectDetailData() {
+    public void getProjectDetailData(int projectId) {
+
+        this.projectID = projectId;
         createData(true);
     }
 
     @Override
     public void refresh() {
+        currentIndex = 0;
         createData(true);
     }
 
     @Override
     public void loadMore() {
+        currentIndex++;
         createData(false);
     }
 
     private void createData(boolean isRefresh) {
-        ArrayList<String> data = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            data.add(i + "");
+        if (projectID == -1){
+            return;
         }
-        addDisposible(Observable.just(data)
-                .delay(Constants.delayTime, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ArrayList<String>>() {
+        addDisposible(manager.getProjectListData(currentIndex, projectID)
+                .compose(RxUtil.handleResult())
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribeWith(new BaseObserver<ProjectListData>(mView) {
                     @Override
-                    public void accept(ArrayList<String> strings) throws Exception {
-                        mView.showProjectDetailData(strings, isRefresh);
+                    public void onNext(ProjectListData projectListData) {
+                        super.onNext(projectListData);
+                        mView.showProjectDetailData(projectListData, isRefresh);
                     }
                 }));
+
+
     }
 }

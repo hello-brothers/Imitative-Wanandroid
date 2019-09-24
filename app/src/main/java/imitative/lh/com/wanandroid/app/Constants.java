@@ -37,6 +37,7 @@ public class Constants {
 
     public static final int TAB_ONE = 0;
     public static final float KNOLEDGE_TEXT_SIZE = 12;
+    public static final int PAGE_SIZE = 14;
     public static long delayTime = 1000;
 
     public static final int TYPE_DEFAULE        = 0;//搜索默认界面

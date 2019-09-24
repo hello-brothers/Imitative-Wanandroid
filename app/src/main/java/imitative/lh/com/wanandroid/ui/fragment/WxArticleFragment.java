@@ -9,6 +9,7 @@ import android.view.View;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.R;
@@ -18,6 +19,7 @@ import imitative.lh.com.wanandroid.base.fragment.BaseRootFragment;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.WxArticlePagerContract;
 import imitative.lh.com.wanandroid.core.event.JumpToTheTop;
+import imitative.lh.com.wanandroid.network.bean.WxAuthor;
 import imitative.lh.com.wanandroid.presenter.WxArticlePresenter;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 
@@ -48,7 +50,7 @@ public class WxArticleFragment extends BaseFragment<WxArticlePresenter> implemen
 
     }
 
-    private void initViewPagerAndTabLayout(String... titles) {
+    private void initViewPagerAndTabLayout(List<WxAuthor> authorsList) {
         mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
@@ -57,13 +59,13 @@ public class WxArticleFragment extends BaseFragment<WxArticlePresenter> implemen
 
             @Override
             public int getCount() {
-                return titles.length;
+                return authorsList.size();
             }
 
             @Nullable
             @Override
             public CharSequence getPageTitle(int position) {
-                return titles[position];
+                return authorsList.get(position).getName();
 
             }
         });
@@ -100,10 +102,15 @@ public class WxArticleFragment extends BaseFragment<WxArticlePresenter> implemen
     }
 
     @Override
-    public void showWxAuthorListView(String... titles) {
+    public void showWxAuthorListView(List<WxAuthor> authorsList) {
+        if (presenter.getCurrentPage() == Constants.TYPE_WX_ARTICLE){
+            setChildViewVisibility(View.VISIBLE);
+        }else {
+            setChildViewVisibility(View.INVISIBLE);
+        }
         fragments.clear();
-        initFragments(titles);
-        initViewPagerAndTabLayout(titles);
+        initFragments(authorsList);
+        initViewPagerAndTabLayout(authorsList);
         setChildViewVisibility(View.VISIBLE);
         showNormalView();
 
@@ -118,9 +125,9 @@ public class WxArticleFragment extends BaseFragment<WxArticlePresenter> implemen
     }
 
 
-    private void initFragments(String... titles) {
-        for (int i = 0; i < titles.length; i++) {
-            fragments.add(WxDetailArticleFragment.getInstance());
+    private void initFragments(List<WxAuthor> authorsList) {
+        for (int i = 0; i < authorsList.size(); i++) {
+            fragments.add(WxDetailArticleFragment.getInstance(authorsList.get(i).getId()));
         }
     }
 

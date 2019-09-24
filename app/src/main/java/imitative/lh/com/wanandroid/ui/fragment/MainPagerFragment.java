@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.ui.activity.LoginActivity;
 import imitative.lh.com.wanandroid.R;
@@ -45,7 +46,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
     SmartRefreshLayout smartRefreshLayout;
 
     private EssayListAdapter    recycleradapter;
-    private List<EssayListData.EssayData>        mEssayDataList;
+    private List<EssayData>        mEssayDataList;
     private boolean             isReCreate;
     private Banner              banner;
 
