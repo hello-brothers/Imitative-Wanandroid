@@ -282,14 +282,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
                 startMainPager();
                 break;
             case R.id.nav_item_collection:
-                if (presenter.getLoginState()){
-                    startCollectFragment();
-                    return true;
-                }else {
-                    startActivityForResult(new Intent(this, LoginActivity.class), LOGIN_COLLECT_CODE);
-                    CommonUtils.showMessage(this, getString(R.string.login_first));
-                    return false;
-                }
+                startCollectFragment();
+//                if (presenter.getLoginState()){
+//                    startCollectFragment();
+//                    return true;
+//                }else {
+//                    startActivityForResult(new Intent(this, LoginActivity.class), LOGIN_COLLECT_CODE);
+//                    CommonUtils.showMessage(this, getString(R.string.login_first));
+//                    return false;
+//                }
+                break;
             case R.id.nav_item_logout:
                 if (presenter.getLoginState()){
                     logout();

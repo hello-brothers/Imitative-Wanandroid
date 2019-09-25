@@ -1,5 +1,6 @@
 package imitative.lh.com.wanandroid.ui.fragment;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,13 +44,33 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+    }
+
+    @Override
     protected void initView() {
         initRecyclerView();
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (presenter ==null){
+            return;
+        }
+        if (!presenter.getLoginState()){
+            showErrorView();
+        }else {
+            presenter.refresh();
+        }
+    }
+
+    @Override
     protected void initDataAndView() {
         super.initDataAndView();
+
         initRefresh();
         if (presenter != null){
             presenter.getCollectionListData();
@@ -72,7 +93,11 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
     public void showCollectionListData(List data) {
         this.showData = data;
         collectionAdapter.replaceData(showData);
-        showNormalView();
+        if (!presenter.getLoginState()){
+            showErrorView();
+        }else {
+            showNormalView();
+        }
     }
 
     private void initRecyclerView() {
