@@ -1,6 +1,7 @@
 package imitative.lh.com.wanandroid.network.util;
 
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
+import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.network.exception.ApiException;
 import imitative.lh.com.wanandroid.network.exception.CustomException;
 import io.reactivex.Observable;
@@ -56,4 +57,5 @@ public class RxUtil {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
 }

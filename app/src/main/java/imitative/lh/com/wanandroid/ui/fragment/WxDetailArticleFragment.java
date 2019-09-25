@@ -98,13 +98,13 @@ public class WxDetailArticleFragment extends BaseFragment<WxArticleDetailPresent
     private void initRefresh() {
         smartRefreshLayout.setOnLoadMoreListener(refreshLayout -> {
             presenter.loadMore();
-            refreshLayout.finishLoadMore(3000);
+            refreshLayout.finishLoadMore(Constants.REFRESH_TIME);
 
         });
 
         smartRefreshLayout.setOnRefreshListener(refreshLayout -> {
             presenter.refresh();
-            refreshLayout.finishRefresh(3000);
+            refreshLayout.finishRefresh(Constants.REFRESH_TIME);
 
         });
     }

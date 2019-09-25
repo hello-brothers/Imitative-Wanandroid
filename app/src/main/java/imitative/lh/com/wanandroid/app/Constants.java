@@ -38,6 +38,12 @@ public class Constants {
     public static final int TAB_ONE = 0;
     public static final float KNOLEDGE_TEXT_SIZE = 12;
     public static final int PAGE_SIZE = 14;
+    public static final String IS_LOAD_TOPESSAYDATA = "isload_topessaydata";
+    public static final String ESSAY_WITHTOP_DATA = "essay_withtop_data";
+    public static final String BANNER_DATA = "banner_data";
+    public static final String ESSAYLIST_DATA = "essaylist_data";
+    public static final String ESSAY_TOPDATA = "essay_topdata";
+    public static final int REFRESH_TIME = 1000;
     public static long delayTime = 1000;
 
     public static final int TYPE_DEFAULE        = 0;//搜索默认界面

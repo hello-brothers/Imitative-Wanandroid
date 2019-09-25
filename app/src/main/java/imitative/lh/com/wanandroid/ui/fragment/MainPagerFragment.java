@@ -88,9 +88,9 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         setRefrash();
         if (isFirstbuild()){
             //第一次加载
-            presenter.autoRefresh();
+            presenter.loadData();
         }else {
-            presenter.getEssayListData();
+            presenter.refresh();
         }
         if (CommonUtils.isNetworkConnected()){
             showLoadingView();
@@ -118,9 +118,10 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
 
     public void initRecyclerView(){
         mEssayDataList  = new ArrayList<>();
-        recycleradapter = new EssayListAdapter(R.layout.item_essay, mEssayDataList);
+        recycleradapter = new EssayListAdapter(mEssayDataList);
         recycleradapter.setOnItemClickListener((adapter, view, position) -> startEssayDetailPager(view, position));
         recycleradapter.setOnItemChildClickListener((adapter, view, position) -> clickChildEvent(view, position));
+        recycleradapter.openLoadAnimation();
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
@@ -156,7 +157,6 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
             CommonUtils.showMessage(_mActivity, getString(R.string.login_first));
             return;
         }
-
         CommonUtils.showMessage(_mActivity, "i like " + position);
     }
 
@@ -173,19 +173,13 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
     }
 
     @Override
-    public void showEssayListView(EssayListData data, boolean isRefresh) {
+    public void showEssayList(List<EssayData> data) {
         if (recycleradapter == null){
             return;
         }
-        if (isRefresh){
-            //刷新数据
-            mEssayDataList = data.getDatas();
-            recycleradapter.replaceData(mEssayDataList);
-        }else {
-            //向下拉加载数据
-            mEssayDataList.addAll(data.getDatas());
-            recycleradapter.addData(data.getDatas());
-        }
+
+        mEssayDataList = data;
+        recycleradapter.replaceData(mEssayDataList);
         showNormalView();
     }
 
@@ -222,6 +216,14 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         banner.start();
     }
 
+    @Override
+    public void showLoadMoreView(List<EssayData> data) {
+        if (recycleradapter == null){
+            return;
+        }
+        recycleradapter.addData(data);
+        showNormalView();
+    }
 
     @Override
     protected MainPagerPresenter createPresenter() {
@@ -231,11 +233,11 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
     private void setRefrash() {
         smartRefreshLayout.setOnRefreshListener(refreshLayout -> {
             presenter.refresh();
-            refreshLayout.finishRefresh(3000);
+            refreshLayout.finishRefresh(Constants.REFRESH_TIME);
         });
         smartRefreshLayout.setOnLoadMoreListener(refreshLayout -> {
             presenter.loadMore();
-            refreshLayout.finishLoadMore(3000);
+            refreshLayout.finishLoadMore(Constants.REFRESH_TIME);
         });
     }
 
@@ -244,9 +246,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         super.reload();
         if (presenter != null && recyclerView.getVisibility() == View.INVISIBLE
                 && CommonUtils.isNetworkConnected()) {
-            presenter.autoRefresh();
+            presenter.refresh();
         }
     }
-
-
 }

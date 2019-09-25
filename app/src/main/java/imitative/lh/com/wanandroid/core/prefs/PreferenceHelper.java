@@ -18,4 +18,8 @@ public interface PreferenceHelper {
 
     void setCurrentPage(int pageIndex);
 
+    void setIsLoadTopEssayData(boolean isLoad);
+
+    boolean isLoadTopEssayData();
+
 }

@@ -63,4 +63,13 @@ public class CommonUtils {
         return connectivityManager.getActiveNetworkInfo() != null;
     }
 
+    /**
+     * 泛型转换工具
+     * @param object
+     * @param <T>
+     * @return
+     */
+    public static <T> T cast(Object object) {
+        return (T) object;
+    }
 }

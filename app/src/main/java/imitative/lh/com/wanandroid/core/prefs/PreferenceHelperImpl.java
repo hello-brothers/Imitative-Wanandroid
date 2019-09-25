@@ -52,4 +52,14 @@ public class PreferenceHelperImpl implements PreferenceHelper {
     public void setCurrentPage(int pageIndex) {
         mPreferences.edit().putInt(Constants.CURRENT_PAGE, pageIndex).apply();
     }
+
+    @Override
+    public void setIsLoadTopEssayData(boolean isLoad) {
+        mPreferences.edit().putBoolean(Constants.IS_LOAD_TOPESSAYDATA, isLoad).apply();
+    }
+
+    @Override
+    public boolean isLoadTopEssayData() {
+        return mPreferences.getBoolean(Constants.IS_LOAD_TOPESSAYDATA, true);
+    }
 }

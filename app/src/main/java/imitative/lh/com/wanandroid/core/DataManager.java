@@ -68,7 +68,15 @@ public class DataManager implements PreferenceHelper, HttpHelper {
         preferenceHelper.setCurrentPage(pageIndex);
     }
 
+    @Override
+    public void setIsLoadTopEssayData(boolean isLoad) {
+        preferenceHelper.setIsLoadTopEssayData(isLoad);
+    }
 
+    @Override
+    public boolean isLoadTopEssayData() {
+        return preferenceHelper.isLoadTopEssayData();
+    }
 
 
     /**********************************************http*****************************************************************/

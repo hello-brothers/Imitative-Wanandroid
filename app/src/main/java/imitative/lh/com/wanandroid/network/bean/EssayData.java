@@ -1,5 +1,7 @@
 package imitative.lh.com.wanandroid.network.bean;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,11 @@ import java.util.List;
  * @created by lh
  * @Describe:
  */
-public class EssayData {
+public class EssayData implements MultiItemEntity {
+    public static final int TYPE_TOP        = 1;
+    public static final int TYPE_NORMAL     = 0;
+
+    private int item_type;
 
     /**
      * apkLink :
@@ -291,5 +297,14 @@ public class EssayData {
 
     public void setTags(List<?> tags) {
         this.tags = tags;
+    }
+
+    @Override
+    public int getItemType() {
+        return item_type;
+    }
+
+    public void setItemtype(int itemType){
+        this.item_type = itemType;
     }
 }
