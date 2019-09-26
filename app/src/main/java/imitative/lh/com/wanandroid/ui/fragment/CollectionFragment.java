@@ -140,4 +140,11 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
         }
     }
 
+    @Override
+    public void reload() {
+        super.reload();
+        if (presenter != null && collection_recycler.getVisibility() == View.INVISIBLE){
+            presenter.refresh();
+        }
+    }
 }

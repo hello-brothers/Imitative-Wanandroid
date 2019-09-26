@@ -39,4 +39,5 @@
     <string name="unlogin">未登录</string>
     <string name="login_text">点我登录</string>
     <string name="unlogin_text">还没有登录，请先登录..</string>
+    <string name="retry">重试</string>
 </resources>

@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.ui.activity.LoginActivity;
@@ -27,9 +29,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
     private View        loadingView;
     private View        errorView;
     private View        unloginView;
-    private Button      btn_reload;
+    private TextView    btn_reload;
     private ViewGroup   mNormalView;
     private TextView tv_toLogin;
+    private LottieAnimationView empty_view_anim;
 
     @Override
     protected void initDataAndView() {
@@ -56,6 +59,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
         tv_toLogin = unloginView.findViewById(R.id.tv_tologin);
         tv_toLogin.setOnClickListener(v -> toLogin());
         btn_reload = errorView.findViewById(R.id.btn_reload);
+        empty_view_anim = errorView.findViewById(R.id.empty_value_view);
+
         btn_reload.setOnClickListener( v -> reload());
         unloginView.setVisibility(View.GONE);
         mNormalView.setVisibility(View.VISIBLE);
@@ -97,6 +102,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
         hideCurrentView();
         mCurrentState = ERROR_STATE;
         errorView.setVisibility(View.VISIBLE);
+        empty_view_anim.setAnimation("empty_value.json");
+        empty_view_anim.loop(true);
+        empty_view_anim.playAnimation();
     }
 
     @Override
@@ -122,6 +130,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
                 loadingView.setVisibility(View.GONE);
                 break;
             case ERROR_STATE:
+                empty_view_anim.cancelAnimation();
                 errorView.setVisibility(View.GONE);
                 break;
             case UNLOGIN_STATUS:
@@ -133,5 +142,13 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
 
     public void jumpToTheTop(){
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (empty_view_anim != null){
+            empty_view_anim.cancelAnimation();
+        }
     }
 }
