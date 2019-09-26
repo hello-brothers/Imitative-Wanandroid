@@ -22,9 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,7 +33,6 @@ import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.core.event.LoginEvent;
 import imitative.lh.com.wanandroid.presenter.MainPresenter;
 import imitative.lh.com.wanandroid.utils.CommonAlertDialog;
-import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.utils.StatusBarUtils;
 import imitative.lh.com.wanandroid.base.activity.BaseActivity;
 import imitative.lh.com.wanandroid.contract.mainpager.MainContract;
@@ -365,8 +362,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
      */
     @Override
     public void showLogoutView() {
-        tv_login.setText("login");
-        tv_login.setOnClickListener(v -> startActivity(new Intent(this, LoginActivity.class)));
+        tv_login.setText(R.string.login_text);
+        tv_login.setOnClickListener(v ->{
+            startActivity(new Intent(this, LoginActivity.class));
+            overridePendingTransition(R.anim.right_to_left_enter, R.anim.right_to_left_exit);
+        });
         if (home_nav == null){
             return;
         }
@@ -383,7 +383,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     @Override
     public void showLogoutSuccess() {
         CommonAlertDialog.newInstance().cancelDialog(true);
-        startActivity(new Intent(this, LoginActivity.class));
+//        startActivity(new Intent(this, LoginActivity.class));
         adjustFragment();
         RxBus.getDefault().post(new LoginEvent(false));
     }

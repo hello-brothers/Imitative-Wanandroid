@@ -29,6 +29,8 @@ public class KnowledgeAdapter extends BaseQuickAdapter<KnowledgeHierarchyData, K
         super(layoutResId, data);
     }
 
+
+
     @Override
     protected void convert(KnowledgeHierarchyListViewHolder helper, KnowledgeHierarchyData item) {
 

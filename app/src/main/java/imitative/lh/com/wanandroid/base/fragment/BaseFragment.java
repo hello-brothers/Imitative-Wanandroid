@@ -1,11 +1,14 @@
 package imitative.lh.com.wanandroid.base.fragment;
 
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
+import imitative.lh.com.wanandroid.ui.activity.LoginActivity;
 
 /**
  * @Date 2019/8/30
@@ -17,13 +20,16 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
     private static final int NORMAL_STATE = 1;
     private static final int LOADING_STATE = 2;
     private static final int ERROR_STATE = 3;
+    private static final int UNLOGIN_STATUS = 4;
 
     private int mCurrentState = NORMAL_STATE;
 
     private View        loadingView;
     private View        errorView;
+    private View        unloginView;
     private Button      btn_reload;
     private ViewGroup   mNormalView;
+    private TextView tv_toLogin;
 
     @Override
     protected void initDataAndView() {
@@ -41,13 +47,25 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
         ViewGroup parent = (ViewGroup) mNormalView.getParent();
         View.inflate(_mActivity, R.layout.loading_view, parent);
         View.inflate(_mActivity, R.layout.error_view, parent);
+        View.inflate(_mActivity, R.layout.unlogin_view, parent);
+
+        unloginView = parent.findViewById(R.id.unlogin_view);
         loadingView = parent.findViewById(R.id.loading_view);
         errorView = parent.findViewById(R.id.error_view);
+
+        tv_toLogin = unloginView.findViewById(R.id.tv_tologin);
+        tv_toLogin.setOnClickListener(v -> toLogin());
         btn_reload = errorView.findViewById(R.id.btn_reload);
         btn_reload.setOnClickListener( v -> reload());
+        unloginView.setVisibility(View.GONE);
         mNormalView.setVisibility(View.VISIBLE);
         loadingView.setVisibility(View.GONE);
         errorView.setVisibility(View.GONE);
+    }
+
+    private void toLogin() {
+        startActivity(new Intent(_mActivity, LoginActivity.class));
+        _mActivity.overridePendingTransition(R.anim.right_to_left_enter, 0);
     }
 
     @Override
@@ -81,6 +99,17 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
         errorView.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void showUnloginView() {
+        if (mCurrentState == UNLOGIN_STATUS || unloginView == null){
+            return;
+        }
+        hideCurrentView();
+        mCurrentState = UNLOGIN_STATUS;
+        unloginView.setVisibility(View.VISIBLE);
+
+    }
+
     private void hideCurrentView() {
         switch (mCurrentState){
             case NORMAL_STATE:
@@ -95,6 +124,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
             case ERROR_STATE:
                 errorView.setVisibility(View.GONE);
                 break;
+            case UNLOGIN_STATUS:
+                unloginView.setVisibility(View.GONE);
             default:
                 break;
         }

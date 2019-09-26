@@ -36,4 +36,7 @@
     <string name="NETWORK_ERROR">网络错误</string>
     <string name="HTTP_ERROR">协议错误</string>
     <string name="essay_top">置顶</string>
+    <string name="unlogin">未登录</string>
+    <string name="login_text">点我登录</string>
+    <string name="unlogin_text">还没有登录，请先登录..</string>
 </resources>

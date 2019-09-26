@@ -88,6 +88,11 @@ public abstract class BaseRootFragment<T extends AbstractPresenter> extends Abst
     }
 
     @Override
+    public void showUnloginView() {
+
+    }
+
+    @Override
     public void showErrorMsg(String errorMsg) {
         CommonUtils.showMessage(_mActivity, errorMsg);
     }

@@ -5,13 +5,28 @@ import java.util.concurrent.TimeUnit;
 
 import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
+import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.CollectionPagerContract;
+import imitative.lh.com.wanandroid.core.event.LoginEvent;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class CollectionPresenter extends BasePresenter<CollectionPagerContract.View> implements CollectionPagerContract.Presenter {
+
+    @Override
+    public void attachView(CollectionPagerContract.View view) {
+        super.attachView(view);
+        registerEvent();
+    }
+
+    private void registerEvent() {
+        addDisposible(RxBus.getDefault().toFlowable(LoginEvent.class)
+                .filter(loginEvent -> !loginEvent.isLogin())
+                .subscribe(loginEvent -> mView.showUnloginView()));
+    }
+
     @Override
     public void getCollectionListData() {
         createData();

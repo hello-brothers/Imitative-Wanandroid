@@ -1,11 +1,14 @@
 package imitative.lh.com.wanandroid.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -16,10 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.base.fragment.BaseFragment;
 import imitative.lh.com.wanandroid.contract.mainpager.CollectionPagerContract;
 import imitative.lh.com.wanandroid.presenter.CollectionPresenter;
+import imitative.lh.com.wanandroid.ui.activity.LoginActivity;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.ui.adapter.CollectionAdapter;
 
@@ -61,7 +66,7 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
             return;
         }
         if (!presenter.getLoginState()){
-            showErrorView();
+            showUnloginView();
         }else {
             presenter.refresh();
         }
@@ -70,7 +75,6 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
     @Override
     protected void initDataAndView() {
         super.initDataAndView();
-
         initRefresh();
         if (presenter != null){
             presenter.getCollectionListData();
@@ -79,6 +83,8 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
             showLoadingView();
         }
     }
+
+
 
     public static CollectionFragment newInstance(){
         return new CollectionFragment();
@@ -94,7 +100,7 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
         this.showData = data;
         collectionAdapter.replaceData(showData);
         if (!presenter.getLoginState()){
-            showErrorView();
+            showUnloginView();
         }else {
             showNormalView();
         }
@@ -133,4 +139,5 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
                 break;
         }
     }
+
 }

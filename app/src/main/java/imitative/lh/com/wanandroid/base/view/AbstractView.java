@@ -19,6 +19,8 @@ public interface AbstractView {
 
     void showErrorView();
 
+    void showUnloginView();
+
     void showErrorMsg(String errorMsg);
 
 }

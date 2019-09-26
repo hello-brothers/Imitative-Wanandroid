@@ -1,8 +1,13 @@
 package imitative.lh.com.wanandroid.ui.fragment;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.animation.BaseAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +64,13 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
         knowledge_recycler.setLayoutManager(new LinearLayoutManager(_mActivity));
         knowledgeAdapter = new KnowledgeAdapter(R.layout.item_knowledge, knowledgeData);
         knowledgeAdapter.setListener(position -> startToKnowledgeNext(position));
+        knowledgeAdapter.openLoadAnimation(new BaseAnimation() {
+            @Override
+            public Animator[] getAnimators(View view) {
+                return new Animator[]{ObjectAnimator.ofFloat(view, "alpha", 0.5f, 1.0f),
+                        ObjectAnimator.ofFloat(view, "scaleX", 0.5f, 1.0f)};
+            }
+        });
         knowledge_recycler.setAdapter(knowledgeAdapter);
     }
 

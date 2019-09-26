@@ -2,6 +2,8 @@ package imitative.lh.com.wanandroid.ui.fragment;
 
 
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.animation.BaseAnimation;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -34,6 +37,7 @@ import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.base.fragment.BaseFragment;
 import imitative.lh.com.wanandroid.contract.mainpager.MainPagerContract;
 import imitative.lh.com.wanandroid.presenter.MainPagerPresenter;
+import imitative.lh.com.wanandroid.utils.CommonAlertDialog;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.ui.adapter.EssayListAdapter;
 
@@ -46,7 +50,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
     SmartRefreshLayout smartRefreshLayout;
 
     private EssayListAdapter    recycleradapter;
-    private List<EssayData>        mEssayDataList;
+    private List<EssayData>     mEssayDataList;
     private boolean             isReCreate;
     private Banner              banner;
 
@@ -121,7 +125,6 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         recycleradapter = new EssayListAdapter(mEssayDataList);
         recycleradapter.setOnItemClickListener((adapter, view, position) -> startEssayDetailPager(view, position));
         recycleradapter.setOnItemChildClickListener((adapter, view, position) -> clickChildEvent(view, position));
-        recycleradapter.openLoadAnimation();
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
@@ -153,8 +156,14 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
             return;
         }
         if (!presenter.getLoginState()){
-            startActivity(new Intent(_mActivity, LoginActivity.class));
-            CommonUtils.showMessage(_mActivity, getString(R.string.login_first));
+            CommonAlertDialog.newInstance().showDialog(_mActivity,
+                    getString(R.string.unlogin), getString(R.string.unlogin_text), getString(R.string.no), getString(R.string.ok),
+                    v -> CommonAlertDialog.newInstance().cancelDialog(true),
+                    v -> {
+                        startActivity(new Intent(_mActivity, LoginActivity.class));
+                        CommonAlertDialog.newInstance().cancelDialog(true);
+                    }
+            );
             return;
         }
         CommonUtils.showMessage(_mActivity, "i like " + position);

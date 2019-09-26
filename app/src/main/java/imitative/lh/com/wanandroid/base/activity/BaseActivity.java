@@ -48,6 +48,11 @@ public abstract class BaseActivity<T extends AbstractPresenter> extends Abstract
     }
 
     @Override
+    public void showUnloginView() {
+
+    }
+
+    @Override
     public void preload() {
 
     }
