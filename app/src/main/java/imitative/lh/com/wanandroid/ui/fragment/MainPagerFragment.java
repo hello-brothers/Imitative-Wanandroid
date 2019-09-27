@@ -179,10 +179,12 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         if (recycleradapter.getData().size() < 0 || recycleradapter.getData().size() < position){
             return;
         }
+        EssayData essayData = recycleradapter.getData().get(position);
         Intent intent = new Intent(_mActivity, EssayDetailActivity.class);
-        intent.putExtra(Constants.ESSEY_TITLE, recycleradapter.getData().get(position).getTitle());
+        intent.putExtra(Constants.ESSEY_TITLE, essayData.getTitle());
+        intent.putExtra(Constants.IS_COLLECTION, essayData.isCollect());
+        intent.putExtra(Constants.ESSAY_LINK, essayData.getLink());
         startActivity(intent);
-        CommonUtils.showMessage(_mActivity, position + "");
     }
 
     @Override

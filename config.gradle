@@ -48,6 +48,8 @@ ext{
             "converter-gson"                    : "com.squareup.retrofit2:converter-gson:${version["retrofitVersion"]}",
             "adapter-rxjava2"                   : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitVersion"]}",
             "logging-interceptor"               : "com.squareup.okhttp3:logging-interceptor:3.8.1",
+            "agentweb"                          : "com.just.agentweb:agentweb:4.1.2",
+
 
             //ui test
             "espresso-core"                 : "com.android.support.test.espresso:espresso-core:3.0.2",
