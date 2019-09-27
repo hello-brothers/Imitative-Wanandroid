@@ -44,6 +44,8 @@ public class Constants {
     public static final String ESSAYLIST_DATA = "essaylist_data";
     public static final String ESSAY_TOPDATA = "essay_topdata";
     public static final int REFRESH_TIME = 1000;
+    public static final String ESSEY_TITLE = "essay_title";
+    public static final String IS_COLLECTION = "is_collection";
     public static long delayTime = 1000;
 
     public static final int TYPE_DEFAULE        = 0;//搜索默认界面

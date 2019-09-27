@@ -31,6 +31,7 @@ import butterknife.BindView;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.ui.activity.EssayDetailActivity;
 import imitative.lh.com.wanandroid.ui.activity.LoginActivity;
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.app.Constants;
@@ -178,6 +179,9 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         if (recycleradapter.getData().size() < 0 || recycleradapter.getData().size() < position){
             return;
         }
+        Intent intent = new Intent(_mActivity, EssayDetailActivity.class);
+        intent.putExtra(Constants.ESSEY_TITLE, recycleradapter.getData().get(position).getTitle());
+        startActivity(intent);
         CommonUtils.showMessage(_mActivity, position + "");
     }
 

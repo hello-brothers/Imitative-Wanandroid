@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.EssayDetailActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/essay_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/common_toolbar_bg"
+        app:layout_scrollFlags="scroll|enterAlways"
+        android:elevation="@dimen/dp_0"
+        android:theme="@style/toolebaroverlay"
+        app:navigationIcon="@drawable/ic_arrow_back_white"
+        >
+
+        <TextView
+            android:id="@+id/essay_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:gravity="left"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@string/main_title"/>
+
+
+    </android.support.v7.widget.Toolbar>
+
+</FrameLayout>
