@@ -4,10 +4,11 @@ import java.util.List;
 
 import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
 
 public interface CollectionPagerContract {
     interface View extends AbstractView{
-        void showCollectionListData(List data);
+        void showCollectionListData(List<EssayData> data);
     }
 
     interface Presenter extends AbstractPresenter<View>{

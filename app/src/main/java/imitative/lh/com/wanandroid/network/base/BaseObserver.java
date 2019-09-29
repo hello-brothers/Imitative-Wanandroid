@@ -36,13 +36,13 @@ public abstract class BaseObserver<T> extends ResourceObserver<T> {
         String message = e.getMessage();
         if (e instanceof ApiException){
             int code = ((ApiException) e).getExceptionCode();
-            showErrorToastAndView(code);
+            showErrorToastAndView(code, message);
             mView.showErrorView();
         }
 
     }
 
-    private void showErrorToastAndView(int code) {
+    private void showErrorToastAndView(int code, String message) {
         switch (code){
             case CustomException.PARSE_ERROR:
                 mView.showErrorMsg(WanAndroidApp.getInstance().getString(R.string.PARSE_ERROR));
@@ -55,6 +55,9 @@ public abstract class BaseObserver<T> extends ResourceObserver<T> {
                 break;
             case CustomException.UNKNOWN:
                 mView.showErrorMsg(WanAndroidApp.getInstance().getString(R.string.UNKNOWN));
+                break;
+            case BaseResponse.CODE_FAIL:
+                mView.showErrorMsg(WanAndroidApp.getInstance().getString(R.string.LOGIN_ERROR));
                 break;
         }
     }

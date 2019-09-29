@@ -65,6 +65,7 @@ dependencies {
     implementation rootProject.ext.dependencies["fragmentation-swipeback"]
     implementation rootProject.ext.dependencies["fragmentation-core"]
     implementation rootProject.ext.dependencies["logger"]
+    implementation rootProject.ext.dependencies["PersistentCookieJar"]
 
     implementation rootProject.ext.dependencies["multidex"]
     //unit test

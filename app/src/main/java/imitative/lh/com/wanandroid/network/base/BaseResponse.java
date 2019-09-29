@@ -8,6 +8,8 @@ package imitative.lh.com.wanandroid.network.base;
 public class BaseResponse<T> {
 
     public static final int CODE_SUCCESS = 0;
+
+    public static final int CODE_FAIL = -1;
     private int errorCode;
 
     private T data;

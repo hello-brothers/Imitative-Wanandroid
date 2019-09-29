@@ -1,8 +1,10 @@
 package imitative.lh.com.wanandroid.base.presenter;
 
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
+import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.core.DataManager;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
+import imitative.lh.com.wanandroid.core.event.LoginEvent;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -12,6 +14,12 @@ public class BasePresenter<T extends AbstractView> implements AbstractPresenter<
     protected DataManager manager = WanAndroidApp.getInstance().getDataManager();
     public void attachView(T view){
         this.mView = view;
+        registerEvent();
+    }
+
+    private void registerEvent() {
+        addDisposible(RxBus.getDefault().toFlowable(LoginEvent.class)
+                .subscribe(loginEvent -> mView.reload()));
     }
 
     public void detachView(){
@@ -69,4 +77,5 @@ public class BasePresenter<T extends AbstractView> implements AbstractPresenter<
         }
         compositeDisposable.add(disposable);
     }
+
 }

@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     private ProjectFragment                         projectFragment;
     private NavigationFragment                      navigationFragment;
     private TextView                                tv_login;
-    private List<AbstractSimpleFragment>                      mFragments;
+    private List<BaseRootFragment>                      mFragments;
     private int                                     mLastFgIndex;
 
     private static final int LOGIN_COLLECT_CODE     = 101;
@@ -280,14 +280,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
                 break;
             case R.id.nav_item_collection:
                 startCollectFragment();
-//                if (presenter.getLoginState()){
-//                    startCollectFragment();
-//                    return true;
-//                }else {
-//                    startActivityForResult(new Intent(this, LoginActivity.class), LOGIN_COLLECT_CODE);
-//                    CommonUtils.showMessage(this, getString(R.string.login_first));
-//                    return false;
-//                }
                 break;
             case R.id.nav_item_logout:
                 if (presenter.getLoginState()){
@@ -351,7 +343,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
         if (home_nav == null){
             return;
         }
-
         tv_login.setText(WanAndroidApp.getInstance().getDataManager().getLoginAccount());
         tv_login.setOnClickListener(null);
         home_nav.getMenu().findItem(R.id.nav_item_logout).setVisible(true);
@@ -371,6 +362,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
             return;
         }
         home_nav.getMenu().findItem(R.id.nav_item_logout).setVisible(false);
+        closeDrawer();
+
     }
 
     private void logout() {
@@ -383,9 +376,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
     @Override
     public void showLogoutSuccess() {
         CommonAlertDialog.newInstance().cancelDialog(true);
-//        startActivity(new Intent(this, LoginActivity.class));
-        adjustFragment();
-        RxBus.getDefault().post(new LoginEvent(false));
     }
 
     @OnClick(R.id.main_floating_action_btn)
@@ -444,9 +434,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements Navigat
                 Toast.makeText(mActivity, "usage", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_search:
-                Toast.makeText(mActivity, "search", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, SearchActivity.class));
-//                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_in_left);
 
                 break;
         }

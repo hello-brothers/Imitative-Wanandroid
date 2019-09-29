@@ -2,6 +2,7 @@ package imitative.lh.com.wanandroid.presenter;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import org.reactivestreams.Publisher;
 
@@ -14,12 +15,16 @@ import java.util.concurrent.TimeUnit;
 
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.app.Constants;
+import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
+import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.MainPagerContract;
+import imitative.lh.com.wanandroid.core.event.LoginEvent;
 import imitative.lh.com.wanandroid.network.base.BaseObserver;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.util.RxUtil;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
@@ -62,15 +67,51 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.View> im
                 .flatMap(essayListData -> Observable.just(essayListData.getDatas()));
     }
 
+    /**
+     * 自动登录
+     * @return
+     */
+    private Observable<LoginData> getAutoLoginData(){
+        return manager.getLoginData(getLoginAccount(), getLoginPassword())
+                .compose(RxUtil.handleResult());
+
+    }
+
 
     @Override
     public void loadData() {
         mPageIndex = 0;
         if (manager.isLoadTopEssayData()) {
+            canAutoLogin();
             getEssayListDataWithTop();
         } else {
             getEssayListDataWithNoTop();
         }
+    }
+
+    private void canAutoLogin() {
+        addDisposible(getAutoLoginData().compose(RxUtil.rxSchedulerHelper())
+                .subscribeWith(new BaseObserver<LoginData>(mView) {
+                    @Override
+                    public void onNext(LoginData loginData) {
+                        super.onNext(loginData);
+                        manager.setLoginState(true);
+                        manager.setLoginAccount(loginData.getUsername());
+                        manager.setLoginPassword(loginData.getPassword());
+                        RxBus.getDefault().post(new LoginEvent(true));
+                        Log.i("TAG", "onNext: " + "autologinsuccess");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showErrorMsg(WanAndroidApp.getInstance().getString(R.string.LOGIN_ERROR));
+                        manager.setLoginPassword("");
+                        manager.setLoginAccount("");
+                        manager.setLoginState(false);
+                        RxBus.getDefault().post(new LoginEvent(false));
+
+                    }
+                }));
     }
 
     @Override

@@ -8,12 +8,17 @@ import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.CollectionPagerContract;
 import imitative.lh.com.wanandroid.core.event.LoginEvent;
+import imitative.lh.com.wanandroid.network.base.BaseObserver;
+import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.util.RxUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class CollectionPresenter extends BasePresenter<CollectionPagerContract.View> implements CollectionPagerContract.Presenter {
+
+    private int pageIndex = 0;
 
     @Override
     public void attachView(CollectionPagerContract.View view) {
@@ -29,27 +34,26 @@ public class CollectionPresenter extends BasePresenter<CollectionPagerContract.V
 
     @Override
     public void getCollectionListData() {
+        pageIndex = 0;
         createData();
     }
 
     @Override
     public void refresh() {
+        pageIndex = 0;
         createData();
     }
 
     private void createData() {
-        ArrayList<String> data = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            data.add(i+ "");
-        }
 
-        addDisposible(Observable.just(data).delay(Constants.delayTime, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ArrayList<String>>() {
+        addDisposible(manager.getCollectionData(pageIndex)
+                .compose(RxUtil.rxSchedulerHelper())
+                .compose(RxUtil.handleResult())
+                .subscribeWith(new BaseObserver<EssayListData>(mView) {
                     @Override
-                    public void accept(ArrayList<String> strings) throws Exception {
-                        mView.showCollectionListData(strings);
+                    public void onNext(EssayListData essayListData) {
+                        super.onNext(essayListData);
+                        mView.showCollectionListData(essayListData.getDatas());
                     }
                 }));
     }

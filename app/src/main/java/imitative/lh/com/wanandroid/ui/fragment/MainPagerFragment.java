@@ -259,7 +259,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
     @Override
     public void reload() {
         super.reload();
-        if (presenter != null && recyclerView.getVisibility() == View.INVISIBLE
+        if (presenter != null
                 && CommonUtils.isNetworkConnected()) {
             presenter.refresh();
         }

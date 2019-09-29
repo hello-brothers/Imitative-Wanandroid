@@ -1,11 +1,13 @@
 package imitative.lh.com.wanandroid.core;
 
 import java.util.List;
+import java.util.Map;
 
 import imitative.lh.com.wanandroid.core.prefs.PreferenceHelper;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
+import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
@@ -79,7 +81,20 @@ public class DataManager implements PreferenceHelper, HttpHelper {
     }
 
 
+
+
     /**********************************************http*****************************************************************/
+
+    @Override
+    public Observable<BaseResponse<LoginData>> getLoginData(String username, String password) {
+        return httpHelper.getLoginData(username, password);
+    }
+
+    @Override
+    public Observable<BaseResponse<LoginData>> logout() {
+        return httpHelper.logout();
+    }
+
     @Override
     public Observable<BaseResponse<List<EssayData>>> getTopArticalListData() {
         return httpHelper.getTopArticalListData();
@@ -123,5 +138,10 @@ public class DataManager implements PreferenceHelper, HttpHelper {
     @Override
     public Observable<BaseResponse<ProjectListData>> getProjectListData(int pageIndex, int cid) {
         return httpHelper.getProjectListData(pageIndex, cid);
+    }
+
+    @Override
+    public Observable<BaseResponse<EssayListData>> getCollectionData(int pageIndex) {
+        return httpHelper.getCollectionData(pageIndex);
     }
 }

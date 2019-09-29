@@ -1,11 +1,15 @@
 package imitative.lh.com.wanandroid.network.api;
 
+import android.util.Log;
+
 import java.util.List;
+import java.util.Map;
 
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
+import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
@@ -13,7 +17,11 @@ import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.WxArticalListData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -26,6 +34,22 @@ public interface WanApi {
 
     String HOST = "https://www.wanandroid.com/";
 
+    /**
+     * 登录
+     * https://www.wanandroid.com/user/login
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("user/login")
+    Observable<BaseResponse<LoginData>> getLoginData(@Field("username")String username, @Field("password")String password);
+
+    /**
+     * 登出
+     * https://www.wanandroid.com/user/logout/json
+     * @return
+     */
+    @GET("user/logout/json")
+    Observable<BaseResponse<LoginData>> logout();
     /**
      * 顶置文章
      * https://www.wanandroid.com/article/top/json
@@ -86,6 +110,12 @@ public interface WanApi {
     @GET("project/list/{pageIndex}/json")
     Observable<BaseResponse<ProjectListData>> getProjectListData(@Path("pageIndex") int pageIndex, @Query("cid") int cid);
 
-
+    /**
+     * 收藏列表
+     * https://www.wanandroid.com/lg/collect/list/0/json
+     * @return
+     */
+    @GET("lg/collect/list/{pageIndex}/json")
+    Observable<BaseResponse<EssayListData>> getCollectionData(@Path("pageIndex") int pageIndex);
 
 }

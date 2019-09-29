@@ -23,6 +23,7 @@ import butterknife.OnClick;
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.base.fragment.BaseFragment;
 import imitative.lh.com.wanandroid.contract.mainpager.CollectionPagerContract;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.presenter.CollectionPresenter;
 import imitative.lh.com.wanandroid.ui.activity.LoginActivity;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
@@ -76,12 +77,19 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
     protected void initDataAndView() {
         super.initDataAndView();
         initRefresh();
+        if (!presenter.getLoginState()){
+            showUnloginView();
+            return;
+        }
+
+        if ( CommonUtils.isNetworkConnected()){
+            showLoadingView();
+        }
+
         if (presenter != null){
             presenter.getCollectionListData();
         }
-        if (CommonUtils.isNetworkConnected()){
-            showLoadingView();
-        }
+
     }
 
 
@@ -96,7 +104,7 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
     }
 
     @Override
-    public void showCollectionListData(List data) {
+    public void showCollectionListData(List<EssayData> data) {
         this.showData = data;
         collectionAdapter.replaceData(showData);
         if (!presenter.getLoginState()){

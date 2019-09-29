@@ -1,6 +1,7 @@
 package imitative.lh.com.wanandroid.network.core;
 
 import java.util.List;
+import java.util.Map;
 
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
@@ -8,6 +9,7 @@ import imitative.lh.com.wanandroid.network.api.WanApi;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
+import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
@@ -24,6 +26,25 @@ import io.reactivex.Observable;
 public class HttpHelperImpl implements HttpHelper{
 
     private WanApi service = WanAndroidApp.getInstance().getNetworkManager().createApi();
+
+    /**
+     * 登录
+     * @param
+     * @return
+     */
+    @Override
+    public Observable<BaseResponse<LoginData>> getLoginData(String username, String password) {
+        return service.getLoginData(username, password);
+    }
+
+    /**
+     * 登出
+     * @return
+     */
+    @Override
+    public Observable<BaseResponse<LoginData>> logout() {
+        return service.logout();
+    }
 
     @Override
     public Observable<BaseResponse<List<EssayData>>> getTopArticalListData() {
@@ -77,5 +98,10 @@ public class HttpHelperImpl implements HttpHelper{
     @Override
     public Observable<BaseResponse<ProjectListData>> getProjectListData(int pageIndex, int cid) {
         return service.getProjectListData(pageIndex, cid);
+    }
+
+    @Override
+    public Observable<BaseResponse<EssayListData>> getCollectionData(int pageIndex) {
+        return service.getCollectionData(pageIndex);
     }
 }

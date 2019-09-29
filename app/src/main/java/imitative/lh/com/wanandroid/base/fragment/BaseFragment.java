@@ -70,7 +70,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends BaseRootFrag
 
     private void toLogin() {
         startActivity(new Intent(_mActivity, LoginActivity.class));
-        _mActivity.overridePendingTransition(R.anim.right_to_left_enter, 0);
     }
 
     @Override

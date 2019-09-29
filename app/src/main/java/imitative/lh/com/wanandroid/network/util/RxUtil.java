@@ -2,8 +2,10 @@ package imitative.lh.com.wanandroid.network.util;
 
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.exception.ApiException;
 import imitative.lh.com.wanandroid.network.exception.CustomException;
+import imitative.lh.com.wanandroid.utils.CommonUtils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
@@ -21,6 +23,10 @@ public class RxUtil {
         return upstream -> upstream
                 .onErrorResumeNext(new ErrorResumeFunction<>())
                 .flatMap(new ResponseFunction<>());
+    }
+
+    public static <T> ObservableTransformer<BaseResponse<T>, T> handleLogoutResult(){
+        return upstream -> upstream.flatMap(new LogoutResponseFunstion<>());
     }
 
     /**
@@ -44,7 +50,7 @@ public class RxUtil {
         public ObservableSource<T> apply(BaseResponse<T> tBaseResponse) throws Exception {
             int code = tBaseResponse.getErrorCode();
             String msg = tBaseResponse.getErrorMsg();
-            if (code == BaseResponse.CODE_SUCCESS){
+            if (code == BaseResponse.CODE_SUCCESS && tBaseResponse.getData() != null){
                 return Observable.just(tBaseResponse.getData());
             }else {
                 return Observable.error(new ApiException(code, msg));
@@ -58,4 +64,20 @@ public class RxUtil {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    private static class LogoutResponseFunstion<T> implements Function<BaseResponse<T>, ObservableSource<T>> {
+
+        @Override
+        public ObservableSource<T> apply(BaseResponse<T> tBaseResponse) throws Exception {
+            int code = tBaseResponse.getErrorCode();
+            String msg = tBaseResponse.getErrorMsg();
+            if (code == BaseResponse.CODE_SUCCESS){
+                return Observable.create(emitter -> {
+                    emitter.onNext(CommonUtils.cast(new LoginData()));
+                    emitter.onComplete();
+                });
+            }else {
+                return Observable.error(new ApiException(code, msg));
+            }
+        }
+    }
 }

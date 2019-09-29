@@ -66,26 +66,21 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     private void subscribeLoginClickEvent() {
         presenter.addDisposible(RxView.clicks(btn_login)
                 .throttleFirst(Constants.CLICK_TIME_AREA, TimeUnit.MILLISECONDS)
-//                                    .filter(o -> presenter != null)
-                .filter(new Predicate<Object>() {
-                    @Override
-                    public boolean test(Object o) throws Exception {
-                        return presenter != null;
-                    }
-                })
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        presenter.getLoginData(et_username.getText().toString().trim(), et_password.getText().toString().trim());
-                    }
-                }));
+                .filter(o -> presenter != null)
+                .subscribe(o ->presenter.getLoginData(et_username.getText().toString().trim(), et_password.getText().toString().trim())));
     }
 
     @Override
     public void showLoginSuccess() {
         showToast(WanAndroidApp.getInstance().getString(R.string.login_success));
         setResult(0);
-        RxBus.getDefault().post(new LoginEvent(true));
         finish();
+        RxBus.getDefault().post(new LoginEvent(true));
+    }
+
+    @Override
+    public void showErrorView() {
+        super.showErrorView();
+
     }
 }
