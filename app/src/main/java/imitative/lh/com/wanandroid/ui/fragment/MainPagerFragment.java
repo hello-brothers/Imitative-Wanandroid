@@ -32,8 +32,6 @@ import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.core.event.CollectionEvent;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
-import imitative.lh.com.wanandroid.network.bean.EssayListData;
-import imitative.lh.com.wanandroid.ui.activity.EssayDetailActivity;
 import imitative.lh.com.wanandroid.ui.activity.LoginActivity;
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.app.Constants;
@@ -43,6 +41,7 @@ import imitative.lh.com.wanandroid.presenter.MainPagerPresenter;
 import imitative.lh.com.wanandroid.utils.CommonAlertDialog;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.ui.adapter.EssayListAdapter;
+import imitative.lh.com.wanandroid.utils.SkipUtils;
 
 public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implements MainPagerContract.View {
 
@@ -188,13 +187,11 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
             return;
         }
         EssayData essayData = recycleradapter.getData().get(position);
-        Intent intent = new Intent(_mActivity, EssayDetailActivity.class);
-        intent.putExtra(Constants.ESSEY_TITLE, essayData.getTitle());
-        intent.putExtra(Constants.IS_COLLECTION, essayData.isCollect());
-        intent.putExtra(Constants.ESSAY_LINK, essayData.getLink());
-        intent.putExtra(Constants.ESSAY_ID, essayData.getId());
-        intent.putExtra(Constants.IS_PAGECOLLECT, false);
-        startActivity(intent);
+        SkipUtils.startEssayDetailActivity(_mActivity,
+                essayData.getTitle(),
+                essayData.getLink(),
+                essayData.getId(),
+                essayData.isCollect(), false );
     }
 
     @Override

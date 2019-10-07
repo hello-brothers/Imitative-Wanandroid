@@ -42,6 +42,7 @@ public class EssayListAdapter extends BaseMultiItemQuickAdapter<EssayData, Essay
 
     @Override
     protected void convert(EssayListViewHolder helper, EssayData essayData) {
+        helper.addOnClickListener(R.id.im_start);
         switch (helper.getItemViewType()){
             case EssayData.TYPE_TOP:
                 helper.addOnClickListener(R.id.im_start);

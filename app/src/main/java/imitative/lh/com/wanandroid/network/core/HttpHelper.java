@@ -1,7 +1,6 @@
 package imitative.lh.com.wanandroid.network.core;
 
 import java.util.List;
-import java.util.Map;
 
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
@@ -12,11 +11,8 @@ import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
-import imitative.lh.com.wanandroid.network.bean.WxArticalListData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
 import io.reactivex.Observable;
-import retrofit2.http.FieldMap;
-import retrofit2.http.Path;
 
 /**
  * @Date 2019/9/20
@@ -72,7 +68,7 @@ public interface HttpHelper {
     /**
      * 查看某个公众号历史数据
      */
-    Observable<BaseResponse<WxArticalListData>> getWxAuthorListData(int authorId, int pageIndex);
+    Observable<BaseResponse<EssayListData>> getWxAuthorListData(int authorId, int pageIndex);
 
     /**
      * 导航

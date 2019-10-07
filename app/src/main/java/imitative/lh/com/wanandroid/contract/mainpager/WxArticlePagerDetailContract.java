@@ -4,7 +4,7 @@ import java.util.List;
 
 import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
-import imitative.lh.com.wanandroid.network.bean.WxArticalListData;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
 
 /**
  * @Date 2019/9/12
@@ -16,8 +16,11 @@ public interface WxArticlePagerDetailContract {
 
         void jumpToTheTop();
 
-        void showWxDetailData(List<WxArticalListData.WxArticalData> data, boolean isRefresh);
+        void showWxDetailData(List<EssayData> data, boolean isRefresh);
 
+        void showCancelColletEssay(int position, EssayData essayData);
+
+        void showAddColletEssay(int position, EssayData essayData);
 
     }
 
@@ -28,6 +31,10 @@ public interface WxArticlePagerDetailContract {
         void loadMore();
 
         void getWxDetailData(int authorId);
+
+        void cancelColletEssay(int position, EssayData essayData);
+
+        void addColletEssay(int position, EssayData essayData);
 
 
     }

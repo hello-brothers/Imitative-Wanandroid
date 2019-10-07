@@ -1,7 +1,6 @@
 package imitative.lh.com.wanandroid.network.core;
 
 import java.util.List;
-import java.util.Map;
 
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
@@ -14,7 +13,6 @@ import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
-import imitative.lh.com.wanandroid.network.bean.WxArticalListData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
 import io.reactivex.Observable;
 
@@ -81,7 +79,7 @@ public class HttpHelperImpl implements HttpHelper{
     }
 
     @Override
-    public Observable<BaseResponse<WxArticalListData>> getWxAuthorListData(int authorId, int pageIndex) {
+    public Observable<BaseResponse<EssayListData>> getWxAuthorListData(int authorId, int pageIndex) {
         return service.getWxAuthorListData(authorId, pageIndex);
     }
 

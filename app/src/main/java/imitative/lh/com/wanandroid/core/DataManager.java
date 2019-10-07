@@ -1,7 +1,6 @@
 package imitative.lh.com.wanandroid.core;
 
 import java.util.List;
-import java.util.Map;
 
 import imitative.lh.com.wanandroid.core.prefs.PreferenceHelper;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
@@ -12,7 +11,6 @@ import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
-import imitative.lh.com.wanandroid.network.bean.WxArticalListData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
 import imitative.lh.com.wanandroid.network.core.HttpHelper;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
@@ -121,7 +119,7 @@ public class DataManager implements PreferenceHelper, HttpHelper {
     }
 
     @Override
-    public Observable<BaseResponse<WxArticalListData>> getWxAuthorListData(int authorId, int pageIndex) {
+    public Observable<BaseResponse<EssayListData>> getWxAuthorListData(int authorId, int pageIndex) {
         return httpHelper.getWxAuthorListData(authorId, pageIndex);
     }
 

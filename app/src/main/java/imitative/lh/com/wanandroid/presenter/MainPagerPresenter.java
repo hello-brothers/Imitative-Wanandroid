@@ -255,7 +255,7 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.View> im
     }
 
     private void registerEvent() {
-        RxBus.getDefault().toFlowable(CollectionEvent.class)
-                .subscribe(collectionEvent -> mView.reload());
+        addDisposible(RxBus.getDefault().toFlowable(CollectionEvent.class)
+                .subscribe(collectionEvent -> mView.reload()));
     }
 }

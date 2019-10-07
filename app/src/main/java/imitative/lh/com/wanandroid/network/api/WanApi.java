@@ -1,9 +1,6 @@
 package imitative.lh.com.wanandroid.network.api;
 
-import android.util.Log;
-
 import java.util.List;
-import java.util.Map;
 
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
@@ -14,11 +11,9 @@ import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
-import imitative.lh.com.wanandroid.network.bean.WxArticalListData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -87,7 +82,7 @@ public interface WanApi {
      * 微信公众号 查看某个公众号历史数据
      */
     @GET("wxarticle/list/{authorId}/{pageIndex}/json")
-    Observable<BaseResponse<WxArticalListData>> getWxAuthorListData(@Path("authorId") int authorId, @Path("pageIndex") int pageIndex);
+    Observable<BaseResponse<EssayListData>> getWxAuthorListData(@Path("authorId") int authorId, @Path("pageIndex") int pageIndex);
 
     /**
      * 导航
