@@ -62,7 +62,11 @@ public class EssayDetailActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationOnClickListener(v -> onBackPressedSupport());
+        toolbar.setNavigationOnClickListener(v -> {
+            if (!mAgentWeb.back()){
+                onBackPressedSupport();
+            }
+        });
         StatusBarUtils.immersive(this, toolbar, false);
     }
 

@@ -25,6 +25,8 @@ public class NetworkManager {
     private static Retrofit retrofit;
     private static WanApi wanApi;
     private static final SharedPrefsCookiePersistor mSharedCookiePersistor =  new SharedPrefsCookiePersistor(WanAndroidApp.getInstance());
+    public static final PersistentCookieJar persistentCookieJar = new PersistentCookieJar(new SetCookieCache(), mSharedCookiePersistor);
+
 
     public static NetworkManager getInstance() {
         init();
@@ -44,9 +46,8 @@ public class NetworkManager {
         httpLoggingInterceptor.setLevel(BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
-                .cookieJar(new PersistentCookieJar(new SetCookieCache(), mSharedCookiePersistor))
+                .cookieJar(persistentCookieJar)
                 .build();
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(WanApi.HOST)
                 .client(client)
@@ -71,7 +72,7 @@ public class NetworkManager {
 
 
     public void removeAllCookie(){
-        mSharedCookiePersistor.clear();
+        persistentCookieJar.clear();
     }
 
 
