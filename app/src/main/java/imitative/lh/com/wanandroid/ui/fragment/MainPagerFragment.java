@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import imitative.lh.com.wanandroid.component.RxBus;
+import imitative.lh.com.wanandroid.core.event.CollectionEvent;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
@@ -60,6 +62,8 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         super.onAttach(context);
         isReCreate = getArguments().getBoolean(Constants.ARG_PARAM1);
     }
+
+
 
     @Override
     public void onResume() {
@@ -167,7 +171,11 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
             );
             return;
         }
-        CommonUtils.showMessage(_mActivity, "i like " + position);
+        if (recycleradapter.getData().get(position).isCollect()){
+            presenter.cancelColletEssay(position, recycleradapter.getData().get(position));
+        }else {
+            presenter.addColletEssay(position, recycleradapter.getData().get(position));
+        }
     }
 
     /**
@@ -184,6 +192,8 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         intent.putExtra(Constants.ESSEY_TITLE, essayData.getTitle());
         intent.putExtra(Constants.IS_COLLECTION, essayData.isCollect());
         intent.putExtra(Constants.ESSAY_LINK, essayData.getLink());
+        intent.putExtra(Constants.ESSAY_ID, essayData.getId());
+        intent.putExtra(Constants.IS_PAGECOLLECT, false);
         startActivity(intent);
     }
 
@@ -241,6 +251,16 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
     }
 
     @Override
+    public void showCancelColletEssay(int position, EssayData essayData) {
+        recycleradapter.setData(position, essayData);
+    }
+
+    @Override
+    public void showAddColletEssay(int position, EssayData essayData) {
+        recycleradapter.setData(position, essayData);
+    }
+
+    @Override
     protected MainPagerPresenter createPresenter() {
         return new MainPagerPresenter();
     }
@@ -264,4 +284,6 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
             presenter.refresh();
         }
     }
+
+
 }

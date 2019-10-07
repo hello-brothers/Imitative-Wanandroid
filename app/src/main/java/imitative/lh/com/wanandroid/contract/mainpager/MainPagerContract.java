@@ -23,6 +23,10 @@ public interface MainPagerContract {
         void showBannerData(List<BannerData> data);
 
         void showLoadMoreView(List<EssayData> data);
+
+        void showCancelColletEssay(int position, EssayData essayData);
+
+        void showAddColletEssay(int position, EssayData essayData);
     }
 
     interface Presenter extends AbstractPresenter<View>{
@@ -38,5 +42,10 @@ public interface MainPagerContract {
         void getEssayListDataWithNoTop();
 
         void getBannerData();
+
+        void cancelColletEssay(int position, EssayData essayData);
+
+        void addColletEssay(int position, EssayData essayData);
+
     }
 }

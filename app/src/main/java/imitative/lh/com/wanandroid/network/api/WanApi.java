@@ -118,4 +118,34 @@ public interface WanApi {
     @GET("lg/collect/list/{pageIndex}/json")
     Observable<BaseResponse<EssayListData>> getCollectionData(@Path("pageIndex") int pageIndex);
 
+
+    /**
+     * 收藏站内文章
+     * https://www.wanandroid.com/lg/collect/1165/json
+     *
+     */
+    @POST("lg/collect/{essayId}/json")
+    Observable<BaseResponse<EssayListData>> addCollectEssay(@Path("essayId") int essayId);
+
+    /**
+     *
+     * 取消收藏： 文章列表位置
+     * https://www.wanandroid.com/lg/uncollect_originId/2333/json
+     * @param essayId
+     * @return
+     */
+    @POST("lg/uncollect_originId/{essayId}/json")
+    Observable<BaseResponse<EssayListData>> cancelCollectEssay(@Path("essayId") int essayId);
+
+    /**
+     * 取消收藏：收藏列表位置
+     * https://www.wanandroid.com/lg/uncollect/2805/json
+     * @param essayId
+     * @param originId 代表的是你收藏之前的那篇文章本身的id 但是收藏支持主动添加，这种情况下，没有originId则为-1
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("lg/uncollect/{essayId}/json")
+    Observable<BaseResponse<EssayListData>> cancelPageCollectEssay(@Path("essayId") int essayId, @Field("originId") int originId);
+
 }

@@ -1,6 +1,7 @@
 package imitative.lh.com.wanandroid.network.util;
 
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.exception.ApiException;
@@ -26,7 +27,11 @@ public class RxUtil {
     }
 
     public static <T> ObservableTransformer<BaseResponse<T>, T> handleLogoutResult(){
-        return upstream -> upstream.flatMap(new LogoutResponseFunstion<>());
+        return upstream -> upstream.flatMap(new LogoutResponseFunction<>());
+    }
+
+    public static <T> ObservableTransformer<BaseResponse<T>, T> handleCollectResult(){
+        return upstream -> upstream.flatMap(new CollectionResponseFunction<>());
     }
 
     /**
@@ -64,7 +69,7 @@ public class RxUtil {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private static class LogoutResponseFunstion<T> implements Function<BaseResponse<T>, ObservableSource<T>> {
+    private static class LogoutResponseFunction<T> implements Function<BaseResponse<T>, ObservableSource<T>> {
 
         @Override
         public ObservableSource<T> apply(BaseResponse<T> tBaseResponse) throws Exception {
@@ -78,6 +83,24 @@ public class RxUtil {
             }else {
                 return Observable.error(new ApiException(code, msg));
             }
+        }
+    }
+
+    private static class CollectionResponseFunction<T> implements Function<BaseResponse<T>, ObservableSource<T>>{
+
+        @Override
+        public ObservableSource<T> apply(BaseResponse<T> tBaseResponse) throws Exception {
+            int code = tBaseResponse.getErrorCode();
+            String msg = tBaseResponse.getErrorMsg();
+            if (code == BaseResponse.CODE_SUCCESS){
+                return Observable.create(emitter -> {
+                    emitter.onNext(CommonUtils.cast(new EssayListData()));
+                    emitter.onComplete();
+                });
+            }else {
+                return Observable.error(new ApiException(code, msg));
+            }
+
         }
     }
 }

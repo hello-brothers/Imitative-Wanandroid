@@ -61,6 +61,7 @@ public class EssayData implements MultiItemEntity {
     private String niceDate;
     private String niceShareDate;
     private String origin;
+    private String originId;
     private String prefix;
     private String projectLink;
     private long publishTime;
@@ -297,6 +298,14 @@ public class EssayData implements MultiItemEntity {
 
     public void setTags(List<?> tags) {
         this.tags = tags;
+    }
+
+    public String getOriginId() {
+        return originId;
+    }
+
+    public void setOriginId(String originId) {
+        this.originId = originId;
     }
 
     @Override

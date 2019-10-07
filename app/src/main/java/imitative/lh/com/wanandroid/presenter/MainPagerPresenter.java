@@ -19,6 +19,7 @@ import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.MainPagerContract;
+import imitative.lh.com.wanandroid.core.event.CollectionEvent;
 import imitative.lh.com.wanandroid.core.event.LoginEvent;
 import imitative.lh.com.wanandroid.network.base.BaseObserver;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
@@ -44,6 +45,12 @@ import io.reactivex.schedulers.Schedulers;
  * @Describe:
  */
 public class MainPagerPresenter extends BasePresenter<MainPagerContract.View> implements MainPagerContract.Presenter {
+
+    @Override
+    public void attachView(MainPagerContract.View view) {
+        super.attachView(view);
+        registerEvent();
+    }
 
     /***默认页码***/
     private int mPageIndex = 0;
@@ -77,7 +84,6 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.View> im
 
     }
 
-
     @Override
     public void loadData() {
         mPageIndex = 0;
@@ -104,6 +110,7 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.View> im
 
                     @Override
                     public void onError(Throwable e) {
+                        WanAndroidApp.getInstance().getNetworkManager().removeAllCookie();
                         mView.showErrorMsg(WanAndroidApp.getInstance().getString(R.string.LOGIN_ERROR));
                         manager.setLoginPassword("");
                         manager.setLoginAccount("");
@@ -213,7 +220,42 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.View> im
                 }));
     }
 
+    @Override
+    public void cancelColletEssay(int position, EssayData essayData) {
+        addDisposible(manager.cancelCollectEssay(essayData.getId())
+                .compose(RxUtil.handleCollectResult())
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribeWith(new BaseObserver<EssayListData>(mView) {
+                    @Override
+                    public void onNext(EssayListData essayListData) {
+                        super.onNext(essayListData);
+                        essayData.setCollect(false);
+                        mView.showCancelColletEssay(position, essayData);
+                    }
+                }));
+    }
+
+    @Override
+    public void addColletEssay(int position, EssayData essayData) {
+        addDisposible(manager.addCollectEssay(essayData.getId())
+                .compose(RxUtil.handleCollectResult())
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribeWith(new BaseObserver<EssayListData>(mView) {
+                    @Override
+                    public void onNext(EssayListData essayListData) {
+                        super.onNext(essayListData);
+                        essayData.setCollect(true);
+                        mView.showAddColletEssay(position, essayData);
+                    }
+                }));
+    }
+
     private Observable<BaseResponse<List<BannerData>>> getBannerObservable() {
         return manager.getBannerData();
+    }
+
+    private void registerEvent() {
+        RxBus.getDefault().toFlowable(CollectionEvent.class)
+                .subscribe(collectionEvent -> mView.reload());
     }
 }

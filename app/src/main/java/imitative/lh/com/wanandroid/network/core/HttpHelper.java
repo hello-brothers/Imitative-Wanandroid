@@ -98,4 +98,28 @@ public interface HttpHelper {
      * @return
      */
     Observable<BaseResponse<EssayListData>> getCollectionData(int pageIndex);
+
+    /**
+     * 收藏站内文章
+     * @param essayId
+     * @return
+     */
+    Observable<BaseResponse<EssayListData>> addCollectEssay(int essayId);
+
+    /**
+     * 非收藏界面 取消收藏
+     * @param essayId
+     * @return
+     */
+    Observable<BaseResponse<EssayListData>> cancelCollectEssay(int essayId);
+
+    /**
+     * 收藏界面 取消收藏
+     * @param essayId
+     * @param originId
+     * @return
+     */
+    Observable<BaseResponse<EssayListData>> cancelPageCollectEssay(int essayId);
+
+
 }
