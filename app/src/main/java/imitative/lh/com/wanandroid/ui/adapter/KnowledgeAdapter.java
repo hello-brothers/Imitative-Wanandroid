@@ -50,7 +50,7 @@ public class KnowledgeAdapter extends BaseQuickAdapter<KnowledgeHierarchyData, K
             flexTextView.setTextSize(Constants.KNOLEDGE_TEXT_SIZE);
             flexTextView.setOnClickListener(v -> {
                 if (listener != null){
-                    listener.onItemClick(child.getName());
+                    listener.onItemClick(item);
                 }
             });
             knowleage_flexbox.addView(flexTextView);
@@ -60,7 +60,7 @@ public class KnowledgeAdapter extends BaseQuickAdapter<KnowledgeHierarchyData, K
     }
 
     public interface OnItemClickListener{
-        void onItemClick(String position);
+        void onItemClick(KnowledgeHierarchyData data);
     }
     private OnItemClickListener listener;
 

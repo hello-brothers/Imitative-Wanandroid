@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.EssayDetailActivity"></activity>
+        <activity android:name=".ui.activity.KnowledgeDetailActivity"></activity>
+        <activity android:name=".ui.activity.EssayDetailActivity" />
         <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".ui.activity.AboutUsActivity" />
         <activity android:name=".ui.activity.LoginActivity" />

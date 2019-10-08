@@ -2,6 +2,7 @@ package imitative.lh.com.wanandroid.ui.fragment;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,10 +15,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.R;
+import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.base.fragment.BaseFragment;
 import imitative.lh.com.wanandroid.contract.mainpager.KnowledgePagerContract;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import imitative.lh.com.wanandroid.presenter.KnowledgePagerPresenter;
+import imitative.lh.com.wanandroid.ui.activity.KnowledgeDetailActivity;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.ui.adapter.KnowledgeAdapter;
 
@@ -63,7 +66,7 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
         knowledgeData = new ArrayList<>();
         knowledge_recycler.setLayoutManager(new LinearLayoutManager(_mActivity));
         knowledgeAdapter = new KnowledgeAdapter(R.layout.item_knowledge, knowledgeData);
-        knowledgeAdapter.setListener(position -> startToKnowledgeNext(position));
+        knowledgeAdapter.setListener(data -> startToKnowledgeNext(data));
         knowledgeAdapter.openLoadAnimation(new BaseAnimation() {
             @Override
             public Animator[] getAnimators(View view) {
@@ -92,8 +95,14 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
         }
     }
 
-    private void startToKnowledgeNext(String position) {
-        CommonUtils.showMessage(_mActivity, position+"");
+    private void startToKnowledgeNext(KnowledgeHierarchyData data) {
+        if (data == null){
+            return;
+        }
+        Intent intent = new Intent(_mActivity, KnowledgeDetailActivity.class);
+        String know_title = data.getName();
+        intent.putExtra(Constants.KNOW_TITLE, know_title);
+        startActivity(intent);
     }
 
     @Override
