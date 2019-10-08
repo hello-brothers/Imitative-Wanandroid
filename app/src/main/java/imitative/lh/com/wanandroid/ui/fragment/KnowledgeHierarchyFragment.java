@@ -102,6 +102,7 @@ public class KnowledgeHierarchyFragment extends BaseFragment<KnowledgePagerPrese
         Intent intent = new Intent(_mActivity, KnowledgeDetailActivity.class);
         String know_title = data.getName();
         intent.putExtra(Constants.KNOW_TITLE, know_title);
+        intent.putExtra(Constants.ARG_PARAM1, data);
         startActivity(intent);
     }
 

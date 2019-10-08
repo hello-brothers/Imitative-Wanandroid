@@ -157,5 +157,10 @@ public class DataManager implements PreferenceHelper, HttpHelper {
         return httpHelper.cancelPageCollectEssay(essayId);
     }
 
+    @Override
+    public Observable<BaseResponse<EssayListData>> getKnowledagDetailListData(int pageIndex, int cid) {
+        return httpHelper.getKnowledagDetailListData(pageIndex, cid);
+    }
+
 
 }

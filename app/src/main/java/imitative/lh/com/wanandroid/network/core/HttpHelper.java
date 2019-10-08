@@ -116,5 +116,13 @@ public interface HttpHelper {
      */
     Observable<BaseResponse<EssayListData>> cancelPageCollectEssay(int essayId);
 
+    /**
+     *  知识体系下的文章
+     * @param pageIndex
+     * @param cid
+     * @return
+     */
+    Observable<BaseResponse<EssayListData>> getKnowledagDetailListData(int pageIndex, int cid);
+
 
 }

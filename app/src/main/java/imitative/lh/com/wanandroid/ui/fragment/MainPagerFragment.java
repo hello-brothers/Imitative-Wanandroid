@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import imitative.lh.com.wanandroid.component.RxBus;
-import imitative.lh.com.wanandroid.core.event.CollectionEvent;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.ui.activity.LoginActivity;

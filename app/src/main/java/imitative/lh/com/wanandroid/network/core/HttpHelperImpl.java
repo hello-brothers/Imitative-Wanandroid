@@ -116,4 +116,9 @@ public class HttpHelperImpl implements HttpHelper{
     public Observable<BaseResponse<EssayListData>> cancelPageCollectEssay(int essayId) {
         return service.cancelPageCollectEssay(essayId, -1);
     }
+
+    @Override
+    public Observable<BaseResponse<EssayListData>> getKnowledagDetailListData(int pageIndex, int cid) {
+        return service.getKnowledagDetailListData(pageIndex, cid);
+    }
 }

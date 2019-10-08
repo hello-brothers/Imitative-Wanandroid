@@ -29,8 +29,6 @@ import butterknife.OnClick;
 import imitative.lh.com.wanandroid.R;
 import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
-import imitative.lh.com.wanandroid.component.RxBus;
-import imitative.lh.com.wanandroid.core.event.LoginEvent;
 import imitative.lh.com.wanandroid.presenter.MainPresenter;
 import imitative.lh.com.wanandroid.utils.CommonAlertDialog;
 import imitative.lh.com.wanandroid.utils.StatusBarUtils;

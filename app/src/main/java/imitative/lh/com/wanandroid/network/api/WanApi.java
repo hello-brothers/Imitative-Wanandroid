@@ -142,4 +142,13 @@ public interface WanApi {
     @POST("lg/uncollect/{essayId}/json")
     Observable<BaseResponse<EssayListData>> cancelPageCollectEssay(@Path("essayId") int essayId, @Field("originId") int originId);
 
+    /**
+     * 知识体系下的文章
+     * https://www.wanandroid.com/article/list/0/json?cid=60
+     * @param cid
+     * @return
+     */
+    @GET("article/list/{pageIndex}/json")
+    Observable<BaseResponse<EssayListData>> getKnowledagDetailListData(@Path("pageIndex") int pageIndex, @Query("cid") int cid);
+
 }
