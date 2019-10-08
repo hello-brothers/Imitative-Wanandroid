@@ -28,6 +28,7 @@ import imitative.lh.com.wanandroid.presenter.CollectionPresenter;
 import imitative.lh.com.wanandroid.ui.activity.LoginActivity;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.ui.adapter.CollectionAdapter;
+import imitative.lh.com.wanandroid.utils.SkipUtils;
 
 /**
  * @Date 2019/8/28
@@ -114,6 +115,12 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
         }
     }
 
+    @Override
+    public void showCancelPageCollectEssay(int position) {
+        showData.remove(position);
+        collectionAdapter.replaceData(showData);
+    }
+
     private void initRecyclerView() {
         linearLayoutManager = new LinearLayoutManager(_mActivity);
         collection_recycler.setLayoutManager(linearLayoutManager);
@@ -123,8 +130,6 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
         collectionAdapter.setOnItemChildClickListener((adapter, view, position) -> clickChildEvent(view, position));
         collection_recycler.setAdapter(collectionAdapter);
     }
-
-
 
     private void initRefresh(){
 
@@ -142,8 +147,17 @@ public class CollectionFragment extends BaseFragment<CollectionPresenter> implem
     private void clickChildEvent(View view, int position) {
         switch (view.getId()){
             case R.id.tv_delet:
-                showData.remove(position);
-                collectionAdapter.replaceData(showData);
+//                showData.remove(position);
+//                collectionAdapter.replaceData(showData);
+                presenter.cancelPageCollectEssay(position, collectionAdapter.getData().get(position));
+                break;
+            case R.id.liker_content:
+                EssayData essayData = collectionAdapter.getData().get(position);
+                SkipUtils.startEssayDetailActivity(_mActivity,
+                        essayData.getTitle(),
+                        essayData.getLink(),
+                        essayData.getId(),
+                        true, true);
                 break;
         }
     }

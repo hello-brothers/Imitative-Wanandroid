@@ -19,12 +19,14 @@ import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.presenter.NavigationPresenter;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.ui.adapter.NavigationAdapter;
+import imitative.lh.com.wanandroid.utils.SkipUtils;
+import imitative.lh.com.wanandroid.widget.custom.FlexTextView;
 import q.rorbin.verticaltablayout.VerticalTabLayout;
 import q.rorbin.verticaltablayout.adapter.TabAdapter;
 import q.rorbin.verticaltablayout.widget.ITabView;
 import q.rorbin.verticaltablayout.widget.TabView;
 
-public class NavigationFragment extends BaseFragment<NavigationPresenter> implements NavigationContract.View {
+public class NavigationFragment extends BaseFragment<NavigationPresenter> implements NavigationContract.View, FlexTextView.OnFlexClickListener {
     @BindView(R.id.navigation_tab_layout)
     VerticalTabLayout verticalTabLayout;
     @BindView(R.id.navigation_RecyclerView)
@@ -85,10 +87,18 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
         leftRightLinkage();
     }
 
+    @Override
+    public void showRefresh(List<NavigationListData> data) {
+        if (navigationAdapter == null){
+            return;
+        }
+        navigationAdapter.replaceData(data);
+    }
+
     private void initReyclerView() {
 
         List<NavigationListData> data = new ArrayList<>();
-        navigationAdapter = new NavigationAdapter(R.layout.item_knowledge, data);
+        navigationAdapter = new NavigationAdapter(R.layout.item_knowledge, data, this);
         layoutManager = new LinearLayoutManager(_mActivity);
         recyclerView.setOnTouchListener((v, event) -> {
             isTouchRecycler = true;
@@ -139,6 +149,9 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
              * 滚动变化时回调
              * @param recyclerView  当前滚动的recyclerview
              * @param newState  当前的滚动状态
+             *                  开始滚动（SCROLL_STATE_FLING），
+             *                  正在滚动(SCROLL_STATE_TOUCH_SCROLL),
+             *                  已经停止（SCROLL_STATE_IDLE）
              */
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -179,7 +192,6 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
             @Override
             public void onTabSelected(TabView tab, int position) {
                 if (!scrollByTouch){
-                    Log.i("TAG", "onTabSelected: " + position);
                     smoothScrollToPosition(position);
                 }
 
@@ -192,9 +204,7 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
         });
     }
 
-
     private void smoothScrollToPosition(int currentPosition) {
-        Log.i("TAG", "smoothScrollToPosition: " + currentPosition);
         int firstPosition = layoutManager.findFirstVisibleItemPosition();
         int lastPosition = layoutManager.findLastVisibleItemPosition();
 
@@ -221,8 +231,22 @@ public class NavigationFragment extends BaseFragment<NavigationPresenter> implem
     @Override
     public void reload() {
         super.reload();
-        if (presenter != null && normal_view.getVisibility() == View.INVISIBLE){
-            presenter.getNavigationListData();
+        if (presenter != null ){
+            presenter.refresh();
         }
     }
+
+    /**
+     * 点击flextextview 进入网页
+     * @param title
+     * @param link
+     * @param id
+     * @param isCollect
+     */
+    @Override
+    public void onClick(String title, String link, int id, boolean isCollect) {
+        SkipUtils.startEssayDetailActivity(_mActivity, title, link, id, isCollect, false);
+    }
+
+
 }

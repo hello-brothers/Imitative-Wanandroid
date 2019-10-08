@@ -7,8 +7,10 @@ import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.CollectionPagerContract;
+import imitative.lh.com.wanandroid.core.event.CollectionEvent;
 import imitative.lh.com.wanandroid.core.event.LoginEvent;
 import imitative.lh.com.wanandroid.network.base.BaseObserver;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.network.util.RxUtil;
 import io.reactivex.Observable;
@@ -42,6 +44,20 @@ public class CollectionPresenter extends BasePresenter<CollectionPagerContract.V
     public void refresh() {
         pageIndex = 0;
         createData();
+    }
+
+    @Override
+    public void cancelPageCollectEssay(int position, EssayData essayData) {
+        addDisposible(manager.cancelPageCollectEssay(essayData.getId())
+                .compose(RxUtil.handleCollectResult())
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribeWith(new BaseObserver<EssayListData>(mView) {
+                    @Override
+                    public void onNext(EssayListData essayListData) {
+                        super.onNext(essayListData);
+                        mView.showCancelPageCollectEssay(position);
+                    }
+                }));
     }
 
     private void createData() {

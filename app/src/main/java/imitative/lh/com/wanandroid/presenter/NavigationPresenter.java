@@ -23,10 +23,15 @@ import io.reactivex.schedulers.Schedulers;
 public class NavigationPresenter extends BasePresenter<NavigationContract.View> implements NavigationContract.Presenter {
     @Override
     public void getNavigationListData() {
-        createDate();
+        createDate(false);
     }
 
-    private void createDate() {
+    @Override
+    public void refresh() {
+        createDate(true);
+    }
+
+    private void createDate(boolean isRefresh) {
 
         addDisposible(manager.getNavigationListData()
                 .compose(RxUtil.handleResult())
@@ -36,7 +41,11 @@ public class NavigationPresenter extends BasePresenter<NavigationContract.View> 
                     @Override
                     public void onNext(List<NavigationListData> navigationListData) {
                         super.onNext(navigationListData);
-                        mView.showNavigationListData(navigationListData);
+                        if (isRefresh){
+                            mView.showRefresh(navigationListData);
+                        }else {
+                            mView.showNavigationListData(navigationListData);
+                        }
                     }
                 }));
     }

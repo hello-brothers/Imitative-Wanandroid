@@ -13,11 +13,18 @@ import imitative.lh.com.wanandroid.network.bean.NavigationListData;
  */
 public interface NavigationContract {
     interface View extends AbstractView{
+
         void showNavigationListData(List<NavigationListData> data);
+
+        void showRefresh(List<NavigationListData> data);
+
     }
 
     interface Presenter extends AbstractPresenter<View>{
+
         void getNavigationListData();
+
+        void refresh();
     }
 
 }

@@ -8,7 +8,10 @@ import imitative.lh.com.wanandroid.network.bean.EssayData;
 
 public interface CollectionPagerContract {
     interface View extends AbstractView{
+
         void showCollectionListData(List<EssayData> data);
+
+        void showCancelPageCollectEssay(int position);
     }
 
     interface Presenter extends AbstractPresenter<View>{
@@ -16,5 +19,7 @@ public interface CollectionPagerContract {
         void getCollectionListData();
 
         void refresh();
+
+        void cancelPageCollectEssay(int position, EssayData essayData);
     }
 }

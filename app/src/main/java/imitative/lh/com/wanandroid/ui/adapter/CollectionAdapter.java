@@ -45,5 +45,8 @@ public class CollectionAdapter extends BaseQuickAdapter<EssayData, CollectionLis
         helper.setText(R.id.liker_chapter, item.getSuperChapterName() + " · " + item.getChapterName());
         helper.setText(R.id.item_essay_date, item.getNiceDate());
         Glide.with(mContext).load(item.getEnvelopePic()).into((ImageView) helper.getView(R.id.item_img));
+
+        helper.addOnClickListener(R.id.tv_delet);
+        helper.addOnClickListener(R.id.liker_content);
     }
 }

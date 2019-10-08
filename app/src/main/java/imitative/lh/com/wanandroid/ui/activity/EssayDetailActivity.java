@@ -241,11 +241,13 @@ public class EssayDetailActivity extends BaseActivity<EssayDetailPresenter> impl
     public void showCancelColletEssay(EssayListData essayListData) {
         essay_collection.setTitle(getString(R.string.collection));
         essay_collection.setIcon(R.drawable.ic_unlover);
+        isCollection = !isCollection;
     }
 
     @Override
     public void showAddColletEssay(EssayListData essayListData) {
         essay_collection.setTitle(getString(R.string.cancel_collectin));
         essay_collection.setIcon(R.drawable.ic_lover);
+        isCollection = !isCollection;
     }
 }
