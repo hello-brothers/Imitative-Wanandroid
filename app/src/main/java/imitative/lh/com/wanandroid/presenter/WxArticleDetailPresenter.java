@@ -100,7 +100,5 @@ public class WxArticleDetailPresenter extends BasePresenter<WxArticlePagerDetail
     private void registerEvent() {
         addDisposible(RxBus.getDefault().toFlowable(JumpToTheTop.class)
                 .subscribe(jumpToTheTop -> mView.jumpToTheTop()));
-        addDisposible(RxBus.getDefault().toFlowable(CollectionEvent.class)
-                .subscribe(collectionEvent -> mView.reload()));
     }
 }

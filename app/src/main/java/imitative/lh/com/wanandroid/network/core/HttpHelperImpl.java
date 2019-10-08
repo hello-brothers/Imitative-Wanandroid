@@ -10,7 +10,6 @@ import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
-import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
@@ -94,7 +93,7 @@ public class HttpHelperImpl implements HttpHelper{
     }
 
     @Override
-    public Observable<BaseResponse<ProjectListData>> getProjectListData(int pageIndex, int cid) {
+    public Observable<BaseResponse<EssayListData>> getProjectListData(int pageIndex, int cid) {
         return service.getProjectListData(pageIndex, cid);
     }
 

@@ -1,10 +1,9 @@
 package imitative.lh.com.wanandroid.contract.mainpager;
 
-import java.util.List;
-
 import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
-import imitative.lh.com.wanandroid.network.bean.ProjectListData;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
+import imitative.lh.com.wanandroid.network.bean.EssayListData;
 
 /**
  * @Date 2019/9/17
@@ -16,7 +15,11 @@ public interface ProjectPagerDetailContract {
 
         void jumpToTheTop();
 
-        void showProjectDetailData(ProjectListData data, boolean isRefresh);
+        void showProjectDetailData(EssayListData data, boolean isRefresh);
+
+        void showCancelColletEssay(int position, EssayData essayData);
+
+        void showAddColletEssay(int position, EssayData essayData);
     }
 
     interface Presenter extends AbstractPresenter<View>{
@@ -26,5 +29,9 @@ public interface ProjectPagerDetailContract {
         void refresh();
 
         void loadMore();
+
+        void cancelColletEssay(int position, EssayData essayData);
+
+        void addColletEssay(int position, EssayData essayData);
     }
 }

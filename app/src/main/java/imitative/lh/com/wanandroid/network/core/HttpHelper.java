@@ -8,7 +8,6 @@ import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
-import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
@@ -86,7 +85,7 @@ public interface HttpHelper {
      * 项目 数据列表
      *
      */
-    Observable<BaseResponse<ProjectListData>> getProjectListData(int pageIndex, int cid);
+    Observable<BaseResponse<EssayListData>> getProjectListData(int pageIndex, int cid);
 
     /**
      * 收藏列表

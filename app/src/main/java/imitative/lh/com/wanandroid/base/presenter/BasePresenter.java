@@ -20,7 +20,12 @@ public class BasePresenter<T extends AbstractView> implements AbstractPresenter<
 
     private void registerEvent() {
         addDisposible(RxBus.getDefault().toFlowable(LoginEvent.class)
+                .filter(loginEvent -> mView!=null)
                 .subscribe(loginEvent -> mView.reload()));
+
+        addDisposible(RxBus.getDefault().toFlowable(CollectionEvent.class)
+                .filter(collectionEvent -> mView!=null)
+                .subscribe(collectionEvent -> mView.reload()));
 
     }
 

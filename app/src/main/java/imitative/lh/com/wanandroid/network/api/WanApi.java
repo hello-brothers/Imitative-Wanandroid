@@ -8,7 +8,6 @@ import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
-import imitative.lh.com.wanandroid.network.bean.ProjectListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
@@ -103,7 +102,7 @@ public interface WanApi {
      * https://www.wanandroid.com/project/list/1/json?cid=294
      */
     @GET("project/list/{pageIndex}/json")
-    Observable<BaseResponse<ProjectListData>> getProjectListData(@Path("pageIndex") int pageIndex, @Query("cid") int cid);
+    Observable<BaseResponse<EssayListData>> getProjectListData(@Path("pageIndex") int pageIndex, @Query("cid") int cid);
 
     /**
      * 收藏列表
