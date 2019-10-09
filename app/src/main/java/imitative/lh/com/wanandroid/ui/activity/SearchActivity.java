@@ -11,14 +11,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.google.android.flexbox.FlexboxLayout;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import imitative.lh.com.wanandroid.R;
@@ -47,19 +51,14 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
     SearchView searchView;
     RecyclerView mRecyclerView;
 
-    private ConstraintLayout    inEffective_layout;
-    private FrameLayout         effective_layout;
-    private int                 CURRENT_INDEX = -1;
-    private FrameLayout         defaule_layout;
-    private WxDetailArticleAdapter adapter;
-    private FlexboxLayout flexboxLayout;
-    private FlexboxLayout history_search_flexBox;
-
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private ConstraintLayout            inEffective_layout;
+    private FrameLayout                 effective_layout;
+    private int                         CURRENT_INDEX = -1;
+    private FrameLayout                 defaule_layout;
+    private WxDetailArticleAdapter      adapter;
+    private FlexboxLayout               flexboxLayout;
+    private FlexboxLayout               history_search_flexBox;
+    private LinearLayout                history_clearall;
 
     @Override
     protected SearchPresenter createPresneter() {
@@ -78,14 +77,12 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         assert actionBar != null;
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setHomeButtonEnabled(true);
-
         StatusBarUtils.immersive(this, toolbar_search, false);
     }
 
     @Override
     protected void onViewCreated() {
         super.onViewCreated();
-
     }
 
     @Override
@@ -94,6 +91,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         initSearchView();
         /**初始化三种界面的布局**/
         initLayout();
+        subscribeClickEvent();
         /**初始化recyclerview**/
         initRecyclerView();
 
@@ -143,6 +141,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         mRecyclerView = search_container.findViewById(R.id.search_datarecycler);
         flexboxLayout = search_container.findViewById(R.id.hot_search_flexBox);
         history_search_flexBox = search_container.findViewById(R.id.history_search_flexBox);
+        history_clearall = search_container.findViewById(R.id.history_clearall);
 
         defaule_layout.setVisibility(View.GONE);
         inEffective_layout.setVisibility(View.GONE);
@@ -155,8 +154,20 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         for (HotKey hotKey : hotKeyList) {
             FlexTextView flexTextView = new FlexTextView(this);
             flexTextView.setText(hotKey.getName());
+
+            addFlexClickEvent(flexTextView, hotKey.getName());
             flexboxLayout.addView(flexTextView);
+
         }
+    }
+
+    private void addFlexClickEvent(FlexTextView flexText, String name) {
+        presenter.addDisposible(RxView.clicks(flexText)
+                .throttleFirst(Constants.CLICK_TIME_AREA, TimeUnit.MILLISECONDS)
+                .subscribe(o -> {
+                    searchView.setText(name);
+                    presenter.getSearchData(searchView.getText());
+                }));
     }
 
     /**
@@ -205,6 +216,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         for (HistoryData historyData : historyDataList) {
             FlexTextView flexTextView = new FlexTextView(this);
             flexTextView.setText(historyData.getValue());
+            addFlexClickEvent(flexTextView, historyData.getValue());
             history_search_flexBox.addView(flexTextView);
         }
     }
@@ -314,5 +326,12 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         }else {
             presenter.addColletEssay(position, adapter.getData().get(position));
         }
+    }
+
+    private void subscribeClickEvent() {
+        presenter.addDisposible(RxView.clicks(history_clearall)
+                .throttleFirst(Constants.CLICK_TIME_AREA, TimeUnit.MILLISECONDS)
+                .filter(o -> presenter != null)
+                .subscribe(o -> presenter.clearAllHistoryData()));
     }
 }

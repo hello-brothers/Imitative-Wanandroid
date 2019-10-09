@@ -54,4 +54,5 @@ public class FlexTextView extends TextView {
     public interface OnFlexClickListener{
         void onClick(String title, String link, int id, boolean isCollect);
     }
+    
 }

@@ -72,6 +72,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
     @Override
     public void clearAllHistoryData() {
         manager.clearAllHistoryData();
+        refreshHistoryData();
     }
 
     @Override

@@ -98,8 +98,6 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
         }
     }
 
-
-
     public interface OnStatusChangListener{
 
         /**
@@ -123,4 +121,11 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
         this.listener = onStatusChangListener;
     }
 
+    public void setText(String text){
+        et_search.setText(text);
+    }
+
+    public String getText(){
+        return et_search.getText().toString();
+    }
 }
