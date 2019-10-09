@@ -7,6 +7,7 @@ import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.api.WanApi;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.bean.HotKey;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
@@ -120,5 +121,15 @@ public class HttpHelperImpl implements HttpHelper{
     @Override
     public Observable<BaseResponse<EssayListData>> getKnowledagDetailListData(int pageIndex, int cid) {
         return service.getKnowledagDetailListData(pageIndex, cid);
+    }
+
+    @Override
+    public Observable<BaseResponse<EssayListData>> getSearchData(int pageIndex, String key) {
+        return service.getSearchData(pageIndex, key);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<HotKey>>> getSearchHotKey() {
+        return service.getSearchHotKey();
     }
 }

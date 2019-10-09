@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
@@ -24,7 +26,11 @@ android {
         targetCompatibility = '1.8'
     }
 }
-
+greendao{
+    schemaVersion 1
+    targetGenDir 'src/main/java'
+    daoPackage 'imitative.lh.com.wanandroid.core.dao'
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -55,6 +61,8 @@ dependencies {
     implementation rootProject.ext.dependencies["logging-interceptor"]
     implementation rootProject.ext.dependencies["agentweb"]
 
+    //dao
+    implementation rootProject.ext.dependencies["dao"]
     //ti
     implementation rootProject.ext.dependencies["butterknife"]
     implementation rootProject.ext.dependencies["butterknife-compiler"]

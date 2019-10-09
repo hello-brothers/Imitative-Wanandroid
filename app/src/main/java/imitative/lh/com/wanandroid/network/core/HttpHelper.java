@@ -5,6 +5,7 @@ import java.util.List;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.bean.HotKey;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
@@ -12,6 +13,8 @@ import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
 import io.reactivex.Observable;
+import retrofit2.http.Field;
+import retrofit2.http.Path;
 
 /**
  * @Date 2019/9/20
@@ -123,6 +126,20 @@ public interface HttpHelper {
      * @return
      */
     Observable<BaseResponse<EssayListData>> getKnowledagDetailListData(int pageIndex, int cid);
+
+    /**
+     * 搜索
+     * @param pageIndex 页码
+     * @param key 关键字
+     * @return
+     */
+    Observable<BaseResponse<EssayListData>> getSearchData(int pageIndex, String key);
+
+    /**
+     * 搜索热词
+     * @return
+     */
+    Observable<BaseResponse<List<HotKey>>> getSearchHotKey();
 
 
 }

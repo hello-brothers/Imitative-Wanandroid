@@ -5,6 +5,7 @@ import java.util.List;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.bean.HotKey;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
@@ -150,5 +151,23 @@ public interface WanApi {
      */
     @GET("article/list/{pageIndex}/json")
     Observable<BaseResponse<EssayListData>> getKnowledagDetailListData(@Path("pageIndex") int pageIndex, @Query("cid") int cid);
+
+    /**
+     * 搜索
+     * https://www.wanandroid.com/article/query/0/json
+     * @param pageIndex
+     * @param key
+     * @return
+     */
+    @POST("article/query/{pageIndex}/json")
+    @FormUrlEncoded
+    Observable<BaseResponse<EssayListData>> getSearchData(@Path("pageIndex") int pageIndex, @Field("k") String key);
+
+    /**
+     * 搜索热词
+     * https://www.wanandroid.com//hotkey/json
+     */
+    @GET("/hotkey/json")
+    Observable<BaseResponse<List<HotKey>>> getSearchHotKey();
 
 }

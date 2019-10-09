@@ -3,6 +3,7 @@ package imitative.lh.com.wanandroid.app;
 import android.app.Application;
 
 import imitative.lh.com.wanandroid.core.DataManager;
+import imitative.lh.com.wanandroid.core.db.DBHelperImpl;
 import imitative.lh.com.wanandroid.core.prefs.PreferenceHelperImpl;
 import imitative.lh.com.wanandroid.network.core.HttpHelperImpl;
 import imitative.lh.com.wanandroid.network.core.NetworkManager;
@@ -25,7 +26,7 @@ public class WanAndroidApp extends Application {
         instance = this;
         networkManager = NetworkManager.getInstance();
 
-        dataManager = new DataManager(new PreferenceHelperImpl(), new HttpHelperImpl());
+        dataManager = new DataManager(new PreferenceHelperImpl(), new HttpHelperImpl(), DBHelperImpl.getInstance(this));
     }
 
     public DataManager getDataManager() {

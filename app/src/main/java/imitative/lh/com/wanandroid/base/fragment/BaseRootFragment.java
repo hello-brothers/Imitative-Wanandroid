@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 
 /**
@@ -95,5 +96,15 @@ public abstract class BaseRootFragment<T extends AbstractPresenter> extends Abst
     @Override
     public void showErrorMsg(String errorMsg) {
         CommonUtils.showMessage(_mActivity, errorMsg);
+    }
+
+    @Override
+    public void showAddColletEssay(int position, EssayData essayData) {
+
+    }
+
+    @Override
+    public void showCancelColletEssay(int position, EssayData essayData) {
+        
     }
 }

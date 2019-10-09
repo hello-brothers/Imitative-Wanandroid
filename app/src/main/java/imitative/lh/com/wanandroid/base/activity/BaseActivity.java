@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import imitative.lh.com.wanandroid.base.presenter.AbstractPresenter;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
 
@@ -90,5 +91,15 @@ public abstract class BaseActivity<T extends AbstractPresenter> extends Abstract
     @Override
     public void showErrorMsg(String errorMsg) {
         CommonUtils.showMessage(this, errorMsg);
+    }
+
+    @Override
+    public void showCancelColletEssay(int position, EssayData essayData) {
+
+    }
+
+    @Override
+    public void showAddColletEssay(int position, EssayData essayData) {
+
     }
 }

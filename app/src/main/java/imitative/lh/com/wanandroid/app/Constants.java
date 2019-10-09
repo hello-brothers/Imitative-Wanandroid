@@ -50,6 +50,7 @@ public class Constants {
     public static final String ESSAY_ID = "essay_id";
     public static final String IS_PAGECOLLECT = "is_pagecollect";
     public static final String KNOW_TITLE = "know_title";
+    public static final String DB_NAME = "wan_android_history.db";
     public static long delayTime = 1000;
 
     public static final int TYPE_DEFAULE        = 0;//搜索默认界面

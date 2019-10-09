@@ -1,6 +1,7 @@
 package imitative.lh.com.wanandroid.ui.adapter;
 
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -27,7 +28,7 @@ public class WxDetailArticleAdapter extends BaseQuickAdapter<EssayData, WxDetail
     TextView essay_data;
     @Override
     protected void convert(WxDetailArticleViewHolder helper, EssayData item) {
-        helper.setText(R.id.essay_title, item.getTitle());
+        helper.setText(R.id.essay_title,  Html.fromHtml(item.getTitle()));
         helper.setText(R.id.essay_author, item.getAuthor());
         helper.setText(R.id.chapter, item.getSuperChapterName() + " · " + item.getChapterName());
         helper.setText(R.id.item_essay_date, item.getNiceDate());

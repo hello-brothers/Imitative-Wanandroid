@@ -31,36 +31,6 @@ public class KnowledgePagerDetailPresenter extends BasePresenter<KnowledgePagerD
         createData(false);
     }
 
-    @Override
-    public void cancelColletEssay(int position, EssayData essayData) {
-        addDisposible(manager.cancelCollectEssay(essayData.getId())
-                .compose(RxUtil.handleCollectResult())
-                .compose(RxUtil.rxSchedulerHelper())
-                .subscribeWith(new BaseObserver<EssayListData>(mView) {
-                    @Override
-                    public void onNext(EssayListData essayListData) {
-                        super.onNext(essayListData);
-                        essayData.setCollect(false);
-                        mView.showCancelColletEssay(position, essayData);
-                    }
-                }));
-    }
-
-    @Override
-    public void addColletEssay(int position, EssayData essayData) {
-        addDisposible(manager.addCollectEssay(essayData.getId())
-                .compose(RxUtil.handleCollectResult())
-                .compose(RxUtil.rxSchedulerHelper())
-                .subscribeWith(new BaseObserver<EssayListData>(mView) {
-                    @Override
-                    public void onNext(EssayListData essayListData) {
-                        super.onNext(essayListData);
-                        essayData.setCollect(true);
-                        mView.showAddColletEssay(position, essayData);
-                    }
-                }));
-    }
-
     private void createData(boolean isRefresh) {
         addDisposible(manager.getKnowledagDetailListData(pageIndex, id)
                 .compose(RxUtil.handleResult())

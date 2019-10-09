@@ -2,9 +2,12 @@ package imitative.lh.com.wanandroid.core;
 
 import java.util.List;
 
+import imitative.lh.com.wanandroid.core.dao.HistoryData;
+import imitative.lh.com.wanandroid.core.db.DBHelper;
 import imitative.lh.com.wanandroid.core.prefs.PreferenceHelper;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.bean.HotKey;
 import imitative.lh.com.wanandroid.network.bean.KnowledgeHierarchyData;
 import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
@@ -18,13 +21,15 @@ import io.reactivex.Observable;
 /**
  * 代理模式
  */
-public class DataManager implements PreferenceHelper, HttpHelper {
+public class DataManager implements PreferenceHelper, HttpHelper, DBHelper {
     private final HttpHelper httpHelper;
     private final PreferenceHelper preferenceHelper;
+    private final DBHelper dbHelper;
 
-    public DataManager(PreferenceHelper preferenceHelper, HttpHelper httpHelper) {
+    public DataManager(PreferenceHelper preferenceHelper, HttpHelper httpHelper, DBHelper dbHelper) {
         this.preferenceHelper = preferenceHelper;
         this.httpHelper = httpHelper;
+        this.dbHelper = dbHelper;
     }
 
     @Override
@@ -162,5 +167,35 @@ public class DataManager implements PreferenceHelper, HttpHelper {
         return httpHelper.getKnowledagDetailListData(pageIndex, cid);
     }
 
+    @Override
+    public Observable<BaseResponse<EssayListData>> getSearchData(int pageIndex, String key) {
+        return httpHelper.getSearchData(pageIndex, key);
+    }
 
+    @Override
+    public Observable<BaseResponse<List<HotKey>>> getSearchHotKey() {
+        return httpHelper.getSearchHotKey();
+    }
+
+    /************************************************Database*****************************************************************/
+
+    @Override
+    public void addHistoryData(String data) {
+        dbHelper.addHistoryData(data);
+    }
+
+    @Override
+    public void clearAllHistoryData() {
+        dbHelper.clearAllHistoryData();
+    }
+
+    @Override
+    public void clearOneHistoryData(String data) {
+        dbHelper.clearOneHistoryData(data);
+    }
+
+    @Override
+    public List<HistoryData> loadAllHistoryData() {
+        return dbHelper.loadAllHistoryData();
+    }
 }

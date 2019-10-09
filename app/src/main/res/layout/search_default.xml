@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/default_search"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -78,15 +79,21 @@
                     <imitative.lh.com.wanandroid.widget.custom.FlexTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         android:text="afgsegghgbsfh"/>
 
                     <imitative.lh.com.wanandroid.widget.custom.FlexTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         android:text="afgsegghgbsfh"/>
                     <imitative.lh.com.wanandroid.widget.custom.FlexTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         android:text="sagdfsgdsfghbdfhbfgh"/>
 
 
@@ -158,14 +165,20 @@
                     <imitative.lh.com.wanandroid.widget.custom.FlexTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         android:text="afgsegghgbsfh"/>
 
                     <imitative.lh.com.wanandroid.widget.custom.FlexTextView
                         android:layout_width="wrap_content"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         android:layout_height="wrap_content"
                         android:text="afgsegghgbsfh"/>
                     <imitative.lh.com.wanandroid.widget.custom.FlexTextView
                         android:layout_width="wrap_content"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         android:layout_height="wrap_content"
                         android:text="sagdfsgdsfghbdfhbfgh"/>
 

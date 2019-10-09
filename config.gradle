@@ -68,6 +68,8 @@ ext{
             "logger"                            : "com.orhanobut:logger:2.1.1",
             "PersistentCookieJar"               : "com.github.franmontiel:PersistentCookieJar:v1.0.1",
 
+            //dao
+            "dao"                               : "org.greenrobot:greendao:3.2.2",
 
             //unit test
             "junit"                             : 'junit:junit:4.12',

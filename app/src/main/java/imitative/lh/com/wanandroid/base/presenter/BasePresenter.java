@@ -6,6 +6,10 @@ import imitative.lh.com.wanandroid.core.DataManager;
 import imitative.lh.com.wanandroid.base.view.AbstractView;
 import imitative.lh.com.wanandroid.core.event.CollectionEvent;
 import imitative.lh.com.wanandroid.core.event.LoginEvent;
+import imitative.lh.com.wanandroid.network.base.BaseObserver;
+import imitative.lh.com.wanandroid.network.bean.EssayData;
+import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.util.RxUtil;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -83,6 +87,39 @@ public class BasePresenter<T extends AbstractView> implements AbstractPresenter<
             compositeDisposable = new CompositeDisposable();
         }
         compositeDisposable.add(disposable);
+    }
+
+    /**
+     * 集成多个界面重复操作添加取消收藏操作
+     * @param position
+     * @param essayData
+     */
+    public void cancelColletEssay(int position, EssayData essayData) {
+        addDisposible(manager.cancelCollectEssay(essayData.getId())
+                .compose(RxUtil.handleCollectResult())
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribeWith(new BaseObserver<EssayListData>(mView) {
+                    @Override
+                    public void onNext(EssayListData essayListData) {
+                        super.onNext(essayListData);
+                        essayData.setCollect(false);
+                        mView.showCancelColletEssay(position, essayData);
+                    }
+                }));
+    }
+
+    public void addColletEssay(int position, EssayData essayData) {
+        addDisposible(manager.addCollectEssay(essayData.getId())
+                .compose(RxUtil.handleCollectResult())
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribeWith(new BaseObserver<EssayListData>(mView) {
+                    @Override
+                    public void onNext(EssayListData essayListData) {
+                        super.onNext(essayListData);
+                        essayData.setCollect(true);
+                        mView.showAddColletEssay(position, essayData);
+                    }
+                }));
     }
 
 }

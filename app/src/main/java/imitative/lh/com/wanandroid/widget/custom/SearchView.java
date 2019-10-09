@@ -91,6 +91,9 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
         switch (v.getId()){
             case R.id.tv_clearall:
                 et_search.setText("");
+                if (listener != null){
+                    listener.clearContent();
+                }
                 break;
         }
     }
@@ -109,6 +112,8 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
          * @param content 需要搜索的字段
          */
         void searchContent(String content);
+
+        void clearContent();
 
     }
 

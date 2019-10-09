@@ -16,7 +16,7 @@
         </com.scwang.smartrefresh.header.BezierCircleHeader>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/search_dataRecycler"
+            android:id="@+id/search_datarecycler"
             tools:listitem="@layout/item_essay"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
