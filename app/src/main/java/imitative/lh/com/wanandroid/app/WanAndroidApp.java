@@ -2,6 +2,9 @@ package imitative.lh.com.wanandroid.app;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
+
+import imitative.lh.com.wanandroid.BuildConfig;
 import imitative.lh.com.wanandroid.core.DataManager;
 import imitative.lh.com.wanandroid.core.db.DBHelperImpl;
 import imitative.lh.com.wanandroid.core.prefs.PreferenceHelperImpl;
@@ -27,6 +30,10 @@ public class WanAndroidApp extends Application {
         networkManager = NetworkManager.getInstance();
 
         dataManager = new DataManager(new PreferenceHelperImpl(), new HttpHelperImpl(), DBHelperImpl.getInstance(this));
+
+        if (BuildConfig.DEBUG){
+            Stetho.initializeWithDefaults(this);
+        }
     }
 
     public DataManager getDataManager() {

@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.jakewharton.rxbinding2.view.RxView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
     private FlexboxLayout               flexboxLayout;
     private FlexboxLayout               history_search_flexBox;
     private LinearLayout                history_clearall;
+    private SmartRefreshLayout smartRefreshLayout;
 
     @Override
     protected SearchPresenter createPresneter() {
@@ -91,6 +93,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         initSearchView();
         /**初始化三种界面的布局**/
         initLayout();
+        initRefresh();
         subscribeClickEvent();
         /**初始化recyclerview**/
         initRecyclerView();
@@ -134,14 +137,15 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         View.inflate(this, R.layout.search_effectivedata, search_container);
 
 
-        defaule_layout = search_container.findViewById(R.id.default_search);
-        inEffective_layout = search_container.findViewById(R.id.search_empty);
-        effective_layout = search_container.findViewById(R.id.search_effectiveLayout);
+        defaule_layout              = search_container.findViewById(R.id.default_search);
+        inEffective_layout          = search_container.findViewById(R.id.search_empty);
+        effective_layout            = search_container.findViewById(R.id.search_effectiveLayout);
 
-        mRecyclerView = search_container.findViewById(R.id.search_datarecycler);
-        flexboxLayout = search_container.findViewById(R.id.hot_search_flexBox);
-        history_search_flexBox = search_container.findViewById(R.id.history_search_flexBox);
-        history_clearall = search_container.findViewById(R.id.history_clearall);
+        mRecyclerView               = search_container.findViewById(R.id.search_datarecycler);
+        flexboxLayout               = search_container.findViewById(R.id.hot_search_flexBox);
+        history_search_flexBox      = search_container.findViewById(R.id.history_search_flexBox);
+        history_clearall            = search_container.findViewById(R.id.history_clearall);
+        smartRefreshLayout          = search_container.findViewById(R.id.search_smartRefresh);
 
         defaule_layout.setVisibility(View.GONE);
         inEffective_layout.setVisibility(View.GONE);
@@ -183,12 +187,15 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
      */
     @Override
     public void showSearchData(List<EssayData> dataList, boolean isRefresh) {
+        adjustContentView(Constants.TYPE_EFFECTIVE);
+        if (dataList.size()<Constants.PAGE_SIZE){
+            smartRefreshLayout.finishLoadMoreWithNoMoreData();
+        }
         if (isRefresh){
             adapter.replaceData(dataList);
         }else {
             adapter.addData(dataList);
         }
-        adjustContentView(Constants.TYPE_EFFECTIVE);
     }
 
     /**
@@ -326,6 +333,18 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         }else {
             presenter.addColletEssay(position, adapter.getData().get(position));
         }
+    }
+
+    private void initRefresh(){
+        smartRefreshLayout.setOnRefreshListener(refreshLayout -> {
+           presenter.refresh();
+           refreshLayout.finishRefresh(Constants.REFRESH_TIME);
+        });
+
+        smartRefreshLayout.setOnLoadMoreListener(refreshLayout -> {
+            presenter.loadMore();
+            refreshLayout.finishLoadMore(Constants.REFRESH_TIME);
+        });
     }
 
     private void subscribeClickEvent() {

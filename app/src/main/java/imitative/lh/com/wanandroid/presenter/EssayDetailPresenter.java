@@ -1,5 +1,9 @@
 package imitative.lh.com.wanandroid.presenter;
 
+import android.Manifest;
+
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
 import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.EssayDetailContract;
@@ -51,6 +55,18 @@ public class EssayDetailPresenter extends BasePresenter<EssayDetailContract.View
                         super.onNext(essayListData);
                         RxBus.getDefault().post(new CollectionEvent());
                         mView.showAddColletEssay(essayListData);
+                    }
+                }));
+    }
+
+    @Override
+    public void shareEventPermissionVerify(RxPermissions rxPermissions) {
+        addDisposible(rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(aBoolean -> {
+                    if (aBoolean){
+                        mView.shareEvent();
+                    }else {
+                        mView.shareError();
                     }
                 }));
     }

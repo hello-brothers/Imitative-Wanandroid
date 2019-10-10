@@ -1,6 +1,7 @@
 package imitative.lh.com.wanandroid.ui.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.just.agentweb.AgentWeb;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.lang.reflect.Method;
 
@@ -122,8 +124,10 @@ public class EssayDetailActivity extends BaseActivity<EssayDetailPresenter> impl
                 collectEvent();
                 break;
             case R.id.essay_browser:
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(essayLink)));
                 break;
             case R.id.essay_share:
+                presenter.shareEventPermissionVerify(new RxPermissions(this));
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -249,5 +253,18 @@ public class EssayDetailActivity extends BaseActivity<EssayDetailPresenter> impl
         essay_collection.setTitle(getString(R.string.cancel_collectin));
         essay_collection.setIcon(R.drawable.ic_lover);
         isCollection = !isCollection;
+    }
+
+    @Override
+    public void shareEvent() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_type_url, getString(R.string.app_name), essay_title, essayLink));
+        startActivity(Intent.createChooser(intent, getString(R.string.share_choose)));
+    }
+
+    @Override
+    public void shareError() {
+        CommonUtils.showMessage(this, getString(R.string.get_writepermission_deny));
     }
 }

@@ -1,5 +1,7 @@
 package imitative.lh.com.wanandroid.app;
 
+import java.io.File;
+
 public class Constants {
 
     /**
@@ -51,6 +53,8 @@ public class Constants {
     public static final String IS_PAGECOLLECT = "is_pagecollect";
     public static final String KNOW_TITLE = "know_title";
     public static final String DB_NAME = "wan_android_history.db";
+    private static final String PATH_DATA = WanAndroidApp.getInstance().getCacheDir().getAbsolutePath() + File.separator + "data";
+    public static final String PATH_CACHE = Constants.PATH_DATA + "/NetCache";
     public static long delayTime = 1000;
 
     public static final int TYPE_DEFAULE        = 0;//搜索默认界面

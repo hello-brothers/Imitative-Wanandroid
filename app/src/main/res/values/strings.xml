@@ -44,4 +44,7 @@
     <string name="share">分享</string>
     <string name="cancel_collectin">取消收藏</string>
     <string name="LOGIN_ERROR">登录失败</string>
+    <string name="share_type_url">%1$sShare【%2$s】special top：%3$s</string>
+    <string name="share_choose">选择要分享的方式</string>
+    <string name="get_writepermission_deny">获取写入权限失败</string>
 </resources>

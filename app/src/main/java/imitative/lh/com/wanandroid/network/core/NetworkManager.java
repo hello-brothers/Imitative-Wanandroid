@@ -1,18 +1,30 @@
 package imitative.lh.com.wanandroid.network.core;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import imitative.lh.com.wanandroid.BuildConfig;
+import imitative.lh.com.wanandroid.app.Constants;
 import imitative.lh.com.wanandroid.app.WanAndroidApp;
 import imitative.lh.com.wanandroid.network.api.WanApi;
+import imitative.lh.com.wanandroid.utils.CommonUtils;
+import okhttp3.Cache;
+import okhttp3.CacheControl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static okhttp3.logging.HttpLoggingInterceptor.Level.BASIC;
 import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
 
 /**
@@ -44,10 +56,11 @@ public class NetworkManager {
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(httpLoggingInterceptor)
-                .cookieJar(persistentCookieJar)
-                .build();
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+
+        OkHttpClient client = decorateBuilder(builder);
         retrofit = new Retrofit.Builder()
                 .baseUrl(WanApi.HOST)
                 .client(client)
@@ -56,8 +69,58 @@ public class NetworkManager {
                 .build();
     }
 
+    private static OkHttpClient decorateBuilder(OkHttpClient.Builder builder) {
+        if (BuildConfig.DEBUG){
+            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+            httpLoggingInterceptor.setLevel(BODY);
+            builder.addInterceptor(httpLoggingInterceptor);
+            builder.addNetworkInterceptor(new StethoInterceptor());
+        }
+        Interceptor cacheInterceptor = chain -> {
+            Request request = chain.request();
+            if (!CommonUtils.isNetworkConnected()){
+                request = request.newBuilder()
+                        .cacheControl(CacheControl.FORCE_CACHE)
+                        .build();
+            }
 
-        public WanApi createApi() {
+            Response response = chain.proceed(request);
+            if (CommonUtils.isNetworkConnected()){
+                //有网络时，不缓存，最大的保存时长设置为0
+                int maxAge = 0;
+                response = response.newBuilder()
+                        .header("Cache-Control", "public, max-age=" + maxAge)
+                        .removeHeader("Pragma")
+                        .build();
+            }else {
+                int maxStale = 60 * 60 * 24 * 28;
+                response = response.newBuilder()
+                        .addHeader("Cache-Control", "")
+                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                        .removeHeader("Pragma")
+                        .build();
+            }
+            return response;
+        };
+
+        //设置缓存
+        builder.addNetworkInterceptor(cacheInterceptor);
+        builder.addInterceptor(cacheInterceptor);
+        File cacheFile = new File(Constants.PATH_CACHE);
+        Cache cache = new Cache(cacheFile, 1024*1024*50);
+        builder.cache(cache);
+        //设置超时
+        builder.connectTimeout(10, TimeUnit.SECONDS);
+        builder.readTimeout(20, TimeUnit.SECONDS);
+        builder.writeTimeout(20, TimeUnit.SECONDS);
+        //超时重连
+        builder.retryOnConnectionFailure(true);
+        //Cookie认证
+        builder.cookieJar(persistentCookieJar);
+        return builder.build();
+    }
+
+    public WanApi createApi() {
             if (ourInstance == null){
                 throw new IllegalStateException("需要调用NetworkManager#getInstance()");
             }
@@ -67,13 +130,9 @@ public class NetworkManager {
                 }
             }
             return wanApi;
-
     }
-
 
     public void removeAllCookie(){
         persistentCookieJar.clear();
     }
-
-
 }
