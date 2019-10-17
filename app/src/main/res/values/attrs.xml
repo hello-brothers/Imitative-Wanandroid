@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="GrayBgTextView"></declare-styleable>
+
+
+    <declare-styleable name="ArcView">
+        <attr name="arc_height" format="dimension"/>
+        <attr name="arc_color" format="color"/>
+    </declare-styleable>
 </resources>
