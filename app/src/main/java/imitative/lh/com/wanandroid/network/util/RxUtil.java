@@ -4,6 +4,7 @@ import imitative.lh.com.wanandroid.network.base.BaseResponse;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
 import imitative.lh.com.wanandroid.network.bean.LoginData;
+import imitative.lh.com.wanandroid.network.bean.RegisterData;
 import imitative.lh.com.wanandroid.network.exception.ApiException;
 import imitative.lh.com.wanandroid.network.exception.CustomException;
 import imitative.lh.com.wanandroid.utils.CommonUtils;
@@ -32,6 +33,10 @@ public class RxUtil {
 
     public static <T> ObservableTransformer<BaseResponse<T>, T> handleCollectResult(){
         return upstream -> upstream.flatMap(new CollectionResponseFunction<>());
+    }
+
+    public static <T> ObservableTransformer<BaseResponse<T>, T> handleRegisterResult(){
+        return upstream -> upstream.flatMap(new RegisterResponseFunction<>());
     }
 
     /**
@@ -95,6 +100,24 @@ public class RxUtil {
             if (code == BaseResponse.CODE_SUCCESS){
                 return Observable.create(emitter -> {
                     emitter.onNext(CommonUtils.cast(new EssayListData()));
+                    emitter.onComplete();
+                });
+            }else {
+                return Observable.error(new ApiException(code, msg));
+            }
+
+        }
+    }
+
+    private static class RegisterResponseFunction<T> implements Function<BaseResponse<T>, ObservableSource<T>>{
+
+        @Override
+        public ObservableSource<T> apply(BaseResponse<T> tBaseResponse) throws Exception {
+            int code = tBaseResponse.getErrorCode();
+            String msg = tBaseResponse.getErrorMsg();
+            if (code == BaseResponse.CODE_SUCCESS){
+                return Observable.create(emitter -> {
+                    emitter.onNext(CommonUtils.cast(new RegisterData()));
                     emitter.onComplete();
                 });
             }else {

@@ -13,6 +13,7 @@ import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
+import imitative.lh.com.wanandroid.network.bean.RegisterData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
 import imitative.lh.com.wanandroid.network.core.HttpHelper;
 import imitative.lh.com.wanandroid.network.bean.BannerData;
@@ -90,6 +91,11 @@ public class DataManager implements PreferenceHelper, HttpHelper, DBHelper {
     @Override
     public Observable<BaseResponse<LoginData>> getLoginData(String username, String password) {
         return httpHelper.getLoginData(username, password);
+    }
+
+    @Override
+    public Observable<BaseResponse<RegisterData>> register(String username, String password, String repassword) {
+        return httpHelper.register(username, password, repassword);
     }
 
     @Override

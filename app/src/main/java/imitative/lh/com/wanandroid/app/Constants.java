@@ -53,6 +53,10 @@ public class Constants {
     public static final String IS_PAGECOLLECT = "is_pagecollect";
     public static final String KNOW_TITLE = "know_title";
     public static final String DB_NAME = "wan_android_history.db";
+    public static final String ET_USERNAME_LENGTH = "et_username_length";
+    public static final String ET_PASSSWORD_LENGTH = "et_password_length";
+    public static final String ET_CONFIRMPASSWORD_LENGTH = "et_confirmpassword_legth";
+    public static final String REGISTER_NAME = "register_name";
     private static final String PATH_DATA = WanAndroidApp.getInstance().getCacheDir().getAbsolutePath() + File.separator + "data";
     public static final String PATH_CACHE = Constants.PATH_DATA + "/NetCache";
     public static long delayTime = 1000;

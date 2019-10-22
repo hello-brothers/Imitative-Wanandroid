@@ -11,6 +11,7 @@ import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
+import imitative.lh.com.wanandroid.network.bean.RegisterData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -29,6 +30,15 @@ public interface HttpHelper {
      * @return
      */
     Observable<BaseResponse<LoginData>> getLoginData(String username, String password);
+
+    /**
+     * 注册
+     * @param username
+     * @param password
+     * @param repassword
+     * @return
+     */
+    Observable<BaseResponse<RegisterData>> register(String username, String password, String repassword);
 
     /**
      * 登出

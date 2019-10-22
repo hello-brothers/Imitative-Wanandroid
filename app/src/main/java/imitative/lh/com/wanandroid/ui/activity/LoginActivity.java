@@ -1,6 +1,9 @@
 package imitative.lh.com.wanandroid.ui.activity;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -61,6 +64,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @BindView(R.id.btn_toregister)
     TextView btn_toregister;
 
+    public static final int TO_REGISTER_CODE = 1001;
     protected LoginPresenter createPresneter() {
         return new LoginPresenter();
     }
@@ -126,7 +130,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         presenter.addDisposible(RxView.clicks(btn_toregister)
                 .throttleFirst(Constants.CLICK_TIME_AREA, TimeUnit.MILLISECONDS)
-                .subscribe(o -> CommonUtils.showMessage(this, getString(R.string.later))));
+                .subscribe(o -> startActivityForResult(new Intent(LoginActivity.this, RegisterActivity.class), TO_REGISTER_CODE)));
+
     }
 
     @Override
@@ -141,5 +146,20 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void showErrorView() {
         super.showErrorView();
 
+    }
+
+    @Override
+    public void showSnackBar(String message) {
+        Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TO_REGISTER_CODE){
+            Bundle bundle = data.getExtras();
+            String register_name = bundle.getString(Constants.REGISTER_NAME);
+            et_username.setText(register_name);
+        }
     }
 }

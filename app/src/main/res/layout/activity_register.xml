@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/register_toolbar"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_arrow_back_white">
+
+    </android.support.v7.widget.Toolbar>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <imitative.lh.com.wanandroid.widget.custom.ArcView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_240"
+            app:arc_color="@color/colorPrimary"
+            app:arc_height="@dimen/dp_100"
+            />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/dp_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:padding="@dimen/dp_10"
+                android:id="@+id/login_ll"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:elevation="@dimen/dp_1"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+                        <EditText
+                            android:id="@+id/et_username"
+                            android:drawableLeft="@drawable/ic_account"
+                            android:drawableTint="@color/colorPrimary"
+                            android:paddingLeft="@dimen/dp_20"
+                            android:paddingTop="@dimen/dp_20"
+                            android:background="@null"
+                            android:lines="1"
+                            android:inputType="text"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:hint="@string/login_account_hint"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tv_clearaccount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="@dimen/dp_20"
+                            android:drawableTint="@color/colorPrimary"
+                            android:visibility="invisible"
+                            android:drawableRight="@drawable/ic_close"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_05"
+                        android:layout_margin="@dimen/dp_15"
+                        android:background="@color/gray_txt"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+                        <EditText
+                            android:id="@+id/et_password"
+                            android:drawableLeft="@drawable/ic_lock"
+                            android:drawableTint="@color/colorPrimary"
+                            android:paddingLeft="@dimen/dp_20"
+                            android:paddingTop="@dimen/dp_10"
+                            android:background="@null"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:hint="@string/login_psw_hint"
+                            android:inputType="textPassword"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <CheckBox
+                            android:id="@+id/btn_showPassword"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="@dimen/dp_20"
+
+                            android:button="@null"
+                            android:drawableLeft="@drawable/ic_showpassword"
+                            android:drawableTint="@color/showpass_color"
+                            />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_05"
+                        android:layout_margin="@dimen/dp_15"
+                        android:background="@color/gray_txt"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+                        <EditText
+                            android:id="@+id/et_confirm_password"
+                            android:drawableLeft="@drawable/ic_lock"
+                            android:drawableTint="@color/colorPrimary"
+                            android:paddingLeft="@dimen/dp_20"
+                            android:paddingTop="@dimen/dp_10"
+                            android:background="@null"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:hint="@string/login_confirm_psw_hint"
+                            android:inputType="textPassword"
+                            android:imeOptions="actionDone"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <CheckBox
+                            android:id="@+id/btn_show_confirm_password"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="@dimen/dp_20"
+
+                            android:button="@null"
+                            android:drawableLeft="@drawable/ic_showpassword"
+                            android:drawableTint="@color/showpass_color"
+                            />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_05"
+                        android:layout_margin="@dimen/dp_15"
+                        android:background="@color/gray_txt"/>
+                </LinearLayout>
+
+                <Button
+                    android:layout_marginTop="@dimen/dp_40"
+                    android:id="@+id/btn_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:background="@drawable/btn_register_bg"
+                    android:textColor="@color/white"
+                    android:text="@string/text_register"
+                    android:enabled="false"
+                    />
+
+
+            </LinearLayout>
+
+
+
+
+
+        </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

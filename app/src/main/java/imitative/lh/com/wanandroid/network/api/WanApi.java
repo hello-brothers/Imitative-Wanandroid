@@ -11,6 +11,7 @@ import imitative.lh.com.wanandroid.network.bean.LoginData;
 import imitative.lh.com.wanandroid.network.bean.NavigationListData;
 import imitative.lh.com.wanandroid.network.bean.ProjectTab;
 import imitative.lh.com.wanandroid.network.bean.EssayData;
+import imitative.lh.com.wanandroid.network.bean.RegisterData;
 import imitative.lh.com.wanandroid.network.bean.WxAuthor;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -37,6 +38,15 @@ public interface WanApi {
     @FormUrlEncoded
     @POST("user/login")
     Observable<BaseResponse<LoginData>> getLoginData(@Field("username")String username, @Field("password")String password);
+
+    /**
+     * 注册
+     *https://www.wanandroid.com/user/register
+     */
+    @FormUrlEncoded
+    @POST("user/register")
+    Observable<BaseResponse<RegisterData>> register(@Field("username") String username, @Field(("password")) String password, @Field("repassword") String repassword);
+
 
     /**
      * 登出
