@@ -4,6 +4,8 @@ package imitative.lh.com.wanandroid.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.method.HideReturnsTransformationMethod;
@@ -150,5 +152,14 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         intent.putExtras(bundle);
         setResult(1, intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1){
+            pop();
+        }else {
+            ActivityCompat.finishAfterTransition(this);
+        }
     }
 }

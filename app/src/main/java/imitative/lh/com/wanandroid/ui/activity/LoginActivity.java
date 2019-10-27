@@ -156,7 +156,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == TO_REGISTER_CODE){
+        if (requestCode == TO_REGISTER_CODE && resultCode == 1){
             Bundle bundle = data.getExtras();
             String register_name = bundle.getString(Constants.REGISTER_NAME);
             et_username.setText(register_name);
