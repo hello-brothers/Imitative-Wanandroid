@@ -205,6 +205,8 @@ public class EssayDetailActivity extends BaseActivity<EssayDetailPresenter> impl
         }else {
             settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
+
+        settings.setBlockNetworkImage(presenter.getNoImageState());
         settings.setDisplayZoomControls(false);
         settings.setSupportZoom(true);
         settings.setBuiltInZoomControls(true);

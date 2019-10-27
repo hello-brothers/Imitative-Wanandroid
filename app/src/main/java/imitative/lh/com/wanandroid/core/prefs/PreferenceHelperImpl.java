@@ -62,4 +62,14 @@ public class PreferenceHelperImpl implements PreferenceHelper {
     public boolean isLoadTopEssayData() {
         return mPreferences.getBoolean(Constants.IS_LOAD_TOPESSAYDATA, true);
     }
+
+    @Override
+    public void setNoImageState(boolean imageState) {
+        mPreferences.edit().putBoolean(Constants.IS_NOIMAG_STATE, imageState).apply();
+    }
+
+    @Override
+    public boolean getNoImageState() {
+        return mPreferences.getBoolean(Constants.IS_NOIMAG_STATE, false);
+    }
 }

@@ -83,7 +83,15 @@ public class DataManager implements PreferenceHelper, HttpHelper, DBHelper {
         return preferenceHelper.isLoadTopEssayData();
     }
 
+    @Override
+    public void setNoImageState(boolean imageState) {
+        preferenceHelper.setNoImageState(imageState);
+    }
 
+    @Override
+    public boolean getNoImageState() {
+        return preferenceHelper.getNoImageState();
+    }
 
 
     /**********************************************http*****************************************************************/

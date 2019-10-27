@@ -20,6 +20,7 @@ import imitative.lh.com.wanandroid.base.presenter.BasePresenter;
 import imitative.lh.com.wanandroid.component.RxBus;
 import imitative.lh.com.wanandroid.contract.mainpager.MainPagerContract;
 import imitative.lh.com.wanandroid.core.event.CollectionEvent;
+import imitative.lh.com.wanandroid.core.event.HottopEvent;
 import imitative.lh.com.wanandroid.core.event.LoginEvent;
 import imitative.lh.com.wanandroid.network.base.BaseObserver;
 import imitative.lh.com.wanandroid.network.base.BaseResponse;
@@ -257,5 +258,8 @@ public class MainPagerPresenter extends BasePresenter<MainPagerContract.View> im
     private void registerEvent() {
         addDisposible(RxBus.getDefault().toFlowable(CollectionEvent.class)
                 .subscribe(collectionEvent -> mView.reload()));
+
+        addDisposible(RxBus.getDefault().toFlowable(HottopEvent.class)
+                .subscribe(hottopEvent -> mView.reload()));
     }
 }

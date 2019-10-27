@@ -24,4 +24,12 @@ public interface AbstractPresenter<T extends AbstractView>  {
 
     void setLoginPassword(String password);
 
+    void setNoImageState(Boolean noImageState);
+
+    boolean getNoImageState();
+
+    void setIsLoadTopEssayData(boolean isLoadTopEssayData);
+
+    boolean getIsLoadTopEssayData();
+
 }

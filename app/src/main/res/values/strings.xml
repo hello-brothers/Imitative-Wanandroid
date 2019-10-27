@@ -53,4 +53,9 @@
     <string name="to_register">去注册</string>
     <string name="login_confirm_psw_hint">确认密码</string>
     <string name="register_seccuss">注册成功</string>
+    <string name="model_noimg">无图模式</string>
+    <string name="model_noimg_subtitle">开启后在非Wifi环境下不加载图片</string>
+    <string name="show_hottop">是否显示首页置顶文章</string>
+    <string name="show_hottop_subtitle">开启后将不会显示首页置顶文章</string>
+    <string name="setting_basic">基本设置</string>
 </resources>

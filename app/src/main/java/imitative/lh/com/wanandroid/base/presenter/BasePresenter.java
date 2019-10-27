@@ -82,6 +82,26 @@ public class BasePresenter<T extends AbstractView> implements AbstractPresenter<
         manager.setLoginPassword(password);
     }
 
+    @Override
+    public void setNoImageState(Boolean noImageState) {
+        manager.setNoImageState(noImageState);
+    }
+
+    @Override
+    public boolean getNoImageState() {
+        return manager.getNoImageState();
+    }
+
+    @Override
+    public void setIsLoadTopEssayData(boolean isLoadTopEssayData) {
+        manager.setIsLoadTopEssayData(isLoadTopEssayData);
+    }
+
+    @Override
+    public boolean getIsLoadTopEssayData() {
+        return manager.isLoadTopEssayData();
+    }
+
     public void addDisposible(Disposable disposable){
         if (compositeDisposable == null){
             compositeDisposable = new CompositeDisposable();

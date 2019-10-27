@@ -22,4 +22,8 @@ public interface PreferenceHelper {
 
     boolean isLoadTopEssayData();
 
+    void setNoImageState(boolean imageState);
+
+    boolean getNoImageState();
+
 }

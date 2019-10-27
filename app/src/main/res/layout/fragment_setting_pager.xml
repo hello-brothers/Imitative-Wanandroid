@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="setting"/>
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_18"
+        android:text="@string/setting_basic"
+        android:textColor="@color/blue1"
+        android:textSize="@dimen/dp_18" />
+
+    <imitative.lh.com.wanandroid.widget.custom.ItemwithCheckBox
+        android:id="@+id/model_noimg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:item_subtitle="@string/model_noimg_subtitle"
+        app:item_title="@string/model_noimg" />
+
+    <imitative.lh.com.wanandroid.widget.custom.ItemwithCheckBox
+        android:id="@+id/show_hottop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:item_subtitle="@string/show_hottop_subtitle"
+        app:item_title="@string/show_hottop" />
+
+
+
 
 </LinearLayout>
