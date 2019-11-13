@@ -10,6 +10,7 @@ import imitative.lh.com.wanandroid.contract.mainpager.EssayDetailContract;
 import imitative.lh.com.wanandroid.core.event.CollectionEvent;
 import imitative.lh.com.wanandroid.network.base.BaseObserver;
 import imitative.lh.com.wanandroid.network.bean.EssayListData;
+import imitative.lh.com.wanandroid.network.core.NetworkManager;
 import imitative.lh.com.wanandroid.network.util.RxUtil;
 
 public class EssayDetailPresenter extends BasePresenter<EssayDetailContract.View> implements EssayDetailContract.Presenter {

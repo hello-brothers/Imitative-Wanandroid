@@ -34,7 +34,7 @@ public class SettingFragment extends BaseFragment<SettingPresenter> implements S
     @Override
     protected void initView() {
         model_noimg.getCb_checkbox().setChecked(presenter.getNoImageState());
-        show_hottop.getCb_checkbox().setChecked(presenter.getIsLoadTopEssayData());
+        show_hottop.getCb_checkbox().setChecked(!presenter.getIsLoadTopEssayData());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class SettingFragment extends BaseFragment<SettingPresenter> implements S
         presenter.addDisposible(RxCompoundButton.checkedChanges(show_hottop.getCb_checkbox())
                 .filter(o -> presenter != null)
                 .subscribe(aBoolean -> {
-                    presenter.setIsLoadTopEssayData(aBoolean);
+                    presenter.setIsLoadTopEssayData(!aBoolean);
                     RxBus.getDefault().post(new HottopEvent());
                 }));
     }

@@ -76,6 +76,9 @@ public class NetworkManager {
             builder.addInterceptor(httpLoggingInterceptor);
             builder.addNetworkInterceptor(new StethoInterceptor());
         }
+        /**
+         * 一般缓存策略：有网络的时候，读取缓存直到缓存时间到读取网络数据；在没有网络时读取缓存数据。
+         */
         Interceptor cacheInterceptor = chain -> {
             Request request = chain.request();
             if (!CommonUtils.isNetworkConnected()){
@@ -104,8 +107,8 @@ public class NetworkManager {
         };
 
         //设置缓存
-        builder.addNetworkInterceptor(cacheInterceptor);
-        builder.addInterceptor(cacheInterceptor);
+        builder.addNetworkInterceptor(cacheInterceptor);//网络拦截器
+        builder.addInterceptor(cacheInterceptor);       //应用拦截器
         File cacheFile = new File(Constants.PATH_CACHE);
         Cache cache = new Cache(cacheFile, 1024*1024*50);
         builder.cache(cache);
